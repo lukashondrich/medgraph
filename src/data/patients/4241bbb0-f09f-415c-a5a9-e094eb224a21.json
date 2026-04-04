@@ -1,0 +1,565 @@
+{
+  "id": "4241bbb0-f09f-415c-a5a9-e094eb224a21",
+  "name": "Derek111 Brakus656",
+  "age": 74,
+  "sex": "M",
+  "birth_date": "1951-03-22",
+  "conditions": [
+    {
+      "snomed_code": "162864005",
+      "snomed_display": "Body mass index 30+ - obesity (finding)",
+      "icd10_code": "E66.9",
+      "abbreviation": "Obesity",
+      "patient_friendly_name": "Obesity",
+      "clinical_status": "active",
+      "onset_date": "1991-03-28",
+      "category": null
+    },
+    {
+      "snomed_code": "44054006",
+      "snomed_display": "Diabetes",
+      "icd10_code": "E11.9",
+      "abbreviation": "T2DM",
+      "patient_friendly_name": "Type 2 Diabetes",
+      "clinical_status": "active",
+      "onset_date": "1995-04-06",
+      "category": null
+    },
+    {
+      "snomed_code": "271737000",
+      "snomed_display": "Anemia (disorder)",
+      "icd10_code": "D64.9",
+      "abbreviation": "Anemia",
+      "patient_friendly_name": "Anemia",
+      "clinical_status": "active",
+      "onset_date": "1995-04-06",
+      "category": null
+    },
+    {
+      "snomed_code": "80394007",
+      "snomed_display": "Hyperglycemia (disorder)",
+      "icd10_code": "R73.9",
+      "abbreviation": "Hyperglycemia",
+      "patient_friendly_name": "High Blood Sugar",
+      "clinical_status": "active",
+      "onset_date": "1997-04-10",
+      "category": null
+    },
+    {
+      "snomed_code": "302870006",
+      "snomed_display": "Hypertriglyceridemia (disorder)",
+      "icd10_code": "E78.1",
+      "abbreviation": "Hypertriglyceridemia",
+      "patient_friendly_name": "High Triglycerides",
+      "clinical_status": "active",
+      "onset_date": "1997-04-10",
+      "category": null
+    },
+    {
+      "snomed_code": "237602007",
+      "snomed_display": "Metabolic syndrome X (disorder)",
+      "icd10_code": "E88.81",
+      "abbreviation": "MetS",
+      "patient_friendly_name": "Metabolic Syndrome",
+      "clinical_status": "active",
+      "onset_date": "1997-04-10",
+      "category": null
+    },
+    {
+      "snomed_code": "15777000",
+      "snomed_display": "Prediabetes",
+      "icd10_code": "R73.03",
+      "abbreviation": "T2DM (pre)",
+      "patient_friendly_name": "Prediabetes",
+      "clinical_status": "active",
+      "onset_date": "1999-04-15",
+      "category": null
+    },
+    {
+      "snomed_code": "239873007",
+      "snomed_display": "Osteoarthritis of knee",
+      "icd10_code": "M19.90",
+      "abbreviation": "OA",
+      "patient_friendly_name": "Arthritis",
+      "clinical_status": "active",
+      "onset_date": "2008-03-07",
+      "category": null
+    },
+    {
+      "snomed_code": "88805009",
+      "snomed_display": "Chronic congestive heart failure (disorder)",
+      "icd10_code": "I50.9",
+      "abbreviation": "CHF",
+      "patient_friendly_name": "Heart Failure",
+      "clinical_status": "active",
+      "onset_date": "2011-03-26",
+      "category": null
+    }
+  ],
+  "medications": [
+    {
+      "rxnorm_code": "860975",
+      "display": "24 HR Metformin hydrochloride 500 MG Extended Release Oral Tablet",
+      "short_name": "Metformin ER 500mg",
+      "dosage_text": null,
+      "frequency": null,
+      "status": "active",
+      "start_date": "1995-04-06",
+      "end_date": null,
+      "reason_code": "44054006",
+      "reason_display": "Diabetes"
+    },
+    {
+      "rxnorm_code": "849574",
+      "display": "Naproxen sodium 220 MG Oral Tablet",
+      "short_name": "Naproxen 220mg",
+      "dosage_text": null,
+      "frequency": null,
+      "status": "active",
+      "start_date": "2008-03-07",
+      "end_date": null,
+      "reason_code": "239873007",
+      "reason_display": "Osteoarthritis of knee"
+    },
+    {
+      "rxnorm_code": "866414",
+      "display": "24 HR metoprolol succinate 100 MG Extended Release Oral Tablet [Toprol]",
+      "short_name": "metoprolol ER 100mg",
+      "dosage_text": "1.0",
+      "frequency": "daily",
+      "status": "active",
+      "start_date": "2011-04-16",
+      "end_date": null,
+      "reason_code": "88805009",
+      "reason_display": "Chronic congestive heart failure (disorder)"
+    },
+    {
+      "rxnorm_code": "315971",
+      "display": "Lasix 40mg",
+      "short_name": "Lasix 40mg",
+      "dosage_text": "1.0",
+      "frequency": "daily",
+      "status": "active",
+      "start_date": "2011-04-16",
+      "end_date": null,
+      "reason_code": "88805009",
+      "reason_display": "Chronic congestive heart failure (disorder)"
+    },
+    {
+      "rxnorm_code": "1719286",
+      "display": "10 ML Furosemide 10 MG/ML Injection",
+      "short_name": "10 ML Furosemide 10mg",
+      "dosage_text": null,
+      "frequency": null,
+      "status": "active",
+      "start_date": "2011-10-13",
+      "end_date": null,
+      "reason_code": "88805009",
+      "reason_display": "Chronic congestive heart failure (disorder)"
+    }
+  ],
+  "allergies": [],
+  "recent_labs": [
+    {
+      "loinc_code": "8302-2",
+      "display": "Body Height",
+      "short_name": "Height",
+      "value": 176.26561056465763,
+      "unit": "cm",
+      "observed_date": "2011-05-19",
+      "category": "vital-signs"
+    },
+    {
+      "loinc_code": "39156-5",
+      "display": "Body Mass Index",
+      "short_name": "BMI",
+      "value": 30.22011108191691,
+      "unit": "kg/m2",
+      "observed_date": "2011-05-19",
+      "category": "vital-signs"
+    },
+    {
+      "loinc_code": "29463-7",
+      "display": "Body Weight",
+      "short_name": "Weight",
+      "value": 93.8925719701737,
+      "unit": "kg",
+      "observed_date": "2011-05-19",
+      "category": "vital-signs"
+    },
+    {
+      "loinc_code": "8462-4",
+      "display": "Diastolic Blood Pressure",
+      "short_name": "Diastolic BP",
+      "value": 75.23464584551735,
+      "unit": "mm[Hg]",
+      "observed_date": "2011-05-19",
+      "category": "vital-signs"
+    },
+    {
+      "loinc_code": "72514-3",
+      "display": "Pain severity - 0-10 verbal numeric rating [Score] - Reported",
+      "short_name": "Pain severity - 0-10 verbal numeric rating [Score] - Reported",
+      "value": 2.535433877524947,
+      "unit": "{score}",
+      "observed_date": "2011-05-19",
+      "category": "vital-signs"
+    },
+    {
+      "loinc_code": "8480-6",
+      "display": "Systolic Blood Pressure",
+      "short_name": "Systolic BP",
+      "value": 111.05139278146082,
+      "unit": "mm[Hg]",
+      "observed_date": "2011-05-19",
+      "category": "vital-signs"
+    },
+    {
+      "loinc_code": "1742-6",
+      "display": "Alanine aminotransferase [Enzymatic activity/\u200bvolume] in Serum or Plasma",
+      "short_name": "ALT",
+      "value": 30.018607527787626,
+      "unit": "U/L",
+      "observed_date": "2011-10-13",
+      "category": "laboratory"
+    },
+    {
+      "loinc_code": "1751-7",
+      "display": "Albumin [Mass/\u200bvolume] in Serum or Plasma",
+      "short_name": "Albumin (serum)",
+      "value": 4.210687733263439,
+      "unit": "g/dL",
+      "observed_date": "2011-10-13",
+      "category": "laboratory"
+    },
+    {
+      "loinc_code": "6768-6",
+      "display": "Alkaline phosphatase [Enzymatic activity/\u200bvolume] in Serum or Plasma",
+      "short_name": "ALP",
+      "value": 68.05849357992787,
+      "unit": "U/L",
+      "observed_date": "2011-10-13",
+      "category": "laboratory"
+    },
+    {
+      "loinc_code": "1920-8",
+      "display": "Aspartate aminotransferase [Enzymatic activity/\u200bvolume] in Serum or Plasma",
+      "short_name": "AST",
+      "value": 16.090378922323502,
+      "unit": "U/L",
+      "observed_date": "2011-10-13",
+      "category": "laboratory"
+    },
+    {
+      "loinc_code": "1975-2",
+      "display": "Bilirubin.total [Mass/\u200bvolume] in Serum or Plasma",
+      "short_name": "Bilirubin",
+      "value": 0.6355017897369637,
+      "unit": "mg/dL",
+      "observed_date": "2011-10-13",
+      "category": "laboratory"
+    },
+    {
+      "loinc_code": "49765-1",
+      "display": "Calcium",
+      "short_name": "Calcium (corrected)",
+      "value": 9.347033956131469,
+      "unit": "mg/dL",
+      "observed_date": "2011-10-13",
+      "category": "laboratory"
+    },
+    {
+      "loinc_code": "20565-8",
+      "display": "Carbon Dioxide",
+      "short_name": "Carbon Dioxide",
+      "value": 24.01430157805876,
+      "unit": "mmol/L",
+      "observed_date": "2011-10-13",
+      "category": "laboratory"
+    },
+    {
+      "loinc_code": "2069-3",
+      "display": "Chloride",
+      "short_name": "Chloride",
+      "value": 102.31020586943387,
+      "unit": "mmol/L",
+      "observed_date": "2011-10-13",
+      "category": "laboratory"
+    },
+    {
+      "loinc_code": "38483-4",
+      "display": "Creatinine",
+      "short_name": "Creatinine",
+      "value": 1.0432507996685967,
+      "unit": "mg/dL",
+      "observed_date": "2011-10-13",
+      "category": "laboratory"
+    },
+    {
+      "loinc_code": "21000-5",
+      "display": "Erythrocyte distribution width [Entitic volume] by Automated count",
+      "short_name": "Erythrocyte distribution width [Entitic volume] by Automated count",
+      "value": 39.845776087766765,
+      "unit": "fL",
+      "observed_date": "2008-05-01",
+      "category": "laboratory"
+    },
+    {
+      "loinc_code": "789-8",
+      "display": "Erythrocytes [#/volume] in Blood by Automated count",
+      "short_name": "RBC",
+      "value": 5.0529861723717175,
+      "unit": "10*6/uL",
+      "observed_date": "2008-05-01",
+      "category": "laboratory"
+    },
+    {
+      "loinc_code": "10834-0",
+      "display": "Globulin [Mass/\u200bvolume] in Serum by calculation",
+      "short_name": "Globulin [Mass/\u200bvolume] in Serum by calculation",
+      "value": 2.1531046154995304,
+      "unit": "g/L",
+      "observed_date": "2011-10-13",
+      "category": "laboratory"
+    },
+    {
+      "loinc_code": "33914-3",
+      "display": "Glomerular filtration rate/\u200b1.73 sq M.predicted",
+      "short_name": "eGFR",
+      "value": 10.675591570544295,
+      "unit": "mL/min",
+      "observed_date": "2011-10-13",
+      "category": "laboratory"
+    },
+    {
+      "loinc_code": "2339-0",
+      "display": "Glucose",
+      "short_name": "Glucose",
+      "value": 83.57694143643636,
+      "unit": "mg/dL",
+      "observed_date": "2011-10-13",
+      "category": "laboratory"
+    },
+    {
+      "loinc_code": "4544-3",
+      "display": "Hematocrit [Volume Fraction] of Blood by Automated count",
+      "short_name": "Hematocrit",
+      "value": 46.26508857388842,
+      "unit": "%",
+      "observed_date": "2008-05-01",
+      "category": "laboratory"
+    },
+    {
+      "loinc_code": "4548-4",
+      "display": "Hemoglobin A1c/Hemoglobin.total in Blood",
+      "short_name": "HbA1c",
+      "value": 6.055027770479228,
+      "unit": "%",
+      "observed_date": "2011-05-19",
+      "category": "laboratory"
+    },
+    {
+      "loinc_code": "718-7",
+      "display": "Hemoglobin [Mass/volume] in Blood",
+      "short_name": "Hemoglobin",
+      "value": 16.397572889328316,
+      "unit": "g/dL",
+      "observed_date": "2008-05-01",
+      "category": "laboratory"
+    },
+    {
+      "loinc_code": "57905-2",
+      "display": "Hemoglobin.gastrointestinal [Presence] in Stool by Immunologic method",
+      "short_name": "Hemoglobin.gastrointestinal [Presence] in Stool by Immunologic method",
+      "value": 7.501526556086829,
+      "unit": "ng/mL",
+      "observed_date": "2006-03-21",
+      "category": "laboratory"
+    },
+    {
+      "loinc_code": "2085-9",
+      "display": "High Density Lipoprotein Cholesterol",
+      "short_name": "HDL",
+      "value": 76.40135950030432,
+      "unit": "mg/dL",
+      "observed_date": "2011-05-19",
+      "category": "laboratory"
+    },
+    {
+      "loinc_code": "10230-1",
+      "display": "Left ventricular Ejection fraction",
+      "short_name": "Left ventricular Ejection fraction",
+      "value": 41.705565658497356,
+      "unit": "%",
+      "observed_date": "2011-04-16",
+      "category": "laboratory"
+    },
+    {
+      "loinc_code": "6690-2",
+      "display": "Leukocytes [#/volume] in Blood by Automated count",
+      "short_name": "WBC",
+      "value": 9.502860243651208,
+      "unit": "10*3/uL",
+      "observed_date": "2008-05-01",
+      "category": "laboratory"
+    },
+    {
+      "loinc_code": "18262-6",
+      "display": "Low Density Lipoprotein Cholesterol",
+      "short_name": "LDL",
+      "value": 59.755365224025226,
+      "unit": "mg/dL",
+      "observed_date": "2011-05-19",
+      "category": "laboratory"
+    },
+    {
+      "loinc_code": "785-6",
+      "display": "MCH [Entitic mass] by Automated count",
+      "short_name": "MCH",
+      "value": 27.616442454120225,
+      "unit": "pg",
+      "observed_date": "2008-05-01",
+      "category": "laboratory"
+    },
+    {
+      "loinc_code": "786-4",
+      "display": "MCHC [Mass/volume] by Automated count",
+      "short_name": "MCHC",
+      "value": 33.58783394103056,
+      "unit": "g/dL",
+      "observed_date": "2008-05-01",
+      "category": "laboratory"
+    },
+    {
+      "loinc_code": "787-2",
+      "display": "MCV [Entitic volume] by Automated count",
+      "short_name": "MCV",
+      "value": 83.07331520328142,
+      "unit": "fL",
+      "observed_date": "2008-05-01",
+      "category": "laboratory"
+    },
+    {
+      "loinc_code": "14959-1",
+      "display": "Microalbumin Creatinine Ratio",
+      "short_name": "Microalbumin/Creatinine",
+      "value": 12.05641233605852,
+      "unit": "mg/g",
+      "observed_date": "2011-05-19",
+      "category": "laboratory"
+    },
+    {
+      "loinc_code": "33762-6",
+      "display": "NT-proBNP",
+      "short_name": "NT-proBNP",
+      "value": 1664.7676075156837,
+      "unit": "pg/mL",
+      "observed_date": "2011-03-26",
+      "category": "laboratory"
+    },
+    {
+      "loinc_code": "32207-3",
+      "display": "Platelet distribution width [Entitic volume] in Blood by Automated count",
+      "short_name": "Platelet distribution width [Entitic volume] in Blood by Automated count",
+      "value": 215.14227917795898,
+      "unit": "fL",
+      "observed_date": "2008-05-01",
+      "category": "laboratory"
+    },
+    {
+      "loinc_code": "32623-1",
+      "display": "Platelet mean volume [Entitic volume] in Blood by Automated count",
+      "short_name": "Platelet Mean Volume",
+      "value": 10.998799769870029,
+      "unit": "fL",
+      "observed_date": "2008-05-01",
+      "category": "laboratory"
+    },
+    {
+      "loinc_code": "777-3",
+      "display": "Platelets [#/volume] in Blood by Automated count",
+      "short_name": "Platelets",
+      "value": 400.6386187512637,
+      "unit": "10*3/uL",
+      "observed_date": "2008-05-01",
+      "category": "laboratory"
+    },
+    {
+      "loinc_code": "33756-8",
+      "display": "Polyp size greatest dimension by CAP cancer protocols",
+      "short_name": "Polyp size greatest dimension by CAP cancer protocols",
+      "value": 3.586978861865711,
+      "unit": "mm",
+      "observed_date": "2006-03-21",
+      "category": "laboratory"
+    },
+    {
+      "loinc_code": "6298-4",
+      "display": "Potassium",
+      "short_name": "Potassium",
+      "value": 5.1394310975298,
+      "unit": "mmol/L",
+      "observed_date": "2011-10-13",
+      "category": "laboratory"
+    },
+    {
+      "loinc_code": "2885-2",
+      "display": "Protein [Mass/\u200bvolume] in Serum or Plasma",
+      "short_name": "Protein [Mass/\u200bvolume] in Serum or Plasma",
+      "value": 74.78665487259141,
+      "unit": "g/dL",
+      "observed_date": "2011-10-13",
+      "category": "laboratory"
+    },
+    {
+      "loinc_code": "2947-0",
+      "display": "Sodium",
+      "short_name": "Chloride",
+      "value": 139.20386407207258,
+      "unit": "mmol/L",
+      "observed_date": "2011-10-13",
+      "category": "laboratory"
+    },
+    {
+      "loinc_code": "2093-3",
+      "display": "Total Cholesterol",
+      "short_name": "Total Cholesterol",
+      "value": 166.05624033795178,
+      "unit": "mg/dL",
+      "observed_date": "2011-05-19",
+      "category": "laboratory"
+    },
+    {
+      "loinc_code": "2571-8",
+      "display": "Triglycerides",
+      "short_name": "Triglycerides",
+      "value": 149.49757806811112,
+      "unit": "mg/dL",
+      "observed_date": "2011-05-19",
+      "category": "laboratory"
+    },
+    {
+      "loinc_code": "6299-2",
+      "display": "Urea Nitrogen",
+      "short_name": "BUN",
+      "value": 9.487436063100104,
+      "unit": "mg/dL",
+      "observed_date": "2011-10-13",
+      "category": "laboratory"
+    }
+  ],
+  "biometrics": {
+    "last_sync": "2026-02-20T14:55:37.123267",
+    "resting_hr_bpm": 87,
+    "mean_daily_steps": 1500,
+    "step_trend_pct": -10.2,
+    "sleep_hours": 6.8,
+    "sleep_efficiency_pct": 81.9,
+    "wake_events_per_night": 2.7,
+    "hrv_ms": 10
+  },
+  "conditions_summary_clinician": "Obesity, T2DM, Anemia, Hyperglycemia, Hypertriglyceridemia, MetS, T2DM (pre), OA, CHF",
+  "conditions_summary_patient": "Obesity, Type 2 Diabetes, Anemia, High Blood Sugar, High Triglycerides, Metabolic Syndrome, Prediabetes, Arthritis, Heart Failure",
+  "medications_summary_clinician": "Metformin ER 500mg \u00b7 Naproxen 220mg \u00b7 metoprolol ER 100mg daily \u00b7 Lasix 40mg daily \u00b7 10 ML Furosemide 10mg",
+  "medications_summary_patient": "5 medications"
+}

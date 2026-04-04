@@ -1,0 +1,670 @@
+{
+  "id": "9d464bd6-c7fa-49de-998f-44dad6b4f703",
+  "name": "David908 Guillen740",
+  "age": 85,
+  "sex": "M",
+  "birth_date": "1940-08-12",
+  "conditions": [
+    {
+      "snomed_code": "59621000",
+      "snomed_display": "Hypertension",
+      "icd10_code": "I10",
+      "abbreviation": "HTN",
+      "patient_friendly_name": "High Blood Pressure",
+      "clinical_status": "active",
+      "onset_date": "1958-10-06",
+      "category": null
+    },
+    {
+      "snomed_code": "162864005",
+      "snomed_display": "Body mass index 30+ - obesity (finding)",
+      "icd10_code": "E66.9",
+      "abbreviation": "Obesity",
+      "patient_friendly_name": "Obesity",
+      "clinical_status": "active",
+      "onset_date": "1977-10-31",
+      "category": null
+    },
+    {
+      "snomed_code": "44054006",
+      "snomed_display": "Diabetes",
+      "icd10_code": "E11.9",
+      "abbreviation": "T2DM",
+      "patient_friendly_name": "Type 2 Diabetes",
+      "clinical_status": "active",
+      "onset_date": "1982-08-23",
+      "category": null
+    },
+    {
+      "snomed_code": "302870006",
+      "snomed_display": "Hypertriglyceridemia (disorder)",
+      "icd10_code": "E78.1",
+      "abbreviation": "Hypertriglyceridemia",
+      "patient_friendly_name": "High Triglycerides",
+      "clinical_status": "active",
+      "onset_date": "1984-02-20",
+      "category": null
+    },
+    {
+      "snomed_code": "237602007",
+      "snomed_display": "Metabolic syndrome X (disorder)",
+      "icd10_code": "E88.81",
+      "abbreviation": "MetS",
+      "patient_friendly_name": "Metabolic Syndrome",
+      "clinical_status": "active",
+      "onset_date": "1984-02-20",
+      "category": null
+    },
+    {
+      "snomed_code": "271737000",
+      "snomed_display": "Anemia (disorder)",
+      "icd10_code": "D64.9",
+      "abbreviation": "Anemia",
+      "patient_friendly_name": "Anemia",
+      "clinical_status": "active",
+      "onset_date": "1984-02-20",
+      "category": null
+    },
+    {
+      "snomed_code": "80394007",
+      "snomed_display": "Hyperglycemia (disorder)",
+      "icd10_code": "R73.9",
+      "abbreviation": "Hyperglycemia",
+      "patient_friendly_name": "High Blood Sugar",
+      "clinical_status": "active",
+      "onset_date": "1988-09-05",
+      "category": null
+    },
+    {
+      "snomed_code": "15777000",
+      "snomed_display": "Prediabetes",
+      "icd10_code": "R73.03",
+      "abbreviation": "T2DM (pre)",
+      "patient_friendly_name": "Prediabetes",
+      "clinical_status": "active",
+      "onset_date": "1988-09-05",
+      "category": null
+    },
+    {
+      "snomed_code": "53741008",
+      "snomed_display": "Coronary Heart Disease",
+      "icd10_code": "I25.10",
+      "abbreviation": "CAD",
+      "patient_friendly_name": "Coronary Artery Disease",
+      "clinical_status": "active",
+      "onset_date": "2001-10-15",
+      "category": null
+    },
+    {
+      "snomed_code": "128613002",
+      "snomed_display": "Seizure disorder",
+      "icd10_code": "G40.909",
+      "abbreviation": "Seizure disorder",
+      "patient_friendly_name": "Seizure Disorder",
+      "clinical_status": "active",
+      "onset_date": "2004-07-27",
+      "category": null
+    },
+    {
+      "snomed_code": "703151001",
+      "snomed_display": "History of single seizure (situation)",
+      "icd10_code": "R56.9",
+      "abbreviation": "Hx seizure",
+      "patient_friendly_name": "Previous Seizure",
+      "clinical_status": "active",
+      "onset_date": "2004-07-27",
+      "category": null
+    },
+    {
+      "snomed_code": "84757009",
+      "snomed_display": "Epilepsy",
+      "icd10_code": "G40.909",
+      "abbreviation": "Epilepsy",
+      "patient_friendly_name": "Epilepsy",
+      "clinical_status": "active",
+      "onset_date": "2004-07-27",
+      "category": null
+    },
+    {
+      "snomed_code": "40055000",
+      "snomed_display": "Chronic sinusitis (disorder)",
+      "icd10_code": "J32.9",
+      "abbreviation": "Chronic sinusitis",
+      "patient_friendly_name": "Chronic Sinus Problems",
+      "clinical_status": "active",
+      "onset_date": "2013-01-30",
+      "category": null
+    },
+    {
+      "snomed_code": "49436004",
+      "snomed_display": "Atrial Fibrillation",
+      "icd10_code": "I48.91",
+      "abbreviation": "AFib",
+      "patient_friendly_name": "Irregular Heartbeat",
+      "clinical_status": "active",
+      "onset_date": "2016-01-04",
+      "category": null
+    },
+    {
+      "snomed_code": "55822004",
+      "snomed_display": "Hyperlipidemia",
+      "icd10_code": "E78.5",
+      "abbreviation": "Hyperlipidemia",
+      "patient_friendly_name": "High Cholesterol",
+      "clinical_status": "active",
+      "onset_date": "2017-01-09",
+      "category": null
+    }
+  ],
+  "medications": [
+    {
+      "rxnorm_code": "746030",
+      "display": "Atenolol 50 MG / Chlorthalidone 25 MG Oral Tablet",
+      "short_name": "Atenolol 50mg",
+      "dosage_text": null,
+      "frequency": null,
+      "status": "active",
+      "start_date": "1958-11-05",
+      "end_date": null,
+      "reason_code": "59621000",
+      "reason_display": "Hypertension"
+    },
+    {
+      "rxnorm_code": "860975",
+      "display": "24 HR Metformin hydrochloride 500 MG Extended Release Oral Tablet",
+      "short_name": "Metformin ER 500mg",
+      "dosage_text": null,
+      "frequency": null,
+      "status": "active",
+      "start_date": "1986-09-01",
+      "end_date": null,
+      "reason_code": "44054006",
+      "reason_display": "Diabetes"
+    },
+    {
+      "rxnorm_code": "309362",
+      "display": "Clopidogrel 75 MG Oral Tablet",
+      "short_name": "Clopidogrel 75mg",
+      "dosage_text": null,
+      "frequency": null,
+      "status": "active",
+      "start_date": "2001-10-15",
+      "end_date": null,
+      "reason_code": null,
+      "reason_display": null
+    },
+    {
+      "rxnorm_code": "312961",
+      "display": "Simvastatin 20 MG Oral Tablet",
+      "short_name": "Simvastatin 20mg",
+      "dosage_text": null,
+      "frequency": null,
+      "status": "active",
+      "start_date": "2001-10-15",
+      "end_date": null,
+      "reason_code": null,
+      "reason_display": null
+    },
+    {
+      "rxnorm_code": "197361",
+      "display": "Amlodipine 5 MG Oral Tablet",
+      "short_name": "Amlodipine 5mg",
+      "dosage_text": null,
+      "frequency": null,
+      "status": "active",
+      "start_date": "2001-10-15",
+      "end_date": null,
+      "reason_code": null,
+      "reason_display": null
+    },
+    {
+      "rxnorm_code": "705129",
+      "display": "Nitroglycerin 0.4 MG/ACTUAT Mucosal Spray",
+      "short_name": "Nitroglycerin 0.4mg",
+      "dosage_text": null,
+      "frequency": null,
+      "status": "active",
+      "start_date": "2001-10-15",
+      "end_date": null,
+      "reason_code": null,
+      "reason_display": null
+    },
+    {
+      "rxnorm_code": "308971",
+      "display": "Carbamazepine[Tegretol]",
+      "short_name": "Carbamazepine[Tegretol]",
+      "dosage_text": null,
+      "frequency": null,
+      "status": "active",
+      "start_date": "2007-01-29",
+      "end_date": null,
+      "reason_code": null,
+      "reason_display": null
+    },
+    {
+      "rxnorm_code": "855332",
+      "display": "Warfarin Sodium 5 MG Oral Tablet",
+      "short_name": "Warfarin 5mg",
+      "dosage_text": null,
+      "frequency": null,
+      "status": "active",
+      "start_date": "2016-01-04",
+      "end_date": null,
+      "reason_code": null,
+      "reason_display": null
+    },
+    {
+      "rxnorm_code": "897718",
+      "display": "Verapamil Hydrochloride 40 MG",
+      "short_name": "Verapamil 40mg",
+      "dosage_text": null,
+      "frequency": null,
+      "status": "active",
+      "start_date": "2016-01-04",
+      "end_date": null,
+      "reason_code": null,
+      "reason_display": null
+    },
+    {
+      "rxnorm_code": "197604",
+      "display": "Digoxin 0.125 MG Oral Tablet",
+      "short_name": "Digoxin 0.125mg",
+      "dosage_text": null,
+      "frequency": null,
+      "status": "active",
+      "start_date": "2016-01-04",
+      "end_date": null,
+      "reason_code": null,
+      "reason_display": null
+    },
+    {
+      "rxnorm_code": "316672",
+      "display": "Simvistatin 10 MG",
+      "short_name": "Simvistatin 10mg",
+      "dosage_text": "1.0",
+      "frequency": "daily",
+      "status": "active",
+      "start_date": "2019-01-30",
+      "end_date": null,
+      "reason_code": "55822004",
+      "reason_display": "Hyperlipidemia"
+    }
+  ],
+  "allergies": [],
+  "recent_labs": [
+    {
+      "loinc_code": "8302-2",
+      "display": "Body Height",
+      "short_name": "Height",
+      "value": 179.22675146654504,
+      "unit": "cm",
+      "observed_date": "2019-01-21",
+      "category": "vital-signs"
+    },
+    {
+      "loinc_code": "39156-5",
+      "display": "Body Mass Index",
+      "short_name": "BMI",
+      "value": 27.8050711088312,
+      "unit": "kg/m2",
+      "observed_date": "2019-01-21",
+      "category": "vital-signs"
+    },
+    {
+      "loinc_code": "29463-7",
+      "display": "Body Weight",
+      "short_name": "Weight",
+      "value": 89.31608459830957,
+      "unit": "kg",
+      "observed_date": "2019-01-21",
+      "category": "vital-signs"
+    },
+    {
+      "loinc_code": "8462-4",
+      "display": "Diastolic Blood Pressure",
+      "short_name": "Diastolic BP",
+      "value": 75.0534695337351,
+      "unit": "mm[Hg]",
+      "observed_date": "2019-01-21",
+      "category": "vital-signs"
+    },
+    {
+      "loinc_code": "8331-1",
+      "display": "Oral temperature",
+      "short_name": "Oral temperature",
+      "value": 37.82282865610989,
+      "unit": "Cel",
+      "observed_date": "2013-12-08",
+      "category": "vital-signs"
+    },
+    {
+      "loinc_code": "72514-3",
+      "display": "Pain severity - 0-10 verbal numeric rating [Score] - Reported",
+      "short_name": "Pain severity - 0-10 verbal numeric rating [Score] - Reported",
+      "value": 1.4004478164141214,
+      "unit": "{score}",
+      "observed_date": "2019-01-21",
+      "category": "vital-signs"
+    },
+    {
+      "loinc_code": "8480-6",
+      "display": "Systolic Blood Pressure",
+      "short_name": "Systolic BP",
+      "value": 122.91484536213089,
+      "unit": "mm[Hg]",
+      "observed_date": "2019-01-21",
+      "category": "vital-signs"
+    },
+    {
+      "loinc_code": "1742-6",
+      "display": "Alanine aminotransferase [Enzymatic activity/volume] in Serum or Plasma",
+      "short_name": "ALT",
+      "value": 47.27923372656773,
+      "unit": "U/L",
+      "observed_date": "2019-01-30",
+      "category": "laboratory"
+    },
+    {
+      "loinc_code": "1751-7",
+      "display": "Albumin [Mass/volume] in Serum or Plasma",
+      "short_name": "Albumin (serum)",
+      "value": 4.595034141639146,
+      "unit": "g/dL",
+      "observed_date": "2019-01-30",
+      "category": "laboratory"
+    },
+    {
+      "loinc_code": "6768-6",
+      "display": "Alkaline phosphatase [Enzymatic activity/volume] in Serum or Plasma",
+      "short_name": "ALP",
+      "value": 69.70148740140493,
+      "unit": "U/L",
+      "observed_date": "2019-01-30",
+      "category": "laboratory"
+    },
+    {
+      "loinc_code": "1920-8",
+      "display": "Aspartate aminotransferase [Enzymatic activity/volume] in Serum or Plasma",
+      "short_name": "AST",
+      "value": 31.283068959997582,
+      "unit": "U/L",
+      "observed_date": "2019-01-30",
+      "category": "laboratory"
+    },
+    {
+      "loinc_code": "1975-2",
+      "display": "Bilirubin.total [Mass/volume] in Serum or Plasma",
+      "short_name": "Bilirubin",
+      "value": 0.2627991498076343,
+      "unit": "mg/dL",
+      "observed_date": "2019-01-30",
+      "category": "laboratory"
+    },
+    {
+      "loinc_code": "49765-1",
+      "display": "Calcium",
+      "short_name": "Calcium (corrected)",
+      "value": 10.05677165638819,
+      "unit": "mg/dL",
+      "observed_date": "2019-01-30",
+      "category": "laboratory"
+    },
+    {
+      "loinc_code": "20565-8",
+      "display": "Carbon Dioxide",
+      "short_name": "Carbon Dioxide",
+      "value": 23.41165645458228,
+      "unit": "mmol/L",
+      "observed_date": "2019-01-30",
+      "category": "laboratory"
+    },
+    {
+      "loinc_code": "2069-3",
+      "display": "Chloride",
+      "short_name": "Chloride",
+      "value": 106.20503769454606,
+      "unit": "mmol/L",
+      "observed_date": "2019-01-30",
+      "category": "laboratory"
+    },
+    {
+      "loinc_code": "38483-4",
+      "display": "Creatinine",
+      "short_name": "Creatinine",
+      "value": 2.6713685668385976,
+      "unit": "mg/dL",
+      "observed_date": "2019-01-30",
+      "category": "laboratory"
+    },
+    {
+      "loinc_code": "21000-5",
+      "display": "Erythrocyte distribution width [Entitic volume] by Automated count",
+      "short_name": "Erythrocyte distribution width [Entitic volume] by Automated count",
+      "value": 43.73809231844326,
+      "unit": "fL",
+      "observed_date": "2018-01-15",
+      "category": "laboratory"
+    },
+    {
+      "loinc_code": "789-8",
+      "display": "Erythrocytes [#/volume] in Blood by Automated count",
+      "short_name": "RBC",
+      "value": 4.878075375437159,
+      "unit": "10*6/uL",
+      "observed_date": "2018-01-15",
+      "category": "laboratory"
+    },
+    {
+      "loinc_code": "10834-0",
+      "display": "Globulin [Mass/volume] in Serum by calculation",
+      "short_name": "Globulin [Mass/volume] in Serum by calculation",
+      "value": 2.994591832132649,
+      "unit": "g/L",
+      "observed_date": "2019-01-30",
+      "category": "laboratory"
+    },
+    {
+      "loinc_code": "33914-3",
+      "display": "Glomerular filtration rate/1.73 sq M.predicted",
+      "short_name": "eGFR",
+      "value": 82.61982373878097,
+      "unit": "mL/min",
+      "observed_date": "2019-01-30",
+      "category": "laboratory"
+    },
+    {
+      "loinc_code": "2339-0",
+      "display": "Glucose",
+      "short_name": "Glucose",
+      "value": 88.90779483695549,
+      "unit": "mg/dL",
+      "observed_date": "2019-01-30",
+      "category": "laboratory"
+    },
+    {
+      "loinc_code": "4544-3",
+      "display": "Hematocrit [Volume Fraction] of Blood by Automated count",
+      "short_name": "Hematocrit",
+      "value": 40.20038804838692,
+      "unit": "%",
+      "observed_date": "2018-01-15",
+      "category": "laboratory"
+    },
+    {
+      "loinc_code": "4548-4",
+      "display": "Hemoglobin A1c/Hemoglobin.total in Blood",
+      "short_name": "HbA1c",
+      "value": 5.4512677772078,
+      "unit": "%",
+      "observed_date": "2019-01-21",
+      "category": "laboratory"
+    },
+    {
+      "loinc_code": "718-7",
+      "display": "Hemoglobin [Mass/volume] in Blood",
+      "short_name": "Hemoglobin",
+      "value": 14.582920997973215,
+      "unit": "g/dL",
+      "observed_date": "2018-01-15",
+      "category": "laboratory"
+    },
+    {
+      "loinc_code": "2085-9",
+      "display": "High Density Lipoprotein Cholesterol",
+      "short_name": "HDL",
+      "value": 79.58897834038316,
+      "unit": "mg/dL",
+      "observed_date": "2019-01-30",
+      "category": "laboratory"
+    },
+    {
+      "loinc_code": "6690-2",
+      "display": "Leukocytes [#/volume] in Blood by Automated count",
+      "short_name": "WBC",
+      "value": 9.00500129397634,
+      "unit": "10*3/uL",
+      "observed_date": "2018-01-15",
+      "category": "laboratory"
+    },
+    {
+      "loinc_code": "18262-6",
+      "display": "Low Density Lipoprotein Cholesterol",
+      "short_name": "LDL",
+      "value": 86.92683085678233,
+      "unit": "mg/dL",
+      "observed_date": "2019-01-30",
+      "category": "laboratory"
+    },
+    {
+      "loinc_code": "785-6",
+      "display": "MCH [Entitic mass] by Automated count",
+      "short_name": "MCH",
+      "value": 30.81638259086371,
+      "unit": "pg",
+      "observed_date": "2018-01-15",
+      "category": "laboratory"
+    },
+    {
+      "loinc_code": "786-4",
+      "display": "MCHC [Mass/volume] by Automated count",
+      "short_name": "MCHC",
+      "value": 35.81968906832889,
+      "unit": "g/dL",
+      "observed_date": "2018-01-15",
+      "category": "laboratory"
+    },
+    {
+      "loinc_code": "787-2",
+      "display": "MCV [Entitic volume] by Automated count",
+      "short_name": "MCV",
+      "value": 89.0706798139554,
+      "unit": "fL",
+      "observed_date": "2018-01-15",
+      "category": "laboratory"
+    },
+    {
+      "loinc_code": "14959-1",
+      "display": "Microalbumin Creatinine Ratio",
+      "short_name": "Microalbumin/Creatinine",
+      "value": 12.52747219298327,
+      "unit": "mg/g",
+      "observed_date": "2019-01-21",
+      "category": "laboratory"
+    },
+    {
+      "loinc_code": "32207-3",
+      "display": "Platelet distribution width [Entitic volume] in Blood by Automated count",
+      "short_name": "Platelet distribution width [Entitic volume] in Blood by Automated count",
+      "value": 459.65657408422584,
+      "unit": "fL",
+      "observed_date": "2018-01-15",
+      "category": "laboratory"
+    },
+    {
+      "loinc_code": "32623-1",
+      "display": "Platelet mean volume [Entitic volume] in Blood by Automated count",
+      "short_name": "Platelet Mean Volume",
+      "value": 10.335576050756718,
+      "unit": "fL",
+      "observed_date": "2018-01-15",
+      "category": "laboratory"
+    },
+    {
+      "loinc_code": "777-3",
+      "display": "Platelets [#/volume] in Blood by Automated count",
+      "short_name": "Platelets",
+      "value": 237.92943815449257,
+      "unit": "10*3/uL",
+      "observed_date": "2018-01-15",
+      "category": "laboratory"
+    },
+    {
+      "loinc_code": "6298-4",
+      "display": "Potassium",
+      "short_name": "Potassium",
+      "value": 3.9002451931998587,
+      "unit": "mmol/L",
+      "observed_date": "2019-01-30",
+      "category": "laboratory"
+    },
+    {
+      "loinc_code": "2885-2",
+      "display": "Protein [Mass/volume] in Serum or Plasma",
+      "short_name": "Protein [Mass/volume] in Serum or Plasma",
+      "value": 78.36330770377678,
+      "unit": "g/dL",
+      "observed_date": "2019-01-30",
+      "category": "laboratory"
+    },
+    {
+      "loinc_code": "2947-0",
+      "display": "Sodium",
+      "short_name": "Chloride",
+      "value": 143.6272633888033,
+      "unit": "mmol/L",
+      "observed_date": "2019-01-30",
+      "category": "laboratory"
+    },
+    {
+      "loinc_code": "2093-3",
+      "display": "Total Cholesterol",
+      "short_name": "Total Cholesterol",
+      "value": 189.5693089562853,
+      "unit": "mg/dL",
+      "observed_date": "2019-01-30",
+      "category": "laboratory"
+    },
+    {
+      "loinc_code": "2571-8",
+      "display": "Triglycerides",
+      "short_name": "Triglycerides",
+      "value": 153.53731048843875,
+      "unit": "mg/dL",
+      "observed_date": "2019-01-30",
+      "category": "laboratory"
+    },
+    {
+      "loinc_code": "6299-2",
+      "display": "Urea Nitrogen",
+      "short_name": "BUN",
+      "value": 19.35411029436019,
+      "unit": "mg/dL",
+      "observed_date": "2019-01-30",
+      "category": "laboratory"
+    }
+  ],
+  "biometrics": {
+    "last_sync": "2026-02-20T16:10:37.125504",
+    "resting_hr_bpm": 97,
+    "mean_daily_steps": 2337,
+    "step_trend_pct": 5.7,
+    "sleep_hours": 7.0,
+    "sleep_efficiency_pct": 82.9,
+    "wake_events_per_night": 2.1,
+    "hrv_ms": 19
+  },
+  "conditions_summary_clinician": "HTN, Obesity, T2DM, Hypertriglyceridemia, MetS, Anemia, Hyperglycemia, T2DM (pre), CAD, Seizure disorder, Hx seizure, Epilepsy, Chronic sinusitis, AFib, Hyperlipidemia",
+  "conditions_summary_patient": "High Blood Pressure, Obesity, Type 2 Diabetes, High Triglycerides, Metabolic Syndrome, Anemia, High Blood Sugar, Prediabetes, Coronary Artery Disease, Seizure Disorder, Previous Seizure, Epilepsy, Chronic Sinus Problems, Irregular Heartbeat, High Cholesterol",
+  "medications_summary_clinician": "Atenolol 50mg \u00b7 Metformin ER 500mg \u00b7 Clopidogrel 75mg \u00b7 Simvastatin 20mg \u00b7 Amlodipine 5mg \u00b7 Nitroglycerin 0.4mg \u00b7 Carbamazepine[Tegretol] \u00b7 Warfarin 5mg \u00b7 Verapamil 40mg \u00b7 Digoxin 0.125mg \u00b7 Simvistatin 10mg daily",
+  "medications_summary_patient": "11 medications"
+}

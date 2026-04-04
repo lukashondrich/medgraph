@@ -1,0 +1,57 @@
+[
+  {
+    "patient_id": "6e965c83-1c3f-42bb-9604-f809c18bad6b",
+    "name": "Nelia Rolfson",
+    "age": 73,
+    "sex": "F",
+    "headline": "Type 2 Diabetes + Hypertension + CKD — 6 active medications",
+    "condition_tags": ["Type 2 Diabetes", "High Blood Pressure", "Chronic Kidney Disease", "Anemia", "Arthritis", "Chronic Migraine", "Breast Cancer"],
+    "medication_count": 6,
+    "interest_hook": "NSAID + ARB interaction risk; diabetes + kidney disease: medication adjustments needed",
+    "profile_path": "patients/6e965c83-1c3f-42bb-9604-f809c18bad6b.json"
+  },
+  {
+    "patient_id": "89a038bc-c99c-4077-a9b6-b2e5eeeb9d97",
+    "name": "Jeff Heathcote",
+    "age": 66,
+    "sex": "M",
+    "headline": "Coronary Artery Disease + Type 2 Diabetes + Hypertension — 7 active medications",
+    "condition_tags": ["Coronary Artery Disease", "Type 2 Diabetes", "High Blood Pressure", "Anemia", "Arthritis"],
+    "medication_count": 7,
+    "interest_hook": "NSAID + ARB interaction risk; antiplatelet + statin CYP interaction; polypharmacy (7 medications)",
+    "profile_path": "patients/89a038bc-c99c-4077-a9b6-b2e5eeeb9d97.json"
+  },
+  {
+    "patient_id": "0b60a0e5-b33e-49c0-a44f-e824699659eb",
+    "name": "Sanda Wolff",
+    "age": 68,
+    "sex": "F",
+    "headline": "COPD + Type 2 Diabetes + Hypertension + CKD — 5 active medications",
+    "condition_tags": ["Chronic Lung Disease", "Type 2 Diabetes", "High Blood Pressure", "Chronic Kidney Disease", "Obesity"],
+    "medication_count": 5,
+    "interest_hook": "NSAID + diuretic risk; respiratory-metabolic comorbidity; medication adjustments for CKD",
+    "profile_path": "patients/0b60a0e5-b33e-49c0-a44f-e824699659eb.json"
+  },
+  {
+    "patient_id": "4241bbb0-f09f-415c-a5a9-e094eb224a21",
+    "name": "Derek Brakus",
+    "age": 74,
+    "sex": "M",
+    "headline": "Heart Failure + Type 2 Diabetes + Obesity — 5 active medications",
+    "condition_tags": ["Heart Failure", "Type 2 Diabetes", "Obesity", "Anemia", "Arthritis"],
+    "medication_count": 5,
+    "interest_hook": "NSAID + diuretic risk; heart failure + diuretic therapy; beta-blocker management",
+    "profile_path": "patients/4241bbb0-f09f-415c-a5a9-e094eb224a21.json"
+  },
+  {
+    "patient_id": "9d464bd6-c7fa-49de-998f-44dad6b4f703",
+    "name": "David Guillen",
+    "age": 85,
+    "sex": "M",
+    "headline": "AFib + CAD + Epilepsy + Type 2 Diabetes — 11 active medications",
+    "condition_tags": ["Irregular Heartbeat", "Coronary Artery Disease", "Epilepsy", "Type 2 Diabetes", "High Blood Pressure", "Seizure Disorder"],
+    "medication_count": 11,
+    "interest_hook": "Warfarin + Clopidogrel bleeding risk; Verapamil + Digoxin synergy; polypharmacy (11 medications)",
+    "profile_path": "patients/9d464bd6-c7fa-49de-998f-44dad6b4f703.json"
+  }
+]

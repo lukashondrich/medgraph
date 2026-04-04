@@ -1,0 +1,594 @@
+{
+  "id": "6e965c83-1c3f-42bb-9604-f809c18bad6b",
+  "name": "Nelia669 Rolfson709",
+  "age": 73,
+  "sex": "F",
+  "birth_date": "1952-09-12",
+  "conditions": [
+    {
+      "snomed_code": "47693006",
+      "snomed_display": "Rupture of appendix",
+      "icd10_code": "K35.20",
+      "abbreviation": "Ruptured appendix",
+      "patient_friendly_name": "Ruptured Appendix",
+      "clinical_status": "active",
+      "onset_date": "1973-09-09",
+      "category": null
+    },
+    {
+      "snomed_code": "74400008",
+      "snomed_display": "Appendicitis",
+      "icd10_code": "K37",
+      "abbreviation": "Appendicitis",
+      "patient_friendly_name": "Appendicitis",
+      "clinical_status": "active",
+      "onset_date": "1973-09-09",
+      "category": null
+    },
+    {
+      "snomed_code": "428251008",
+      "snomed_display": "History of appendectomy",
+      "icd10_code": "Z87.09",
+      "abbreviation": "Hx appendectomy",
+      "patient_friendly_name": "Previous Appendix Surgery",
+      "clinical_status": "active",
+      "onset_date": "1973-09-09",
+      "category": null
+    },
+    {
+      "snomed_code": "44054006",
+      "snomed_display": "Diabetes",
+      "icd10_code": "E11.9",
+      "abbreviation": "T2DM",
+      "patient_friendly_name": "Type 2 Diabetes",
+      "clinical_status": "active",
+      "onset_date": "1980-11-21",
+      "category": null
+    },
+    {
+      "snomed_code": "59621000",
+      "snomed_display": "Hypertension",
+      "icd10_code": "I10",
+      "abbreviation": "HTN",
+      "patient_friendly_name": "High Blood Pressure",
+      "clinical_status": "active",
+      "onset_date": "1980-11-21",
+      "category": null
+    },
+    {
+      "snomed_code": "19169002",
+      "snomed_display": "Miscarriage in first trimester",
+      "icd10_code": "O03.9",
+      "abbreviation": "Miscarriage (Hx)",
+      "patient_friendly_name": "Previous Miscarriage",
+      "clinical_status": "active",
+      "onset_date": "1983-09-09",
+      "category": null
+    },
+    {
+      "snomed_code": "302870006",
+      "snomed_display": "Hypertriglyceridemia (disorder)",
+      "icd10_code": "E78.1",
+      "abbreviation": "Hypertriglyceridemia",
+      "patient_friendly_name": "High Triglycerides",
+      "clinical_status": "active",
+      "onset_date": "1983-11-25",
+      "category": null
+    },
+    {
+      "snomed_code": "237602007",
+      "snomed_display": "Metabolic syndrome X (disorder)",
+      "icd10_code": "E88.81",
+      "abbreviation": "MetS",
+      "patient_friendly_name": "Metabolic Syndrome",
+      "clinical_status": "active",
+      "onset_date": "1983-11-25",
+      "category": null
+    },
+    {
+      "snomed_code": "271737000",
+      "snomed_display": "Anemia (disorder)",
+      "icd10_code": "D64.9",
+      "abbreviation": "Anemia",
+      "patient_friendly_name": "Anemia",
+      "clinical_status": "active",
+      "onset_date": "1986-11-28",
+      "category": null
+    },
+    {
+      "snomed_code": "422034002",
+      "snomed_display": "Diabetic retinopathy associated with type II diabetes mellitus (disorder)",
+      "icd10_code": "E11.319",
+      "abbreviation": "Diabetic retinopathy",
+      "patient_friendly_name": "Diabetic Eye Disease",
+      "clinical_status": "active",
+      "onset_date": "1996-09-27",
+      "category": null
+    },
+    {
+      "snomed_code": "40055000",
+      "snomed_display": "Chronic sinusitis (disorder)",
+      "icd10_code": "J32.9",
+      "abbreviation": "Chronic sinusitis",
+      "patient_friendly_name": "Chronic Sinus Problems",
+      "clinical_status": "active",
+      "onset_date": "1996-10-12",
+      "category": null
+    },
+    {
+      "snomed_code": "239873007",
+      "snomed_display": "Osteoarthritis of knee",
+      "icd10_code": "M19.90",
+      "abbreviation": "OA",
+      "patient_friendly_name": "Arthritis",
+      "clinical_status": "active",
+      "onset_date": "2000-08-31",
+      "category": null
+    },
+    {
+      "snomed_code": "124171000119105",
+      "snomed_display": "Chronic intractable migraine without aura",
+      "icd10_code": "G43.709",
+      "abbreviation": "Migraine",
+      "patient_friendly_name": "Chronic Migraine",
+      "clinical_status": "active",
+      "onset_date": "2001-02-11",
+      "category": null
+    },
+    {
+      "snomed_code": "80394007",
+      "snomed_display": "Hyperglycemia (disorder)",
+      "icd10_code": "R73.9",
+      "abbreviation": "Hyperglycemia",
+      "patient_friendly_name": "High Blood Sugar",
+      "clinical_status": "active",
+      "onset_date": "2001-07-13",
+      "category": null
+    },
+    {
+      "snomed_code": "15777000",
+      "snomed_display": "Prediabetes",
+      "icd10_code": "R73.03",
+      "abbreviation": "T2DM (pre)",
+      "patient_friendly_name": "Prediabetes",
+      "clinical_status": "active",
+      "onset_date": "2001-07-13",
+      "category": null
+    },
+    {
+      "snomed_code": "1551000119108",
+      "snomed_display": "Nonproliferative diabetic retinopathy due to type 2 diabetes mellitus (disorder)",
+      "icd10_code": "E11.329",
+      "abbreviation": "NPDR (T2DM)",
+      "patient_friendly_name": "Diabetic Eye Disease",
+      "clinical_status": "active",
+      "onset_date": "2009-10-23",
+      "category": null
+    },
+    {
+      "snomed_code": "254837009",
+      "snomed_display": "Malignant neoplasm of breast (disorder)",
+      "icd10_code": "C50.919",
+      "abbreviation": "Breast Ca",
+      "patient_friendly_name": "Breast Cancer",
+      "clinical_status": "active",
+      "onset_date": "2013-08-28",
+      "category": null
+    }
+  ],
+  "medications": [
+    {
+      "rxnorm_code": "106258",
+      "display": "Hydrocortisone 10 MG/ML Topical Cream",
+      "short_name": "Hydrocortisone 10mg",
+      "dosage_text": null,
+      "frequency": "PRN",
+      "status": "active",
+      "start_date": "1978-09-19",
+      "end_date": null,
+      "reason_code": null,
+      "reason_display": null
+    },
+    {
+      "rxnorm_code": "1363309",
+      "display": "Chlorpheniramine Maleate 4 MG Oral Tablet",
+      "short_name": "Chlorpheniramine 4mg",
+      "dosage_text": null,
+      "frequency": "PRN",
+      "status": "active",
+      "start_date": "1978-10-02",
+      "end_date": null,
+      "reason_code": null,
+      "reason_display": null
+    },
+    {
+      "rxnorm_code": "999969",
+      "display": "Amlodipine 5 MG / Hydrochlorothiazide 12.5 MG / Olmesartan medoxomil 20 MG",
+      "short_name": "Amlodipine 5mg",
+      "dosage_text": null,
+      "frequency": null,
+      "status": "active",
+      "start_date": "1981-02-19",
+      "end_date": null,
+      "reason_code": "59621000",
+      "reason_display": "Hypertension"
+    },
+    {
+      "rxnorm_code": "310325",
+      "display": "ferrous sulfate 325 MG Oral Tablet",
+      "short_name": "ferrous sulfate 325mg",
+      "dosage_text": null,
+      "frequency": null,
+      "status": "active",
+      "start_date": "1986-11-28",
+      "end_date": null,
+      "reason_code": null,
+      "reason_display": null
+    },
+    {
+      "rxnorm_code": "849574",
+      "display": "Naproxen sodium 220 MG Oral Tablet",
+      "short_name": "Naproxen 220mg",
+      "dosage_text": null,
+      "frequency": null,
+      "status": "active",
+      "start_date": "2000-08-31",
+      "end_date": null,
+      "reason_code": "239873007",
+      "reason_display": "Osteoarthritis of knee"
+    },
+    {
+      "rxnorm_code": "860975",
+      "display": "24 HR Metformin hydrochloride 500 MG Extended Release Oral Tablet",
+      "short_name": "Metformin ER 500mg",
+      "dosage_text": null,
+      "frequency": null,
+      "status": "active",
+      "start_date": "2000-10-06",
+      "end_date": null,
+      "reason_code": "44054006",
+      "reason_display": "Diabetes"
+    }
+  ],
+  "allergies": [],
+  "recent_labs": [
+    {
+      "loinc_code": "8302-2",
+      "display": "Body Height",
+      "short_name": "Height",
+      "value": 173.68222314133703,
+      "unit": "cm",
+      "observed_date": "2018-12-14",
+      "category": "vital-signs"
+    },
+    {
+      "loinc_code": "39156-5",
+      "display": "Body Mass Index",
+      "short_name": "BMI",
+      "value": 30.08603898786481,
+      "unit": "kg/m2",
+      "observed_date": "2018-12-14",
+      "category": "vital-signs"
+    },
+    {
+      "loinc_code": "29463-7",
+      "display": "Body Weight",
+      "short_name": "Weight",
+      "value": 90.75608494071595,
+      "unit": "kg",
+      "observed_date": "2018-12-14",
+      "category": "vital-signs"
+    },
+    {
+      "loinc_code": "8462-4",
+      "display": "Diastolic Blood Pressure",
+      "short_name": "Diastolic BP",
+      "value": 108.09366452779179,
+      "unit": "mm[Hg]",
+      "observed_date": "2018-12-14",
+      "category": "vital-signs"
+    },
+    {
+      "loinc_code": "8331-1",
+      "display": "Oral temperature",
+      "short_name": "Oral temperature",
+      "value": 37.473839933313094,
+      "unit": "Cel",
+      "observed_date": "2009-10-18",
+      "category": "vital-signs"
+    },
+    {
+      "loinc_code": "72514-3",
+      "display": "Pain severity - 0-10 verbal numeric rating [Score] - Reported",
+      "short_name": "Pain severity - 0-10 verbal numeric rating [Score] - Reported",
+      "value": 0.9862212814013716,
+      "unit": "{score}",
+      "observed_date": "2018-12-14",
+      "category": "vital-signs"
+    },
+    {
+      "loinc_code": "8480-6",
+      "display": "Systolic Blood Pressure",
+      "short_name": "Systolic BP",
+      "value": 175.07289020119626,
+      "unit": "mm[Hg]",
+      "observed_date": "2018-12-14",
+      "category": "vital-signs"
+    },
+    {
+      "loinc_code": "49765-1",
+      "display": "Calcium",
+      "short_name": "Calcium (corrected)",
+      "value": 9.913020746205,
+      "unit": "mg/dL",
+      "observed_date": "2018-12-14",
+      "category": "laboratory"
+    },
+    {
+      "loinc_code": "20565-8",
+      "display": "Carbon Dioxide",
+      "short_name": "Carbon Dioxide",
+      "value": 28.187095920700354,
+      "unit": "mmol/L",
+      "observed_date": "2018-12-14",
+      "category": "laboratory"
+    },
+    {
+      "loinc_code": "2069-3",
+      "display": "Chloride",
+      "short_name": "Chloride",
+      "value": 103.56218947619092,
+      "unit": "mmol/L",
+      "observed_date": "2018-12-14",
+      "category": "laboratory"
+    },
+    {
+      "loinc_code": "38483-4",
+      "display": "Creatinine",
+      "short_name": "Creatinine",
+      "value": 0.7928552420515323,
+      "unit": "mg/dL",
+      "observed_date": "2018-12-14",
+      "category": "laboratory"
+    },
+    {
+      "loinc_code": "38265-5",
+      "display": "DXA [T-score] Bone density",
+      "short_name": "DXA [T-score] Bone density",
+      "value": 0.4703044310730481,
+      "unit": "{T-score}",
+      "observed_date": "2012-06-23",
+      "category": "laboratory"
+    },
+    {
+      "loinc_code": "21000-5",
+      "display": "Erythrocyte distribution width [Entitic volume] by Automated count",
+      "short_name": "Erythrocyte distribution width [Entitic volume] by Automated count",
+      "value": 43.90803980019043,
+      "unit": "fL",
+      "observed_date": "2014-11-21",
+      "category": "laboratory"
+    },
+    {
+      "loinc_code": "789-8",
+      "display": "Erythrocytes [#/volume] in Blood by Automated count",
+      "short_name": "RBC",
+      "value": 4.980802835863345,
+      "unit": "10*6/uL",
+      "observed_date": "2014-11-21",
+      "category": "laboratory"
+    },
+    {
+      "loinc_code": "33914-3",
+      "display": "Estimated Glomerular Filtration Rate",
+      "short_name": "eGFR",
+      "value": 143.64915176638084,
+      "unit": "mL/min/{1.73_m2}",
+      "observed_date": "2018-12-14",
+      "category": "laboratory"
+    },
+    {
+      "loinc_code": "2339-0",
+      "display": "Glucose",
+      "short_name": "Glucose",
+      "value": 79.73815258450394,
+      "unit": "mg/dL",
+      "observed_date": "2018-12-14",
+      "category": "laboratory"
+    },
+    {
+      "loinc_code": "4544-3",
+      "display": "Hematocrit [Volume Fraction] of Blood by Automated count",
+      "short_name": "Hematocrit",
+      "value": 41.525295522677155,
+      "unit": "%",
+      "observed_date": "2014-11-21",
+      "category": "laboratory"
+    },
+    {
+      "loinc_code": "4548-4",
+      "display": "Hemoglobin A1c/Hemoglobin.total in Blood",
+      "short_name": "HbA1c",
+      "value": 6.021509746966203,
+      "unit": "%",
+      "observed_date": "2018-12-14",
+      "category": "laboratory"
+    },
+    {
+      "loinc_code": "718-7",
+      "display": "Hemoglobin [Mass/volume] in Blood",
+      "short_name": "Hemoglobin",
+      "value": 13.161336243789055,
+      "unit": "g/dL",
+      "observed_date": "2014-11-21",
+      "category": "laboratory"
+    },
+    {
+      "loinc_code": "2085-9",
+      "display": "High Density Lipoprotein Cholesterol",
+      "short_name": "HDL",
+      "value": 72.32292398577293,
+      "unit": "mg/dL",
+      "observed_date": "2018-12-14",
+      "category": "laboratory"
+    },
+    {
+      "loinc_code": "6690-2",
+      "display": "Leukocytes [#/volume] in Blood by Automated count",
+      "short_name": "WBC",
+      "value": 7.981530245762316,
+      "unit": "10*3/uL",
+      "observed_date": "2014-11-21",
+      "category": "laboratory"
+    },
+    {
+      "loinc_code": "18262-6",
+      "display": "Low Density Lipoprotein Cholesterol",
+      "short_name": "LDL",
+      "value": 90.64103640166444,
+      "unit": "mg/dL",
+      "observed_date": "2018-12-14",
+      "category": "laboratory"
+    },
+    {
+      "loinc_code": "85344-0",
+      "display": "Lymph nodes with micrometastases [#] in Cancer specimen by Light microscopy",
+      "short_name": "Lymph nodes with micrometastases [#] in Cancer specimen by Light microscopy",
+      "value": 1.1163651399066452,
+      "unit": "#",
+      "observed_date": "2013-08-28",
+      "category": "laboratory"
+    },
+    {
+      "loinc_code": "785-6",
+      "display": "MCH [Entitic mass] by Automated count",
+      "short_name": "MCH",
+      "value": 29.880262984538216,
+      "unit": "pg",
+      "observed_date": "2014-11-21",
+      "category": "laboratory"
+    },
+    {
+      "loinc_code": "786-4",
+      "display": "MCHC [Mass/volume] by Automated count",
+      "short_name": "MCHC",
+      "value": 34.73263706641486,
+      "unit": "g/dL",
+      "observed_date": "2014-11-21",
+      "category": "laboratory"
+    },
+    {
+      "loinc_code": "787-2",
+      "display": "MCV [Entitic volume] by Automated count",
+      "short_name": "MCV",
+      "value": 84.70441781965066,
+      "unit": "fL",
+      "observed_date": "2014-11-21",
+      "category": "laboratory"
+    },
+    {
+      "loinc_code": "14959-1",
+      "display": "Microalbumin Creatinine Ratio",
+      "short_name": "Microalbumin/Creatinine",
+      "value": 6.584372430103205,
+      "unit": "mg/g",
+      "observed_date": "2018-12-14",
+      "category": "laboratory"
+    },
+    {
+      "loinc_code": "32207-3",
+      "display": "Platelet distribution width [Entitic volume] in Blood by Automated count",
+      "short_name": "Platelet distribution width [Entitic volume] in Blood by Automated count",
+      "value": 286.88183739753543,
+      "unit": "fL",
+      "observed_date": "2014-11-21",
+      "category": "laboratory"
+    },
+    {
+      "loinc_code": "32623-1",
+      "display": "Platelet mean volume [Entitic volume] in Blood by Automated count",
+      "short_name": "Platelet Mean Volume",
+      "value": 11.792309692718216,
+      "unit": "fL",
+      "observed_date": "2014-11-21",
+      "category": "laboratory"
+    },
+    {
+      "loinc_code": "777-3",
+      "display": "Platelets [#/volume] in Blood by Automated count",
+      "short_name": "Platelets",
+      "value": 385.62908907987367,
+      "unit": "10*3/uL",
+      "observed_date": "2014-11-21",
+      "category": "laboratory"
+    },
+    {
+      "loinc_code": "6298-4",
+      "display": "Potassium",
+      "short_name": "Potassium",
+      "value": 4.773111070563957,
+      "unit": "mmol/L",
+      "observed_date": "2018-12-14",
+      "category": "laboratory"
+    },
+    {
+      "loinc_code": "33728-7",
+      "display": "Size.maximum dimension in Tumor",
+      "short_name": "Size.maximum dimension in Tumor",
+      "value": 5.643902334653719,
+      "unit": "cm",
+      "observed_date": "2013-08-28",
+      "category": "laboratory"
+    },
+    {
+      "loinc_code": "2947-0",
+      "display": "Sodium",
+      "short_name": "Chloride",
+      "value": 139.09708588303874,
+      "unit": "mmol/L",
+      "observed_date": "2018-12-14",
+      "category": "laboratory"
+    },
+    {
+      "loinc_code": "2093-3",
+      "display": "Total Cholesterol",
+      "short_name": "Total Cholesterol",
+      "value": 185.57766295541234,
+      "unit": "mg/dL",
+      "observed_date": "2018-12-14",
+      "category": "laboratory"
+    },
+    {
+      "loinc_code": "2571-8",
+      "display": "Triglycerides",
+      "short_name": "Triglycerides",
+      "value": 113.06851283987484,
+      "unit": "mg/dL",
+      "observed_date": "2018-12-14",
+      "category": "laboratory"
+    },
+    {
+      "loinc_code": "6299-2",
+      "display": "Urea Nitrogen",
+      "short_name": "BUN",
+      "value": 10.974749754654992,
+      "unit": "mg/dL",
+      "observed_date": "2018-12-14",
+      "category": "laboratory"
+    }
+  ],
+  "biometrics": {
+    "last_sync": "2026-02-20T15:11:37.120833",
+    "resting_hr_bpm": 91,
+    "mean_daily_steps": 3336,
+    "step_trend_pct": -17.6,
+    "sleep_hours": 6.5,
+    "sleep_efficiency_pct": 81.6,
+    "wake_events_per_night": 3.0,
+    "hrv_ms": 29
+  },
+  "conditions_summary_clinician": "Ruptured appendix, Appendicitis, Hx appendectomy, T2DM, HTN, Miscarriage (Hx), Hypertriglyceridemia, MetS, Anemia, Diabetic retinopathy, Chronic sinusitis, OA, Migraine, Hyperglycemia, T2DM (pre), NPDR (T2DM), Breast Ca",
+  "conditions_summary_patient": "Ruptured Appendix, Appendicitis, Previous Appendix Surgery, Type 2 Diabetes, High Blood Pressure, Previous Miscarriage, High Triglycerides, Metabolic Syndrome, Anemia, Diabetic Eye Disease, Chronic Sinus Problems, Arthritis, Chronic Migraine, High Blood Sugar, Prediabetes, Diabetic Eye Disease, Breast Cancer",
+  "medications_summary_clinician": "Hydrocortisone 10mg PRN \u00b7 Chlorpheniramine 4mg PRN \u00b7 Amlodipine 5mg \u00b7 ferrous sulfate 325mg \u00b7 Naproxen 220mg \u00b7 Metformin ER 500mg",
+  "medications_summary_patient": "6 medications"
+}
