@@ -21,6 +21,8 @@ class SynthesizerAgent(HealthcareAgent):
         citations = state.get("citations") or []
         drug_interactions = state.get("drug_interactions") or []
 
+        language = state.get("language", "en")
+
         # Build a dynamic system prompt that includes the specialist outputs.
         dynamic_prompt = build_prompt(
             specialist_outputs,
@@ -28,6 +30,7 @@ class SynthesizerAgent(HealthcareAgent):
             evidence_context=evidence_context or None,
             citations=citations or None,
             drug_interactions=drug_interactions or None,
+            language=language,
         )
 
         messages = self._build_messages(state, system_prompt_override=dynamic_prompt)

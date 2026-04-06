@@ -157,6 +157,7 @@ async def chat(request: ChatRequest):
         "drug_interactions": [],
         "citations": [],
         "router_model_source": "",
+        "language": request.language or "en",
     }
 
     async def event_generator():

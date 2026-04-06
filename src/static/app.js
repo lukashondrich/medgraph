@@ -35,6 +35,8 @@
   var srAnnouncements = document.getElementById("srAnnouncements");
   var modelIndicator = document.getElementById("modelIndicator");
   var modelIndicatorLabel = document.getElementById("modelIndicatorLabel");
+  var patientInfoBtn = document.getElementById("patientInfoBtn");
+  var patientInfoTooltip = document.getElementById("patientInfoTooltip");
 
   // --- Init ---
   initTheme();
@@ -50,6 +52,12 @@
   themeToggle.addEventListener("click", toggleTheme);
   contrastToggle.addEventListener("click", toggleContrast);
   micBtn.addEventListener("click", toggleMic);
+  patientInfoBtn.addEventListener("click", togglePatientInfo);
+  document.addEventListener("click", function (e) {
+    if (!patientInfoBtn.contains(e.target) && !patientInfoTooltip.contains(e.target)) {
+      patientInfoTooltip.classList.remove("visible");
+    }
+  });
 
   loadPatientGallery();
 
@@ -129,6 +137,14 @@
         ? t("lightMode")
         : t("darkMode")
     );
+  }
+
+  // ============================================================
+  // Patient info tooltip
+  // ============================================================
+
+  function togglePatientInfo() {
+    patientInfoTooltip.classList.toggle("visible");
   }
 
   // ============================================================

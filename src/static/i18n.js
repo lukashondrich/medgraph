@@ -53,6 +53,8 @@ var MedGraphI18n = (function () {
       modelLocal: "Local",
       modelCloud: "Cloud",
       modelChecking: "Checking...",
+      patientInfoLabel: "About patient data",
+      patientInfoText: "Synthetic patients generated with Synthea (FHIR R4). No real patient data is used.",
     },
     de: {
       pageTitle: "medgraph \u2014 Patientenbezogener Gesundheitsnavigator",
@@ -104,6 +106,8 @@ var MedGraphI18n = (function () {
       modelLocal: "Lokal",
       modelCloud: "Cloud",
       modelChecking: "Pr\u00FCfe...",
+      patientInfoLabel: "\u00DCber Patientendaten",
+      patientInfoText: "Synthetische Patienten, generiert mit Synthea (FHIR R4). Es werden keine echten Patientendaten verwendet.",
     },
   };
 

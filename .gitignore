@@ -1,5 +1,6 @@
 # Secrets
 .env
+scripts/start_ollama_server.sh
 
 # Python
 __pycache__/

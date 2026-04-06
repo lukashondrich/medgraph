@@ -106,6 +106,7 @@ def build_prompt(
     evidence_context: dict[str, str] | None = None,
     citations: list[dict] | None = None,
     drug_interactions: list[dict] | None = None,
+    language: str = "en",
 ) -> str:
     """Build the full synthesizer prompt with specialist outputs injected.
 
@@ -174,6 +175,16 @@ def build_prompt(
             "seek immediate professional medical attention. Do not bury this information."
         )
 
+    language_block = ""
+    if language and language != "en":
+        language_names = {"de": "German"}
+        lang_name = language_names.get(language, language)
+        language_block = (
+            f"\n\n## Response Language\n\n"
+            f"You MUST write your entire response in {lang_name}. "
+            f"All text, including safety disclaimers and recommendations, must be in {lang_name}."
+        )
+
     return (
         SYSTEM_PROMPT
         + "\n\n## Specialist outputs to synthesize\n\n"
@@ -182,4 +193,5 @@ def build_prompt(
         + citations_block
         + interactions_block
         + safety_notice
+        + language_block
     )
