@@ -1,0 +1,72 @@
+# Example llama-swap config for the MedGraph local-inference demo.
+#
+# This file is intentionally checked in as documentation. Set the model paths
+# in your shell before running llama-swap:
+#
+#   # Qwen3 8B (router) — pure dense transformer, ~5 GB
+#   export MEDGRAPH_ROUTER_GGUF="$HOME/.cache/huggingface/hub/models--unsloth--Qwen3-8B-GGUF/snapshots/a6adef130ffb23ddaf1a62fec9dced968c9bc482/Qwen3-8B-Q4_K_M.gguf"
+#   # Qwen3.6 27B (specialist) — dense 27B, ~17 GB
+#   export MEDGRAPH_SPECIALIST_GGUF="$HOME/.cache/huggingface/hub/models--unsloth--Qwen3.6-27B-GGUF/snapshots/82d411acf4a06cfb8d9b073a5211bf410bfc29bf/Qwen3.6-27B-Q4_K_M.gguf"
+#
+#   brew install llama.cpp
+#   brew tap mostlygeek/llama-swap
+#   brew install llama-swap
+#   llama-swap -config configs/llama-swap.yaml -listen :8080
+#
+# To download GGUFs via llama-server (auto-caches in ~/.cache/huggingface):
+#   llama-server -hf unsloth/Qwen3-8B-GGUF:Q4_K_M --port 8081  # then Ctrl-C
+#   llama-server -hf unsloth/Qwen3.6-27B-GGUF:Q4_K_M --port 8082  # then Ctrl-C
+#
+# App env vars for this topology:
+#   LOCAL_LLM_API_BASE=http://localhost:8080/v1
+#   LOCAL_ROUTER_MODEL=openai/router
+#   LOCAL_SPECIALIST_MODEL=openai/specialist
+#
+# Memory budget (64 GB MacBook):
+#   Router:     ~6 GB  (5 GB weights + KV for 1 slot × 2048 ctx)
+#   Specialist: ~22 GB (17 GB weights + KV for 3 slots × 8192 ctx)
+#   Total:      ~28 GB — leaves ~36 GB for OS, Python, Qdrant, MCP
+
+logToStdout: "both"
+globalTTL: 0
+
+models:
+  router:
+    cmd: >
+      llama-server
+      --host 127.0.0.1
+      --port 8081
+      --model ${env.MEDGRAPH_ROUTER_GGUF}
+      --parallel 1
+      --ctx-size 2048
+      --metrics
+    proxy: http://127.0.0.1:8081
+    checkEndpoint: /health
+    ttl: 0
+
+  specialist:
+    cmd: >
+      llama-server
+      --host 127.0.0.1
+      --port 8082
+      --model ${env.MEDGRAPH_SPECIALIST_GGUF}
+      --parallel 3
+      --ctx-size 8192
+      --cache-ram 512
+      --metrics
+    proxy: http://127.0.0.1:8082
+    checkEndpoint: /health
+    ttl: 0
+
+matrix:
+  vars:
+    r: router
+    s: specialist
+  sets:
+    medgraph: "r & s"
+
+hooks:
+  on_startup:
+    preload:
+      - router
+      - specialist

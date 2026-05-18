@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "medgraph.fullname" . }}-openfda-mcp
+  labels:
+    {{- include "medgraph.labels" . | nindent 4 }}
+    app.kubernetes.io/component: openfda-mcp
+spec:
+  replicas: {{ .Values.openfdaMcp.replicas }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: {{ .Release.Name }}
+      app.kubernetes.io/component: openfda-mcp
+  template:
+    metadata:
+      labels:
+        {{- include "medgraph.labels" . | nindent 8 }}
+        app.kubernetes.io/component: openfda-mcp
+    spec:
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: openfda-mcp
+          image: "{{ .Values.openfdaMcp.image.repository }}:{{ .Values.openfdaMcp.image.tag }}"
+          imagePullPolicy: {{ .Values.openfdaMcp.image.pullPolicy }}
+          securityContext:
+            {{- toYaml .Values.containerSecurityContext | nindent 12 }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.openfdaMcp.port }}
+          env:
+            - name: OPENFDA_MCP_PORT
+              value: {{ .Values.openfdaMcp.port | quote }}
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: http
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: http
+          resources:
+            {{- toYaml .Values.openfdaMcp.resources | nindent 12 }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "medgraph.fullname" . }}-openfda-mcp
+  labels:
+    {{- include "medgraph.labels" . | nindent 4 }}
+    app.kubernetes.io/component: openfda-mcp
+spec:
+  type: {{ .Values.service.type }}
+  selector:
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/component: openfda-mcp
+  ports:
+    - name: http
+      port: {{ .Values.openfdaMcp.port }}
+      targetPort: http

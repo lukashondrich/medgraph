@@ -20,6 +20,24 @@ from tests.eval.datasets import EvalSample
 
 logger = logging.getLogger(__name__)
 
+_PRIMARY_AGENTS = {"symptom", "medication", "lifestyle"}
+_AUXILIARY_AGENTS = {"evidence", "drug_check"}
+_ALL_AGENTS = _PRIMARY_AGENTS | _AUXILIARY_AGENTS
+
+
+def _routes_match(expected: set[str], predicted: set[str]) -> bool:
+    """Return whether predicted routes satisfy the expected eval label.
+
+    Routing labels predate the evidence and drug-check agents. The current
+    router can add those auxiliary agents without changing the user-facing
+    answer path. Score that as correct when all expected primary routes are
+    present and no unexpected primary route was introduced.
+    """
+    if predicted == expected:
+        return True
+    unexpected_primary = predicted - expected - _AUXILIARY_AGENTS
+    return expected.issubset(predicted) and not unexpected_primary
+
 
 # ---------------------------------------------------------------------------
 # Router protocol -- what we need from the router agent
@@ -170,7 +188,7 @@ class RoutingEvaluator:
             raise ValueError("No samples with expected_routes provided.")
 
         # Collect predictions
-        all_agents = {"symptom", "medication", "lifestyle"}
+        all_agents = _ALL_AGENTS
         correct = 0
         misrouted: List[MisroutedSample] = []
         # Per-agent TP/FP/FN for F1
@@ -194,8 +212,8 @@ class RoutingEvaluator:
             predicted_set = set(predicted)
             expected_set = set(sample.expected_routes)  # type: ignore[arg-type]
 
-            # Exact match accuracy
-            if predicted_set == expected_set:
+            # Auxiliary-aware accuracy.
+            if _routes_match(expected_set, predicted_set):
                 correct += 1
             else:
                 misrouted.append(

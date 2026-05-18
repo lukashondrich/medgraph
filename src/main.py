@@ -111,7 +111,7 @@ async def main() -> None:
 
         # Build initial state for this turn
         initial_state = {
-            "messages": messages + [{"role": "user", "content": user_input}],
+            "messages": messages,
             "user_input": user_input,
             "route": [],
             "route_reasoning": "",

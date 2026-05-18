@@ -1,0 +1,14 @@
+FROM python:3.11-slim
+
+WORKDIR /app
+
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY src ./src
+
+ENV OPENFDA_MCP_PORT=8001
+
+EXPOSE 8001
+
+CMD ["sh", "-c", "python -m src.mcp_servers.openfda_server --host 0.0.0.0 --port ${OPENFDA_MCP_PORT}"]

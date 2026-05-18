@@ -1,0 +1,83 @@
+{{- if .Values.vllm.enabled }}
+{{- range $name, $instance := .Values.vllm.instances }}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "medgraph.fullname" $ }}-vllm-{{ $name }}
+  labels:
+    {{- include "medgraph.labels" $ | nindent 4 }}
+    app.kubernetes.io/component: vllm-{{ $name }}
+spec:
+  replicas: {{ $instance.replicas }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: {{ $.Release.Name }}
+      app.kubernetes.io/component: vllm-{{ $name }}
+  template:
+    metadata:
+      labels:
+        {{- include "medgraph.labels" $ | nindent 8 }}
+        app.kubernetes.io/component: vllm-{{ $name }}
+    spec:
+      securityContext:
+        {{- toYaml $.Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: vllm
+          image: "{{ $.Values.vllm.image.repository }}:{{ $.Values.vllm.image.tag }}"
+          imagePullPolicy: {{ $.Values.vllm.image.pullPolicy }}
+          securityContext:
+            {{- toYaml $.Values.containerSecurityContext | nindent 12 }}
+          ports:
+            - name: http
+              containerPort: 8000
+          env:
+            - name: HF_HOME
+              value: /tmp/huggingface
+            - name: TRANSFORMERS_CACHE
+              value: /tmp/huggingface
+          args:
+            - --host
+            - "0.0.0.0"
+            - --port
+            - "8000"
+            - --model
+            - {{ $instance.model | quote }}
+            - --served-model-name
+            - {{ $instance.servedModelName | quote }}
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: http
+            initialDelaySeconds: 30
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: http
+            initialDelaySeconds: 60
+            periodSeconds: 20
+          resources:
+            requests:
+              nvidia.com/gpu: {{ $instance.gpu }}
+            limits:
+              nvidia.com/gpu: {{ $instance.gpu }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "medgraph.fullname" $ }}-vllm-{{ $name }}
+  labels:
+    {{- include "medgraph.labels" $ | nindent 4 }}
+    app.kubernetes.io/component: vllm-{{ $name }}
+spec:
+  type: {{ $.Values.service.type }}
+  selector:
+    app.kubernetes.io/instance: {{ $.Release.Name }}
+    app.kubernetes.io/component: vllm-{{ $name }}
+  ports:
+    - name: http
+      port: 8000
+      targetPort: http
+{{- end }}
+{{- end }}

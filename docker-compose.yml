@@ -1,0 +1,59 @@
+name: medgraph
+
+services:
+  orchestrator:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: medgraph-orchestrator:local
+    environment:
+      PORT: ${PORT:-8000}
+      GEMINI_API_KEY: ${GEMINI_API_KEY:-}
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      MEDGRAPH_MODEL: ${MEDGRAPH_MODEL:-}
+      MEDGRAPH_FALLBACK_MODEL: ${MEDGRAPH_FALLBACK_MODEL:-}
+      USE_MCP: ${USE_MCP:-true}
+      OPENFDA_MCP_URL: ${OPENFDA_MCP_URL:-http://openfda-mcp:8001/mcp/}
+
+      # For Docker Desktop, point at the MacBook host auth proxy / llama-swap.
+      # For Linux/GPU deployments, override this with the vLLM or llama-server URL.
+      LOCAL_LLM_API_BASE: ${LOCAL_LLM_API_BASE:-http://host.docker.internal:11435/v1}
+      LOCAL_ROUTER_API_BASE: ${LOCAL_ROUTER_API_BASE:-}
+      LOCAL_SPECIALIST_API_BASE: ${LOCAL_SPECIALIST_API_BASE:-}
+      LOCAL_LLM_API_KEY: ${LOCAL_LLM_API_KEY:-}
+      LOCAL_ROUTER_MODEL: ${LOCAL_ROUTER_MODEL:-openai/router}
+      LOCAL_SPECIALIST_MODEL: ${LOCAL_SPECIALIST_MODEL:-openai/specialist}
+
+      # Qdrant remains embedded from src/knowledge_pipeline/qdrant_store.
+      # Future external Qdrant work should introduce QDRANT_URL + data restore.
+    ports:
+      - "${PORT:-8000}:${PORT:-8000}"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    depends_on:
+      openfda-mcp:
+        condition: service_healthy
+
+  openfda-mcp:
+    build:
+      context: .
+      dockerfile: Dockerfile.mcp
+    image: medgraph-openfda-mcp:local
+    environment:
+      # Internal container port is fixed; override the host port in ports below.
+      OPENFDA_MCP_PORT: 8001
+      OPENFDA_API_KEY: ${OPENFDA_API_KEY:-}
+    ports:
+      - "${OPENFDA_MCP_PORT:-8001}:8001"
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "python",
+          "-c",
+          "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8001/health', timeout=2).read()",
+        ]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+      start_period: 10s

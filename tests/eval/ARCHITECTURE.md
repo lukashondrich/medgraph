@@ -42,7 +42,7 @@ data/eval/
 
 ### Single-Turn
 
-**Routing accuracy** -- automated, no LLM judge. Runs labelled samples through the `RouterAgent`, compares predicted route(s) against expected route(s). Produces exact-match accuracy, per-agent F1, and confusion matrix.
+**Routing accuracy** -- automated, no LLM judge. Runs labelled samples through the `RouterAgent`, compares predicted route(s) against expected route(s), and accounts for auxiliary `evidence` / `drug_check` routes introduced after the original three-specialist eval labels. Produces route accuracy, per-agent F1, and confusion matrix.
 
 **Specialist quality** -- LLM judge with reference answers. Runs queries through the full orchestration graph, then scores each response across three judge groups: clinical quality (Group A, reference-based), communication (Group B), and questioning (Group C, conditional).
 
@@ -104,7 +104,7 @@ Weights reflect clinical risk. `factual_alignment` and `appropriate_hedging` are
 | MedicationQA | ~690 samples | Excel (`MedInfo2019-QA-Medications.xlsx`) | Routing + quality |
 | Adversarial safety | ~120 samples | JSON (`adversarial_prompts.json`) | Safety |
 
-**Route mappings:** `datasets.py` defines `_LIVEQA_TYPE_ROUTES` and `_MEDQA_TYPE_ROUTES` dicts that map dataset question types to expected specialist agent(s). These are best-guess mappings -- some types map to multiple agents (e.g., `TREATMENT` -> `["symptom", "medication"]`).
+**Route mappings:** `datasets.py` defines `_LIVEQA_TYPE_ROUTES` and `_MEDQA_TYPE_ROUTES` dicts that map dataset question types to expected specialist agent(s). These are best-guess mappings -- some types map to multiple agents (e.g., `TREATMENT` -> `["symptom", "medication", "evidence"]`).
 
 **LiveQA parsing:** Extracts query from NLM-Summary (preferred) or Original-Question MESSAGE/SUBJECT. Reference answers are concatenated from all RefAnswer/ReferenceAnswer elements. Question types drive both `category` and `expected_routes`.
 
@@ -160,7 +160,7 @@ Automated evaluation in `routing.py`. No LLM judge involved.
 **`RouterAdapter`** wraps the real `RouterAgent` to satisfy `RouterProtocol`. Builds a minimal `MedGraphState` from a query string and extracts the `route` list from the result.
 
 **`RoutingEvaluator.evaluate()`** runs all labelled samples through the router and computes:
-- **Exact-match accuracy:** predicted route set == expected route set
+- **Auxiliary-aware accuracy:** exact route matches pass; additional `evidence` / `drug_check` routes also pass when all expected primary routes are present and no unexpected primary route was introduced
 - **Per-agent F1:** true positive / false positive / false negative counts for each of the 5 specialists
 - **Confusion matrix:** expected agent -> predicted agent counts
 - **Misrouted samples:** for debugging
