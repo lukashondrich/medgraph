@@ -45,7 +45,7 @@ message and decide which specialist agent(s) should handle it.
 | medication   | Medication information, side effects, interactions, dosage    |
 | lifestyle    | Wellness, diet, exercise, sleep, stress management, daily health habits |
 | evidence     | Clinical guideline retrieval — select when the query needs evidence-based recommendations |
-| drug_check   | Drug interaction screening — select when the patient is on multiple medications and asks about a new drug or interaction risk |
+| drug_check   | Drug interaction screening — select only when the patient is taking multiple drugs, asks whether drugs can be combined, or asks about interaction/contraindication risk |
 
 ## Instructions
 
@@ -57,8 +57,12 @@ message and decide which specialist agent(s) should handle it.
 select NO specialists (empty list).
 6. When a patient profile is loaded, prefer selecting evidence and/or drug_check \
 alongside the primary specialist(s) for richer, personalized responses.
-7. Provide a short reasoning string explaining your selection.
-8. Provide a confidence score between 0.0 and 1.0.
+7. Do NOT select drug_check for a single-drug factual question such as \
+ingredients, appearance, manufacturer, dose, storage, brand names, or whether \
+a product contains an excipient. Route those to medication, optionally with \
+evidence if source-backed facts are useful.
+8. Provide a short reasoning string explaining your selection.
+9. Provide a confidence score between 0.0 and 1.0.
 
 ## Output format
 

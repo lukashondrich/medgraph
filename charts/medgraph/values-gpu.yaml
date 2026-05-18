@@ -1,0 +1,20 @@
+vllm:
+  enabled: true
+  instances:
+    router:
+      model: Qwen/Qwen3-8B
+      servedModelName: router
+      replicas: 1
+      gpu: 1
+    specialist:
+      model: Qwen/Qwen3.6-27B
+      servedModelName: specialist
+      replicas: 1
+      gpu: 1
+
+orchestrator:
+  env:
+    LOCAL_LLM_API_BASE: "http://medgraph-vllm-router:8000/v1"
+    LOCAL_SPECIALIST_API_BASE: "http://medgraph-vllm-specialist:8000/v1"
+    LOCAL_ROUTER_MODEL: "openai/router"
+    LOCAL_SPECIALIST_MODEL: "openai/specialist"

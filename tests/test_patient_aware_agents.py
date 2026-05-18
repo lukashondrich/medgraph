@@ -214,3 +214,40 @@ class TestDrugCheckAgent:
         agent = DrugCheckAgent()
         result = await agent(patient_state)
         assert result["safety_escalation"] is False
+
+    @pytest.mark.asyncio
+    async def test_uses_direct_screening_by_default(self, patient_state, monkeypatch):
+        from src.agents.drug_check import DrugCheckAgent
+
+        monkeypatch.delenv("USE_MCP", raising=False)
+        with patch(
+            "src.agents.drug_check.screen_patient_medications_via_mcp",
+            new_callable=AsyncMock,
+        ) as mock_mcp:
+            agent = DrugCheckAgent()
+            result = await agent(patient_state)
+
+        self.mock_screen.assert_called_once()
+        mock_mcp.assert_not_called()
+        assert "drug_check" in result["specialist_outputs"]
+
+    @pytest.mark.asyncio
+    async def test_uses_mcp_when_enabled(self, patient_state, monkeypatch):
+        from src.agents.drug_check import DrugCheckAgent
+
+        monkeypatch.setenv("USE_MCP", "true")
+        with patch(
+            "src.agents.drug_check.screen_patient_medications_via_mcp",
+            new_callable=AsyncMock,
+        ) as mock_mcp:
+            mock_mcp.return_value = {
+                "drug_interactions": [],
+                "safety_escalation": False,
+                "summary": "MCP path used.",
+            }
+            agent = DrugCheckAgent()
+            result = await agent(patient_state)
+
+        self.mock_screen.assert_not_called()
+        mock_mcp.assert_awaited_once()
+        assert result["specialist_outputs"]["drug_check"] == "MCP path used."

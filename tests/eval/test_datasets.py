@@ -23,7 +23,7 @@ from tests.eval.datasets import DatasetLoader, EvalSample
 # Helpers
 # ---------------------------------------------------------------------------
 
-VALID_AGENTS = {"symptom", "medication", "lifestyle"}
+VALID_AGENTS = {"symptom", "medication", "lifestyle", "evidence", "drug_check"}
 
 
 def _assert_basic_sample(sample: EvalSample) -> None:

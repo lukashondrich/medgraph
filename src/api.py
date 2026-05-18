@@ -143,7 +143,7 @@ async def chat(request: ChatRequest):
 
     # Build initial state
     initial_state: Dict[str, Any] = {
-        "messages": lang_messages + history + [{"role": "user", "content": message}],
+        "messages": lang_messages + history,
         "user_input": message,
         "route": [],
         "route_reasoning": "",
@@ -293,11 +293,40 @@ async def chat(request: ChatRequest):
 
 @app.get("/api/ollama-status")
 async def ollama_status():
-    """Return Ollama availability for the frontend model indicator."""
+    """Return local inference availability for the frontend model indicator."""
     import os
+    import httpx
+
+    local_base = (
+        os.environ.get("LOCAL_ROUTER_API_BASE")
+        or os.environ.get("LOCAL_LLM_API_BASE", "")
+    ).rstrip("/")
+    local_model = os.environ.get("LOCAL_ROUTER_MODEL") or os.environ.get("LOCAL_SPECIALIST_MODEL")
+    local_enabled = os.environ.get("LOCAL_LLM_ENABLED", "true").lower() in (
+        "true",
+        "1",
+        "yes",
+    )
+    if local_enabled and local_base and local_model:
+        headers = {}
+        local_key = os.environ.get("LOCAL_LLM_API_KEY", "")
+        if local_key:
+            headers["Authorization"] = f"Bearer {local_key}"
+        try:
+            async with httpx.AsyncClient() as client:
+                resp = await client.get(
+                    f"{local_base}/models",
+                    headers=headers,
+                    timeout=2,
+                )
+            if resp.status_code == 200:
+                return {"available": True, "model": local_model, "backend": "local"}
+        except Exception:  # noqa: BLE001
+            pass
+
     available = await ollama_health.check()
     model = os.environ.get("OLLAMA_ROUTER_MODEL") if available else None
-    return {"available": available, "model": model}
+    return {"available": available, "model": model, "backend": "ollama"}
 
 
 # ---------------------------------------------------------------------------

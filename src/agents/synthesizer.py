@@ -12,7 +12,12 @@ class SynthesizerAgent(HealthcareAgent):
     """Reads all specialist outputs and produces the final patient-facing response."""
 
     def __init__(self, model: str | None = None) -> None:
-        super().__init__(name="synthesizer", system_prompt=SYSTEM_PROMPT, model=model)
+        super().__init__(
+            name="synthesizer",
+            system_prompt=SYSTEM_PROMPT,
+            model=model,
+            cloud_only=True,
+        )
 
     async def process(self, state: HealthcareState) -> dict:
         specialist_outputs = state.get("specialist_outputs") or {}

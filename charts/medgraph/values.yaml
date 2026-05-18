@@ -1,0 +1,73 @@
+nameOverride: ""
+fullnameOverride: ""
+
+orchestrator:
+  image:
+    repository: medgraph-orchestrator
+    tag: local
+    pullPolicy: IfNotPresent
+  replicas: 1
+  port: 8000
+  env:
+    MEDGRAPH_MODEL: ""
+    MEDGRAPH_FALLBACK_MODEL: ""
+    LOCAL_LLM_API_BASE: "http://medgraph-vllm-router:8000/v1"
+    LOCAL_ROUTER_MODEL: "openai/router"
+    LOCAL_SPECIALIST_MODEL: "openai/specialist"
+    USE_MCP: "true"
+    OPENFDA_MCP_URL: "http://medgraph-openfda-mcp:8001/mcp/"
+  secretEnv:
+    enabled: false
+    name: medgraph-secrets
+  resources: {}
+
+openfdaMcp:
+  image:
+    repository: medgraph-openfda-mcp
+    tag: local
+    pullPolicy: IfNotPresent
+  replicas: 1
+  port: 8001
+  resources: {}
+
+service:
+  type: ClusterIP
+
+ingress:
+  enabled: false
+  className: ""
+  host: medgraph.local
+  annotations: {}
+
+route:
+  enabled: false
+  host: ""
+
+podSecurityContext:
+  runAsNonRoot: true
+  seccompProfile:
+    type: RuntimeDefault
+
+containerSecurityContext:
+  allowPrivilegeEscalation: false
+  capabilities:
+    drop:
+      - ALL
+
+vllm:
+  enabled: false
+  image:
+    repository: vllm/vllm-openai
+    tag: latest
+    pullPolicy: IfNotPresent
+  instances:
+    router:
+      model: Qwen/Qwen3-8B
+      servedModelName: router
+      replicas: 1
+      gpu: 1
+    specialist:
+      model: Qwen/Qwen3.6-27B
+      servedModelName: specialist
+      replicas: 1
+      gpu: 1

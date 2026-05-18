@@ -1,0 +1,6 @@
+apiVersion: v2
+name: medgraph
+description: MedGraph orchestrator, OpenFDA MCP server, and optional local GPU inference path.
+type: application
+version: 0.1.0
+appVersion: "0.1.0"

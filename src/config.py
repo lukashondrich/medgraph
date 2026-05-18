@@ -58,7 +58,35 @@ def load_config() -> dict:
     if fallback_model:
         os.environ["MEDGRAPH_FALLBACK_MODEL"] = fallback_model
 
-    # Ollama (local model) configuration — router-only
+    # OpenAI-compatible local inference (llama-swap / llama-server / vLLM).
+    # Models should include the LiteLLM provider prefix, e.g. "openai/router".
+    local_llm_api_base = os.getenv("LOCAL_LLM_API_BASE", "")
+    local_router_api_base = os.getenv("LOCAL_ROUTER_API_BASE", "")
+    local_specialist_api_base = os.getenv("LOCAL_SPECIALIST_API_BASE", "")
+    local_llm_api_key = os.getenv("LOCAL_LLM_API_KEY", "")
+    local_llm_enabled = os.getenv("LOCAL_LLM_ENABLED", "true").lower() in (
+        "true",
+        "1",
+        "yes",
+    )
+    local_router_model = os.getenv("LOCAL_ROUTER_MODEL", "")
+    local_specialist_model = os.getenv("LOCAL_SPECIALIST_MODEL", "")
+
+    os.environ["LOCAL_LLM_ENABLED"] = str(local_llm_enabled).lower()
+    if local_llm_api_base:
+        os.environ["LOCAL_LLM_API_BASE"] = local_llm_api_base
+    if local_router_api_base:
+        os.environ["LOCAL_ROUTER_API_BASE"] = local_router_api_base
+    if local_specialist_api_base:
+        os.environ["LOCAL_SPECIALIST_API_BASE"] = local_specialist_api_base
+    if local_llm_api_key:
+        os.environ["LOCAL_LLM_API_KEY"] = local_llm_api_key
+    if local_router_model:
+        os.environ["LOCAL_ROUTER_MODEL"] = local_router_model
+    if local_specialist_model:
+        os.environ["LOCAL_SPECIALIST_MODEL"] = local_specialist_model
+
+    # Legacy Ollama router configuration retained as a fallback path.
     ollama_base_url = os.getenv("OLLAMA_BASE_URL", "http://localhost:11434")
     ollama_router_model = os.getenv("OLLAMA_ROUTER_MODEL", "ollama_chat/gemma4:26b-a4b-it-q8_0")
     ollama_enabled = os.getenv("OLLAMA_ENABLED", "true").lower() in ("true", "1", "yes")
@@ -73,6 +101,12 @@ def load_config() -> dict:
     return {
         "default_model": default_model,
         "fallback_model": fallback_model,
+        "local_llm_api_base": local_llm_api_base,
+        "local_router_api_base": local_router_api_base,
+        "local_specialist_api_base": local_specialist_api_base,
+        "local_llm_enabled": local_llm_enabled,
+        "local_router_model": local_router_model,
+        "local_specialist_model": local_specialist_model,
         "ollama_base_url": ollama_base_url,
         "ollama_router_model": ollama_router_model,
         "ollama_enabled": ollama_enabled,

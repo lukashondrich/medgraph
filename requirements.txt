@@ -13,3 +13,4 @@ qdrant-haystack>=6.0.0
 qdrant-client>=1.13.0
 sentence-transformers>=3.4.0
 httpx>=0.28.0
+fastmcp>=2.14.0

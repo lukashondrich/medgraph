@@ -1,0 +1,20 @@
+.git
+.pytest_cache
+.venv
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+.DS_Store
+.env
+.env.*
+!.env.example
+
+# Eval datasets are not needed in runtime images.
+data/
+archive/
+
+# Local/generated docs and benchmark outputs can be regenerated.
+docs/local-inference-benchmark.md
+
+# Keep src/knowledge_pipeline/qdrant_store; the app uses embedded Qdrant today.

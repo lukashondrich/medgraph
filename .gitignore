@@ -15,6 +15,7 @@ build/
 .coverage
 htmlcov/
 .tox/
+eval-output*.txt
 
 # Virtual environments
 .venv/

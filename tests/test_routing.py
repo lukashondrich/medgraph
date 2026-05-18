@@ -288,7 +288,7 @@ class TestRouterLocalModel:
             _route_json(["symptom"], "Physical symptom.", 0.9)
         )
 
-        with patch("src.agents.router.ollama_health") as mock_health, \
+        with patch("src.agents.base.ollama_health") as mock_health, \
              patch("litellm.acompletion", new_callable=AsyncMock, return_value=mock_response):
             mock_health.check = AsyncMock(return_value=True)
             result = await router(base_state)
@@ -304,7 +304,7 @@ class TestRouterLocalModel:
             _route_json(["symptom"], "Physical symptom.", 0.9)
         )
 
-        with patch("src.agents.router.ollama_health") as mock_health, \
+        with patch("src.agents.base.ollama_health") as mock_health, \
              patch("litellm.acompletion", new_callable=AsyncMock, return_value=mock_response):
             mock_health.check = AsyncMock(return_value=False)
             result = await router(base_state)
@@ -332,7 +332,7 @@ class TestRouterLocalModel:
                 raise Exception("Ollama model error")
             return good_response
 
-        with patch("src.agents.router.ollama_health") as mock_health, \
+        with patch("src.agents.base.ollama_health") as mock_health, \
              patch("litellm.acompletion", new_callable=AsyncMock, side_effect=acompletion_side_effect):
             mock_health.check = AsyncMock(return_value=True)
             result = await router(base_state)
