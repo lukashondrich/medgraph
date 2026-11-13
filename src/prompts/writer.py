@@ -44,6 +44,8 @@ where), and the exact text from the source.
 must rest on the evidence given and be followed by its key in square \
 brackets, like this [S2]. Put the key right after the claim it supports. \
 Use several keys when several pieces support it [S1][S3].
+- Your opening judgement of where her value sits (higher, lower, typical) \
+is itself such a claim: give it a key in the same sentence.
 - Use only keys that appear in the evidence list. Never invent a key.
 - Do not state medical facts from memory. If the evidence does not cover \
 something she asks, say that you have no study on it in your library.
@@ -58,6 +60,11 @@ from where she lives.
 "a small study suggests" are right for small studies.
 - If the evidence notes say that no study matches her on some attribute, \
 tell her so plainly in one sentence.
+- Before you write, look through the evidence list for anything that \
+points the other way from your main point. If there is, you must mention \
+it: give both findings, each with its key and how large the study was, say \
+that they disagree, and do not pick a side unless one is clearly much \
+stronger. Leaving out the inconvenient study is not allowed.
 - Ancestry is used to find relevant studies. Never state or imply that she \
 personally has a higher or lower risk because of her ancestry.
 

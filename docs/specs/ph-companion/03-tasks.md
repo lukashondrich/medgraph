@@ -123,6 +123,17 @@ Notes:
 | 3.5 | Update `CLAUDE.md`, `README.md`, and the `ARCHITECTURE.md` files for changed modules | Docs match the code |
 | 3.6 | **(you, with me)** Demo script: the five-minute path, including the persona switch and one evidence gap | Rehearsed once end to end |
 
+### M3 status (2026-11-13)
+
+| Task | Result |
+|---|---|
+| 3.1 Evaluation | Eight scenario tests in `tests/eval/`. Seven pass reliably; A8 (disagreement) passed in one of two final runs. See `docs/eval-results.md` |
+| 3.2 German | One full run in German on a phone-sized screen. Interface text and short study labels are translated; study titles, cohort descriptions and quotes stay in English |
+| 3.3 Accessibility | Automated scan clean in light, dark and high-contrast themes after darkening two blues. Not tested with a real screen reader |
+| 3.4 Response time | 5–6 seconds for a first interpretation, 13 on the first request after start |
+| 3.5 Docs | `CLAUDE.md`, `README.md`, `docs/system-overview.md`, all `ARCHITECTURE.md` files and `docs/eval-results.md` rewritten. `docs/quality-criteria.md` and `docs/specialist-feedback.md` still describe the earlier project |
+| 3.6 Demo script | Written (`demo-script.md`); the rehearsal is yours |
+
 ## Not planned
 
 - Live literature search (design decision D2: curated corpus first).

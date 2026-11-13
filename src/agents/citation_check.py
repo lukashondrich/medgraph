@@ -22,6 +22,29 @@ _SPACE_BEFORE_PUNCTUATION = re.compile(r"[ \t]+([.,;:!?])")
 _REPEATED_NUMBER = re.compile(r"(\[\d+\])(?:[ \t]*\1)+")
 
 
+_NUMBER = re.compile(r"\[\d+\]")
+MIN_WORDS_NEEDING_CITATION = 12
+
+
+def uncited_paragraphs(text: str) -> list[str]:
+    """Paragraphs that make statements but carry no citation.
+
+    A coarse guard, not a proof: it catches a whole paragraph of claims
+    without a source. The closing next-step paragraph (written in bold) and
+    very short paragraphs are left alone.
+    """
+    found = []
+    for paragraph in re.split(r"\n\s*\n", text.strip()):
+        paragraph = paragraph.strip()
+        if not paragraph or paragraph.startswith("**"):
+            continue
+        if len(paragraph.split()) < MIN_WORDS_NEEDING_CITATION:
+            continue
+        if not _NUMBER.search(paragraph):
+            found.append(paragraph)
+    return found
+
+
 class CheckedAnswer(BaseModel):
     text: str
     citations: list[Citation] = Field(default_factory=list)

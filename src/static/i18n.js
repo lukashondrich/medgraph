@@ -237,6 +237,49 @@ var MedGraphI18n = (function () {
     },
   };
 
+  // Short labels that arrive from the server in English (study designs,
+  // matched attributes). Study titles, cohort descriptions and quoted
+  // passages stay in the language of the paper.
+  var phrases = {
+    de: {
+      "Meta-analysis": "Metaanalyse",
+      "Systematic review": "Systematische Übersicht",
+      "Guideline": "Leitlinie",
+      "Randomised trial": "Randomisierte Studie",
+      "Controlled trial (not randomised)": "Kontrollierte Studie (nicht randomisiert)",
+      "Cohort study": "Kohortenstudie",
+      "Cross-sectional study": "Querschnittsstudie",
+      "Case-control study": "Fall-Kontroll-Studie",
+      "Case series": "Fallserie",
+      "Laboratory study": "Laborstudie",
+      "Review": "Übersichtsarbeit",
+      "Study": "Studie",
+      "Indian ancestry": "Indische Herkunft",
+      "South Asian ancestry (broader group)": "Südasiatische Herkunft (größere Gruppe)",
+      "Black ancestry": "Schwarze Herkunft",
+      "White European ancestry": "Weiße europäische Herkunft",
+      "pregnant": "schwanger",
+      "not pregnant": "nicht schwanger",
+      "premenopausal": "vor der Menopause",
+      "perimenopausal": "um die Menopause",
+      "postmenopausal": "nach der Menopause",
+      "your age group": "Ihre Altersgruppe",
+      "lives in Germany": "lebt in Deutschland",
+      "Indian": "Indisch",
+      "Black": "Schwarz",
+      "White European": "Weiß, europäisch",
+      "Germany": "Deutschland",
+      "India": "Indien",
+      "United States": "USA",
+    },
+  };
+
+  /** Translate a short server-side label; unknown text is returned unchanged. */
+  function phrase(text) {
+    var table = phrases[currentLang];
+    return (table && table[text]) || text;
+  }
+
   var currentLang = localStorage.getItem("medgraph-lang") || "en";
 
   /** Look up a key; `vars` fills {placeholders}. Falls back to English, then the key. */
@@ -290,6 +333,7 @@ var MedGraphI18n = (function () {
 
   return {
     t: t,
+    phrase: phrase,
     setLanguage: setLanguage,
     applyTranslations: applyTranslations,
     getLang: getLang,

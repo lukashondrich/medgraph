@@ -28,6 +28,7 @@ class StudyDesign(str, Enum):
     SYSTEMATIC_REVIEW = "systematic_review"
     GUIDELINE = "guideline"
     RCT = "rct"
+    CONTROLLED_TRIAL = "controlled_trial"  # intervention vs control, not randomised
     COHORT = "cohort"
     CROSS_SECTIONAL = "cross_sectional"
     CASE_CONTROL = "case_control"
@@ -42,6 +43,7 @@ DESIGN_LABELS: dict[StudyDesign, str] = {
     StudyDesign.SYSTEMATIC_REVIEW: "Systematic review",
     StudyDesign.GUIDELINE: "Guideline",
     StudyDesign.RCT: "Randomised trial",
+    StudyDesign.CONTROLLED_TRIAL: "Controlled trial (not randomised)",
     StudyDesign.COHORT: "Cohort study",
     StudyDesign.CROSS_SECTIONAL: "Cross-sectional study",
     StudyDesign.CASE_CONTROL: "Case-control study",

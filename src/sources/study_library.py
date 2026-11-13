@@ -6,8 +6,8 @@ passages.
 
 Lanes:
 - matched: studies whose cohort resembles the profile on a distinguishing
-  attribute, ranked by cohort match and then relevance. Study quality plays
-  no part, so a small study belongs here even when it would rank low.
+  attribute, ranked by relevance lifted by match strength. Study quality
+  plays no part, so a small study belongs here even when it would rank low.
 - overall: everything else, ranked by relevance times evidence weight.
 """
 
@@ -33,6 +33,8 @@ MAX_OVERALL = 4
 MAX_MATCHED = 3
 MAX_GUIDELINES = 2
 SEARCH_DEPTH = 2000
+# Qualifying score at which a match doubles a study's rank in the matched lane.
+MATCH_SCALE = 5.0
 # A study must be about the question to be used. Cosine similarity of its
 # best passage to the best-fitting query has to reach this value. Measured on
 # the first corpus: unrelated questions peak near 0.2, related ones start
@@ -45,6 +47,7 @@ _DESIGN_WEIGHT: dict[StudyDesign, float] = {
     StudyDesign.SYSTEMATIC_REVIEW: 0.95,
     StudyDesign.GUIDELINE: 0.95,
     StudyDesign.RCT: 0.9,
+    StudyDesign.CONTROLLED_TRIAL: 0.85,
     StudyDesign.COHORT: 0.8,
     StudyDesign.CROSS_SECTIONAL: 0.7,
     StudyDesign.CASE_CONTROL: 0.7,
@@ -138,12 +141,13 @@ def select_lanes(
     matches = {sid: match_cohort(profile, records[sid]) for sid in by_study}
 
     matched_ids = [sid for sid in by_study if matches[sid].qualifies]
-    # Rank by how strongly the cohort matches on distinguishing attributes;
-    # among equally strong matches the study closest to the question wins.
+    # Rank by relevance, lifted by how strongly the cohort matches on
+    # distinguishing attributes. A closer match wins between studies that
+    # speak to the question equally well, but a study that answers the
+    # question beats a closer match that is about something else.
     matched_ids.sort(
         key=lambda sid: (
-            matches[sid].qualifying_score,
-            by_study[sid][0].relevance,
+            by_study[sid][0].relevance * (1 + matches[sid].qualifying_score / MATCH_SCALE),
             matches[sid].score,
         ),
         reverse=True,

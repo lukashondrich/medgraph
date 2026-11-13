@@ -22,22 +22,23 @@ All docs connect back to `CLAUDE.md` (the entry point):
 ```
 CLAUDE.md (AI Entry Point)
 │
-├─► README.md                              (setup, demo, architecture overview)
+├─► README.md                              (what it is, how to run it)
 │
-├─► docs/system-overview.md                (visual Mermaid diagrams, data flow)
-├─► docs/WORKFLOW_PATTERNS.md              ★ READ BEFORE STARTING WORK
-├─► docs/DOCUMENTATION_STRUCTURE.md        (this file — guidelines)
-├─► docs/quality-criteria.md               (response quality definitions)
-├─► docs/specialist-feedback.md            (clinical framework feedback)
-├─► docs/eval-results.md                   (evaluation benchmark results)
+├─► docs/specs/ph-companion/               ★ requirements, design, tasks, demo script
+├─► docs/system-overview.md                (flow, event stream, data)
+├─► docs/eval-results.md                   (acceptance scenarios, timing, accessibility)
+├─► docs/WORKFLOW_PATTERNS.md
+├─► docs/DOCUMENTATION_STRUCTURE.md        (this file)
 │
-├─► src/models/ARCHITECTURE.md             (MedGraphState, RouteDecision)
-├─► src/agents/ARCHITECTURE.md             (7 agents, base class, error handling)
-├─► src/prompts/ARCHITECTURE.md            (7 system prompts, design philosophy)
-├─► src/orchestrator/ARCHITECTURE.md       (LangGraph wiring, fan-out, streaming)
-├─► src/data/ARCHITECTURE.md               (FHIR parsing, gallery, OpenFDA)
-├─► src/knowledge_pipeline/ARCHITECTURE.md (Qdrant, Haystack, embeddings)
-└─► tests/eval/ARCHITECTURE.md             (evaluation framework, criteria, judge)
+├─► src/sources/ARCHITECTURE.md            (matching, lanes, ranges, safety)
+├─► src/knowledge_pipeline/ARCHITECTURE.md (study records, corpus build, search)
+├─► src/agents/ARCHITECTURE.md             (planner, sources, writer, citation check)
+├─► src/prompts/ARCHITECTURE.md            (planner and writer prompts)
+├─► src/models/ARCHITECTURE.md             (state, evidence models)
+├─► src/orchestrator/ARCHITECTURE.md       (graph)
+├─► src/data/ARCHITECTURE.md               (profiles, personas)
+├─► src/static/ARCHITECTURE.md             (frontend)
+└─► tests/eval/ARCHITECTURE.md             (acceptance scenarios)
 ```
 
 **Navigation principle:** If lost, return to `CLAUDE.md`.

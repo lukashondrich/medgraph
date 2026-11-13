@@ -8,7 +8,7 @@ from src.models.state import MedGraphState
 from src.prompts.writer import SYSTEM_PROMPT, assign_markers, build_prompt
 
 from .base import FALLBACK_MESSAGE, HealthcareAgent
-from .citation_check import CheckedAnswer, check_citations
+from .citation_check import CheckedAnswer, check_citations, uncited_paragraphs
 
 logger = logging.getLogger(__name__)
 
@@ -18,6 +18,13 @@ _RETRY_NOTE = (
     "\n\n## Correction\n\nYour previous reply contained no valid evidence keys. "
     "Rewrite it so that every claim about pH ranges, causes or risks is "
     "followed by the key of the evidence it rests on, for example [S1]."
+)
+
+
+_UNCITED_NOTE = (
+    "\n\n## Correction\n\nIn your previous reply these paragraphs made statements "
+    "without any evidence key. Rewrite the reply so each of them cites the evidence "
+    "it rests on, or drop statements you cannot support:\n"
 )
 
 
@@ -48,12 +55,23 @@ class WriterAgent(HealthcareAgent):
         )
 
         answer = await self._write(state, prompt, marker_map)
-        # Evidence was available but nothing valid was cited: one retry.
-        if answer is not None and marker_map and not answer.citations:
-            logger.warning("Writer produced no valid citations; retrying once")
-            retry = await self._write(state, prompt + _RETRY_NOTE, marker_map)
-            if retry is not None and retry.citations:
-                answer = retry
+        # One retry when evidence was available but the answer does not use it
+        # properly: nothing valid cited, or a whole paragraph of statements
+        # without a source.
+        if answer is not None and marker_map:
+            if not answer.citations:
+                logger.warning("Writer produced no valid citations; retrying once")
+                retry = await self._write(state, prompt + _RETRY_NOTE, marker_map)
+                if retry is not None and retry.citations:
+                    answer = retry
+            else:
+                bare = uncited_paragraphs(answer.text)
+                if bare:
+                    logger.warning("Writer left %d paragraph(s) uncited; retrying once", len(bare))
+                    note = _UNCITED_NOTE + "\n".join(f"- {p[:200]}" for p in bare)
+                    retry = await self._write(state, prompt + note, marker_map)
+                    if retry is not None and retry.citations and len(uncited_paragraphs(retry.text)) < len(bare):
+                        answer = retry
 
         if answer is None:
             text, citations = FALLBACK_MESSAGE, []

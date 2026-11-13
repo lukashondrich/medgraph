@@ -1949,3 +1949,80 @@ button.cite--matched:hover {
   color: var(--safety-text);
   border-color: var(--safety-border);
 }
+
+/* --- Contrast: white text needs a darker blue than the accent --- */
+
+:root {
+  --accent-strong: #3b58d6;
+  --user-bubble: #3b58d6;
+}
+
+[data-theme="dark"] {
+  --accent-strong: #3a5cd0;
+  --user-bubble: #3a5cd0;
+}
+
+[data-contrast="high"] {
+  --accent-strong: #0033cc;
+  --user-bubble: #0033cc;
+}
+
+[data-theme="dark"][data-contrast="high"] {
+  --accent-strong: #3366ff;
+  --user-bubble: #3366ff;
+}
+
+.patient-btn[aria-pressed="true"],
+.toolbar-btn[aria-pressed="true"],
+.send-btn,
+.lookup-step.done .step-icon,
+button.cite:hover {
+  background: var(--accent-strong);
+  border-color: var(--accent-strong);
+  color: #ffffff;
+}
+
+[data-theme="dark"] .lookup-step.done .step-icon {
+  color: #ffffff;
+}
+
+.patient-btn[aria-pressed="true"] .patient-btn-meta {
+  opacity: 1;
+}
+
+.skip-link {
+  background: var(--accent-strong);
+}
+
+/* --- Contrast: blue text on light surfaces --- */
+
+:root {
+  --accent-text: #3350c8;
+}
+
+[data-theme="dark"],
+[data-contrast="high"] {
+  --accent-text: var(--accent);
+}
+
+.pipeline-toggle,
+.pipeline-title,
+.cite-link,
+.cite-sheet-group,
+.cite,
+.header-accent {
+  color: var(--accent-text);
+}
+
+.cite--matched,
+.cite-sheet--matched .cite-sheet-group {
+  color: var(--matched);
+}
+
+.cite--safety {
+  color: var(--safety-text);
+}
+
+.cite-link {
+  border-color: var(--accent-text);
+}

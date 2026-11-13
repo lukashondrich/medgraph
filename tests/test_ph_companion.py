@@ -15,7 +15,7 @@ import pytest
 from fastapi.testclient import TestClient
 from pydantic import ValidationError
 
-from src.agents.citation_check import check_citations
+from src.agents.citation_check import check_citations, uncited_paragraphs
 from src.agents.planner import ALL_SOURCES, PlannerAgent
 from src.agents.sources import (
     GuidelineSource,
@@ -243,15 +243,18 @@ class TestLanes:
         lanes = select_lanes(candidates, self.records(), make_profile())
         assert [i.study_id for i in lanes.overall] == ["big-general", "mid-general"]
 
-    def test_matched_lane_prefers_stronger_match_then_relevance(self):
+    def test_matched_lane_weighs_match_strength_and_relevance(self):
         records = {
-            "exact-a": make_record("exact-a", cohort={"ancestry": ["indian"]}),
-            "exact-b": make_record("exact-b", cohort={"ancestry": ["indian"], "age_min": 18, "age_max": 45}),
+            "exact": make_record("exact", cohort={"ancestry": ["indian"]}),
             "broader": make_record("broader", cohort={"ancestry": ["south_asian"]}),
+            "exact-weak": make_record("exact-weak", cohort={"ancestry": ["indian"]}),
         }
-        candidates = [passage("broader", 0.95), passage("exact-a", 0.9), passage("exact-b", 0.6)]
-        lanes = select_lanes(candidates, records, make_profile())
-        assert [i.study_id for i in lanes.matched] == ["exact-a", "exact-b", "broader"]
+        # Equal relevance: the closer match comes first.
+        lanes = select_lanes([passage("broader", 0.8), passage("exact", 0.8)], records, make_profile())
+        assert [i.study_id for i in lanes.matched] == ["exact", "broader"]
+        # A broader match that answers the question beats a close match that barely does.
+        lanes = select_lanes([passage("exact-weak", 0.4), passage("broader", 0.9)], records, make_profile())
+        assert [i.study_id for i in lanes.matched] == ["broader", "exact-weak"]
 
     def test_lane_sizes_are_capped(self):
         records = {f"m{i}": make_record(f"m{i}", cohort={"ancestry": ["indian"]}) for i in range(6)}
@@ -425,6 +428,12 @@ class TestCitationCheck:
         result = check_citations("Both [S1][S2] and [S2; S1].", self.marker_map())
         assert result.text == "Both [1][2] and [2][1]."
 
+    def test_uncited_paragraphs_guard(self):
+        long_bare = "This paragraph states several things about ranges and causes without giving any source at all."
+        text = f"{long_bare}\n\nCited claim about the range [1].\n\nShort note.\n\n**Next step:** retest in a few days and watch for any new symptoms that appear."
+        assert uncited_paragraphs(text) == [long_bare]
+        assert uncited_paragraphs("All good here with a source for the statement being made [2].") == []
+
     def test_text_without_markers_has_no_citations(self):
         result = check_citations("No claims here [SAFETY_ESCALATION]", self.marker_map())
         assert result.citations == [] and "[SAFETY_ESCALATION]" in result.text
@@ -516,6 +525,25 @@ class TestWriterAgent:
         assert mock.await_count == 2
         assert out["final_response"] == "Now cited [1]."
         assert "Correction" in mock.await_args_list[1].kwargs["messages"][0]["content"]
+
+    async def test_retries_once_when_a_paragraph_of_claims_is_uncited(self):
+        bare = "Your value sits a little above what is usually seen in women without any symptoms at all."
+        first = f"{bare}\n\nStudies agree [S1].\n\n**Next step:** retest in a few days and see whether it settles down again."
+        second = f"Your value sits a little above the usual range [S1].\n\nStudies agree [S2].\n\n**Next step:** retest."
+        mock = AsyncMock(side_effect=[llm_reply(first), llm_reply(second)])
+        with patch("litellm.acompletion", new=mock):
+            out = await WriterAgent(model="test")(ph_state(sources=self.sources()))
+        assert mock.await_count == 2
+        assert out["final_response"].startswith("Your value sits a little above the usual range [1].")
+        assert bare[:40] in mock.await_args_list[1].kwargs["messages"][0]["content"]
+
+    async def test_keeps_first_answer_when_retry_is_no_better(self):
+        bare = "Your value sits a little above what is usually seen in women without any symptoms at all."
+        first = f"{bare}\n\nStudies agree [S1]."
+        mock = AsyncMock(side_effect=[llm_reply(first), llm_reply(first)])
+        with patch("litellm.acompletion", new=mock):
+            out = await WriterAgent(model="test")(ph_state(sources=self.sources()))
+        assert mock.await_count == 2 and out["final_response"] == f"{bare}\n\nStudies agree [1]."
 
     async def test_no_retry_without_sources(self):
         mock = AsyncMock(return_value=llm_reply("I can only help with your test result."))

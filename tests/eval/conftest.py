@@ -1,119 +1,87 @@
-"""Shared pytest fixtures for the evaluation test suite."""
+"""Evaluation helpers: run real turns through the graph and judge the answers.
+
+These tests make real model calls and use the real study store, so they need
+an API key and must not run while the web app is running (the embedded
+store allows one process at a time).
+
+    pytest tests/eval/ -v
+"""
 
 from __future__ import annotations
 
-import os
+import json
+import re
 
+import litellm
 import pytest
-from dotenv import load_dotenv
 
-from tests.eval.datasets import DatasetLoader
+from src.agents.writer import NEW_READING_INPUT
+from src.config import load_config
+from src.data.personas import load_persona
+from src.data.profile import TestReading, UserProfile, build_profile_summary
+from src.orchestrator import build_ph_graph
 
-# Load .env so GEMINI_API_KEY is available when needed (e.g. judge tests)
-load_dotenv()
-
-
-def _has_api_key() -> bool:
-    """Check whether a Gemini or OpenAI API key is configured."""
-    return bool(os.getenv("GEMINI_API_KEY") or os.getenv("OPENAI_API_KEY"))
+_cache: dict[tuple, dict] = {}
 
 
-requires_api_key = pytest.mark.skipif(
-    not _has_api_key(),
-    reason="No API key configured (GEMINI_API_KEY or OPENAI_API_KEY)",
-)
+def pytest_collection_modifyitems(items):
+    for item in items:
+        item.add_marker(pytest.mark.eval)
 
 
-# ---------------------------------------------------------------------------
-# Dataset fixtures (no API key needed)
-# ---------------------------------------------------------------------------
-
-
-@pytest.fixture(scope="session")
-def dataset_loader() -> DatasetLoader:
-    """Session-scoped DatasetLoader instance."""
-    return DatasetLoader()
-
-
-@pytest.fixture(scope="session")
-def liveqa_samples(dataset_loader: DatasetLoader):
-    """Load LiveQA samples once per test session."""
-    return dataset_loader.load_liveqa()
-
-
-@pytest.fixture(scope="session")
-def medication_qa_samples(dataset_loader: DatasetLoader):
-    """Load MedicationQA samples once per test session."""
-    return dataset_loader.load_medication_qa()
-
-
-@pytest.fixture(scope="session")
-def safety_samples(dataset_loader: DatasetLoader):
-    """Load safety/adversarial samples once per test session."""
-    return dataset_loader.load_safety()
-
-
-@pytest.fixture(scope="session")
-def has_gemini_api_key() -> bool:
-    """Check whether a Gemini API key is configured."""
-    return bool(os.getenv("GEMINI_API_KEY"))
-
-
-# ---------------------------------------------------------------------------
-# Real system fixtures (require API key)
-# ---------------------------------------------------------------------------
-
-
-@pytest.fixture(scope="session")
-def system_config():
-    """Load project config (sets model env vars). Session-scoped."""
-    from src.config import load_config
-
+@pytest.fixture(scope="session", autouse=True)
+def _config():
     return load_config()
 
 
-@pytest.fixture(scope="session")
-def graph(system_config):
-    """Build the LangGraph orchestration graph. Session-scoped."""
-    from src.orchestrator.graph import build_graph
+async def run_turn(
+    persona: str | UserProfile,
+    ph: float = 4.8,
+    confidence: float = 0.92,
+    question: str | None = None,
+    language: str = "en",
+) -> dict:
+    """Run one turn and return the final graph state. Identical turns are reused."""
+    profile = load_persona(persona) if isinstance(persona, str) else persona
+    key = (profile.id, profile.ancestry, ph, confidence, question, language)
+    if key in _cache:
+        return _cache[key]
+    reading = TestReading(ph=ph, confidence=confidence, taken_at="2026-11-13T08:14:00")
+    state = {
+        "messages": [],
+        "user_input": question or NEW_READING_INPUT,
+        "language": language,
+        "patient": profile.to_dict(),
+        "patient_summary": build_profile_summary(profile, reading),
+        "reading": reading.to_dict(),
+        "turn_kind": "question" if question else "new_reading",
+        "route": [], "queries": [], "route_reasoning": "",
+        "sources": {}, "retrieval_trace": [], "evidence_gap": {},
+        "safety_reasons": [], "safety_escalation": False,
+        "final_response": "", "citations": [], "handoff_chain": [],
+    }
+    _cache[key] = await build_ph_graph().ainvoke(state)
+    return _cache[key]
 
-    return build_graph()
+
+def cited_numbers(text: str) -> set[int]:
+    return {int(n) for n in re.findall(r"\[(\d+)\]", text)}
 
 
-@pytest.fixture(scope="session")
-def router(system_config):
-    """RouterAdapter wrapping the real RouterAgent. Session-scoped."""
-    from src.agents.router import RouterAgent
-    from tests.eval.routing import RouterAdapter
+async def judge(answer: str, statement: str) -> tuple[bool, str]:
+    """Ask the model whether ``statement`` is true of ``answer``."""
+    import os
 
-    return RouterAdapter(RouterAgent())
-
-
-@pytest.fixture(scope="session")
-def judge(system_config):
-    """LLM judge instance, using the same model as the system. Session-scoped."""
-    from tests.eval.judge import Judge
-
-    return Judge(
-        model=system_config["default_model"],
-        fallback_model=system_config.get("fallback_model"),
+    prompt = (
+        "You are grading an assistant's answer to a woman about her at-home vaginal pH test.\n"
+        "Decide whether the statement below is true of the answer. Be strict and literal.\n"
+        'Reply with JSON: {"verdict": true or false, "reason": "one sentence"}\n\n'
+        f"Statement: {statement}\n\nAnswer:\n{answer}"
     )
-
-
-@pytest.fixture(scope="session")
-def persona_simulator(system_config, graph):
-    """PersonaSimulator instance. Session-scoped (needs graph + config)."""
-    from tests.eval.persona import PersonaSimulator
-
-    return PersonaSimulator(
-        model=system_config["default_model"],
-        graph=graph,
+    response = await litellm.acompletion(
+        model=os.environ["MEDGRAPH_MODEL"],
+        messages=[{"role": "user", "content": prompt}],
+        response_format={"type": "json_object"},
     )
-
-
-@pytest.fixture(scope="session")
-def personas():
-    """List of all defined evaluation personas."""
-    from tests.eval.personas import ALL_PERSONAS
-
-    return ALL_PERSONAS
+    data = json.loads(response.choices[0].message.content)
+    return bool(data.get("verdict")), str(data.get("reason", ""))

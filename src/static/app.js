@@ -8,6 +8,7 @@
 
   // --- i18n shorthand ---
   var t = MedGraphI18n.t;
+  var phrase = MedGraphI18n.phrase;
 
   // --- State ---
   var sessionId = newSessionId();
@@ -345,7 +346,7 @@
     var rows = [
       [t("profAge"), String(p.age)],
       [t("profAncestry"), ancestryLabel(p.ancestry)],
-      [t("profCountry"), p.country_of_residence],
+      [t("profCountry"), phrase(p.country_of_residence)],
       [t("profMenopause"), t(p.menopausal_status)],
       [t("profPregnancy"), t(p.pregnancy)],
       [t("profCycle"), cycle],
@@ -370,7 +371,7 @@
 
   function ancestryLabel(key) {
     if (selectedPersona && selectedProfile && selectedProfile.ancestry === key) {
-      return selectedPersona.ancestry;
+      return phrase(selectedPersona.ancestry);
     }
     return key;
   }
@@ -720,7 +721,8 @@
       return escapeHTML(t("detailError"));
     }
     if (agent === "reference_ranges") {
-      return escapeHTML(t("detailRanges", { found: counts.found || 0, query: detail.query || "" }));
+      var who = (detail.query || "").split(", ").map(phrase).join(", ");
+      return escapeHTML(t("detailRanges", { found: counts.found || 0, query: who }));
     }
     if (agent === "safety_rules") {
       return counts.fired
@@ -887,7 +889,7 @@
     var size = c.sample_size
       ? c.sample_size.toLocaleString(MedGraphI18n.getLang()) + " " + t("participants")
       : t("sizeNotStated");
-    return c.design + " · " + size;
+    return phrase(c.design) + " · " + size;
   }
 
   // ============================================================
@@ -919,7 +921,7 @@
         '<div class="cite-match"><span class="cite-match-label">' + escapeHTML(t("matchesYou")) + "</span>" +
         c.matched_attributes
           .map(function (a) {
-            return '<span class="cite-chip">' + escapeHTML(a) + "</span>";
+            return '<span class="cite-chip">' + escapeHTML(phrase(a)) + "</span>";
           })
           .join("") +
         "</div>";
@@ -927,7 +929,9 @@
 
     var facts = [];
     if (c.cohort_summary) facts.push([t("whoWasStudied"), c.cohort_summary]);
-    if (c.countries && c.countries.length) facts.push([t("studiedIn"), c.countries.join(", ")]);
+    if (c.countries && c.countries.length) {
+      facts.push([t("studiedIn"), c.countries.map(phrase).join(", ")]);
+    }
     if (facts.length) {
       html +=
         '<dl class="cite-facts">' +

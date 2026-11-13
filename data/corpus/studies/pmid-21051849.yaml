@@ -7,7 +7,7 @@ title: Prevention of preterm birth is possible by vaginal pH screening, early di
 authors: Hoyme and Huebner
 year: 2010
 journal: Gynecol Obstet Invest
-design: other
+design: controlled_trial
 sample_size: null
 cohort:
   description: Pregnant women in Germany screened for abnormal vaginal flora
@@ -50,4 +50,7 @@ check:
     RCT). “Other” is acceptable only if this is explicitly treated as a non-standard/unspecified prospective
     intervention; the claimed value is not justified as the only correct design from the text.)
 
-    resolution: checker agreed with ''other''; no change.'
+    resolution: checker agreed with ''other''; no change.
+
+    resolution: design set to controlled_trial: the abstract reports intervention and control groups in
+    the Erfurt trial and the Thuringia campaign.'

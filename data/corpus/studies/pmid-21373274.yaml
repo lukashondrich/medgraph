@@ -6,7 +6,7 @@ title: 'Self-testing of vaginal pH to prevent preterm delivery: a controlled tri
 authors: Bitzer et al.
 year: 2011
 journal: Dtsch Arztebl Int
-design: other
+design: controlled_trial
 sample_size: 149082
 cohort:
   description: Pregnant women with insurer-covered deliveries in Germany
@@ -59,4 +59,7 @@ check:
     vs control based on requesting test gloves), not a cohort study; it is not described as randomized,
     so it cannot be coded as rct.)
 
-    resolution: design set to other: controlled but not randomised trial.'
+    resolution: design set to other: controlled but not randomised trial.
+
+    resolution: design set to controlled_trial (new vocabulary value): prospective controlled trial, not
+    randomised.'
