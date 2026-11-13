@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>pH Companion — your test result, explained</title>
+  <title>pH Companion Demo — your test result, explained</title>
   <link rel="stylesheet" href="/static/style.css" />
 </head>
 <body>
@@ -17,6 +17,7 @@
         <h1>
           <span data-i18n="appTitle">pH</span>
           <span class="header-accent" data-i18n="appTitleAccent">Companion</span>
+          <span class="header-tag" data-i18n="appTitleTag">Demo</span>
         </h1>
         <p class="header-subtitle" data-i18n="appSubtitle">Your test result, explained with studies that fit you</p>
       </div>
@@ -58,7 +59,7 @@
 
     <!-- Test result (hidden until a persona is selected) -->
     <section class="result-card" id="resultCard" hidden aria-labelledby="resultLabel">
-      <h2 class="patient-bar-label" id="resultLabel" data-i18n="yourTest">Your test result</h2>
+      <h2 class="patient-bar-label" id="resultLabel" data-i18n="yourTest">Choose a test result</h2>
       <div class="patient-gallery" id="readingGallery" role="group" aria-labelledby="resultLabel">
         <!-- Populated by JS -->
       </div>

@@ -42,6 +42,8 @@
   var LOW_CONFIDENCE = 0.7;
   var SCALE_MIN = 3.5;
   var SCALE_MAX = 7.5;
+  // Shortest time a lookup step shows as "in progress" before its check mark.
+  var STEP_MS = 550;
 
   // --- DOM refs ---
   var chatContainer = document.getElementById("chatContainer");
@@ -306,6 +308,7 @@
 
     renderPersonaGallery();
     renderProfileCard();
+    profileCard.open = true; // show who was picked and what is known about her
     resultCard.hidden = false;
     setInputEnabled(true);
     announce(p.name + ": " + t("personaSelected"));
@@ -509,10 +512,19 @@
     try {
       await streamChat(body, lookupEl);
     } catch (err) {
+      lookupEl._failed = true;
       var errorEl = appendAssistantMessage(t("errorGeneric"), false, []);
       errorEl.setAttribute("role", "alert");
       finishLookupCard(lookupEl);
       console.error("Chat stream error:", err);
+    }
+    // The stream can finish before the steps have been shown; wait for them.
+    lookupEl._streamEnded = true;
+    if (lookupEl._sequence) {
+      await lookupEl._sequence;
+    }
+    if (!lookupEl._finished) {
+      finishLookupCard(lookupEl);
     }
 
     isProcessing = false;
@@ -587,40 +599,29 @@
 
   function handleSSEEvent(event, lookupEl) {
     switch (event.type) {
+      // Events only record what happened. The lookup card shows it step by
+      // step, top to bottom, in runLookupSequence().
       case "routing":
-        if (event.data.agents) {
-          setStepState(lookupEl, "plan", "done");
-          addLookupSteps(lookupEl, event.data.agents);
+        if (event.data.agents && !lookupEl._sequence) {
+          lookupEl._sequence = runLookupSequence(lookupEl, event.data.agents);
         }
-        scrollToBottom();
         break;
 
       case "specialist":
-        updateLookupStep(lookupEl, event.data);
-        scrollToBottom();
-        break;
-
-      case "synthesizing":
-        setStepState(lookupEl, "writer", "processing");
-        announce(t("srcWriter"));
-        scrollToBottom();
+        if (event.data.status === "done") {
+          lookupEl._results[event.data.agent] = event.data.detail || {};
+        }
         break;
 
       case "response":
-        setStepState(lookupEl, "writer", "done");
-        finishLookupCard(lookupEl);
         if (event.data.session_id) {
           sessionId = event.data.session_id;
         }
-        appendAssistantMessage(
-          event.data.content,
-          event.data.safety_escalation,
-          event.data.citations || [],
-          event.data.safety_reasons || []
-        );
+        lookupEl._response = event.data;
         break;
 
       case "error":
+        lookupEl._failed = true;
         var errEl = appendAssistantMessage(t("errorGeneric"), false, []);
         errEl.setAttribute("role", "alert");
         finishLookupCard(lookupEl);
@@ -645,6 +646,8 @@
     var el = document.createElement("div");
     el.className = "pipeline-status";
     el._trace = {};
+    el._results = {};
+    el._started = Date.now();
 
     el.innerHTML =
       '<div class="pipeline-card">' +
@@ -708,11 +711,70 @@
     return step;
   }
 
-  function updateLookupStep(el, data) {
-    var step = setStepState(el, data.agent, data.status === "done" ? "done" : "processing");
-    if (!step || data.status !== "done" || !data.detail) return;
-    el._trace[data.agent] = data.detail;
-    step.querySelector(".step-detail").innerHTML = stepDetailHTML(data.agent, data.detail);
+  function sleep(ms) {
+    return new Promise(function (resolve) {
+      setTimeout(resolve, ms);
+    });
+  }
+
+  /** Resolve once `ready()` is true and at least STEP_MS have passed since `start`. */
+  async function stepFinished(el, start, ready) {
+    while (!ready() && !el._failed && !el._streamEnded) {
+      await sleep(50);
+    }
+    var remaining = STEP_MS - (Date.now() - start);
+    if (remaining > 0 && !el._failed) {
+      await sleep(remaining);
+    }
+  }
+
+  /**
+   * Walk through the lookup steps from top to bottom. Each step shows its
+   * spinner for at least STEP_MS, even when its result arrived at once, so
+   * the work reads as a sequence. The answer appears after the last step.
+   */
+  async function runLookupSequence(el, agents) {
+    await stepFinished(el, el._started, function () {
+      return true;
+    });
+    setStepState(el, "plan", "done");
+    addLookupSteps(el, agents);
+    scrollToBottom();
+
+    for (var i = 0; i < agents.length && !el._failed; i++) {
+      var agent = agents[i];
+      setStepState(el, agent, "processing");
+      await stepFinished(el, Date.now(), function () {
+        return el._results[agent] !== undefined;
+      });
+      var detail = el._results[agent];
+      if (detail === undefined) break;
+      var step = setStepState(el, agent, "done");
+      el._trace[agent] = detail;
+      if (step) {
+        step.querySelector(".step-detail").innerHTML = stepDetailHTML(agent, detail);
+      }
+      scrollToBottom();
+    }
+    if (el._failed) return;
+
+    setStepState(el, "writer", "processing");
+    announce(t("srcWriter"));
+    scrollToBottom();
+    await stepFinished(el, Date.now(), function () {
+      return !!el._response;
+    });
+    if (el._failed || !el._response) return;
+
+    setStepState(el, "writer", "done");
+    await sleep(STEP_MS / 2);
+    finishLookupCard(el);
+    appendAssistantMessage(
+      el._response.content,
+      el._response.safety_escalation,
+      el._response.citations || [],
+      el._response.safety_reasons || []
+    );
   }
 
   function stepDetailHTML(agent, detail) {

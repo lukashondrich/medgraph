@@ -2026,3 +2026,19 @@ button.cite:hover {
 .cite-link {
   border-color: var(--accent-text);
 }
+
+/* --- "Demo" tag next to the title --- */
+
+.header-tag {
+  display: inline-block;
+  margin-left: 0.25rem;
+  padding: 0.0625rem 0.4375rem;
+  border: 1px solid var(--border);
+  border-radius: 0.625rem;
+  color: var(--text-secondary);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  vertical-align: 0.2em;
+}

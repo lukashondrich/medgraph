@@ -12,13 +12,13 @@ Vanilla HTML/CSS/JS, no build step. Bilingual (DE/EN), dark and high-contrast th
 
 ## Flow
 
-1. Choosing a persona loads the profile and shows the result card.
+1. Choosing a persona loads the profile, opens the profile card and shows the result card.
 2. Choosing a reading starts a fresh conversation and sends a `new_reading` turn. Switching persona with a reading chosen does the same for the new persona.
 3. Typed questions send `question` turns in the same session.
 
 ## Components
 
-- **Lookup card** — one step per source, with what was searched and found; collapses to a one-line summary when the answer arrives.
+- **Lookup card** — one step per source, with what was searched and found; collapses to a one-line summary when the answer arrives. Stream events only record results; `runLookupSequence()` shows the steps top to bottom, each in progress for at least `STEP_MS` (550 ms), and the answer appears after the last step.
 - **Answer** — Markdown rendered with `marked` after neutralising raw HTML. `[n]` becomes a button; the number stays on the line of the claim it follows.
 - **Safety notice** — above the answer when a rule fired, showing the rule's text.
 - **Sources list** — collapsed under each answer, grouped: safety, women like you, reference ranges, guidelines, best overall.

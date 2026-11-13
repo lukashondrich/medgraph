@@ -7,9 +7,10 @@ var MedGraphI18n = (function () {
 
   var translations = {
     en: {
-      pageTitle: "pH Companion — your test result, explained",
+      pageTitle: "pH Companion Demo — your test result, explained",
       appTitle: "pH",
       appTitleAccent: "Companion",
+      appTitleTag: "Demo",
       appSubtitle: "Your test result, explained with studies that fit you",
       settings: "Settings",
       selectPersona: "Choose a profile",
@@ -17,7 +18,7 @@ var MedGraphI18n = (function () {
       personaInfoLabel: "About these profiles",
       personaInfoText: "Demo profiles. No real personal data is used.",
       galleryError: "Could not load the profiles",
-      yourTest: "Your test result",
+      yourTest: "Choose a test result",
       chooseReading: "Choose a test result",
       readingSelected: "Test result selected",
       readConfidence: "Reading confidence",
@@ -123,9 +124,10 @@ var MedGraphI18n = (function () {
       opensNewTab: "opens in a new tab",
     },
     de: {
-      pageTitle: "pH Companion — Ihr Testergebnis, erklärt",
+      pageTitle: "pH Companion Demo — Ihr Testergebnis, erklärt",
       appTitle: "pH",
       appTitleAccent: "Companion",
+      appTitleTag: "Demo",
       appSubtitle: "Ihr Testergebnis, erklärt mit Studien, die zu Ihnen passen",
       settings: "Einstellungen",
       selectPersona: "Profil wählen",
@@ -133,7 +135,7 @@ var MedGraphI18n = (function () {
       personaInfoLabel: "Über diese Profile",
       personaInfoText: "Demo-Profile. Es werden keine echten persönlichen Daten verwendet.",
       galleryError: "Die Profile konnten nicht geladen werden",
-      yourTest: "Ihr Testergebnis",
+      yourTest: "Testergebnis wählen",
       chooseReading: "Testergebnis wählen",
       readingSelected: "Testergebnis ausgewählt",
       readConfidence: "Messsicherheit",
