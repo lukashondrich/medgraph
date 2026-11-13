@@ -1,0 +1,60 @@
+study_id: pmid-10029984
+pmid: '10029984'
+doi: 10.1097/00007435-199902000-00007
+url: https://pubmed.ncbi.nlm.nih.gov/10029984/
+title: Race/ethnicity, vaginal flora patterns, and pH during pregnancy
+authors: Royce et al.
+year: 1999
+journal: Sex Transm Dis
+design: cross_sectional
+sample_size: 842
+cohort:
+  description: Pregnant women at 24–29 weeks' gestation
+  ancestry:
+  - black
+  - white_european
+  countries:
+  - United States
+  age_min: null
+  age_max: null
+  menopausal_status: []
+  pregnancy:
+  - pregnant
+topics:
+- bacterial vaginosis
+- vaginal flora
+- vaginal pH
+- pregnancy
+- race/ethnicity
+key_finding: Black pregnant women had higher bacterial vaginosis prevalence and different vaginal pH/flora
+  patterns than white women, not explained by measured behavioral or sociodemographic factors.
+abstract: 'Objectives: To investigate the relationship between bacterial vaginosis during pregnancy and
+  black race/ethnicity. Study design: Gram staining was used to evaluate vaginal flora in 842 women at
+  24 to 29 weeks'' gestation. Results: Overall, 22.3% of blacks and 8.5% of whites had bacterial vaginosis.
+  Vaginal pH and flora differed significantly by race/ethnicity; blacks were more likely to have pH >
+  or = 4.5, no lactobacilli, small gram-variable and -negative rods, and Mobiluncus compared with whites
+  (odds ratios 1.6, 1.5, 1.4, and 10.6, respectively). Quantity of morphotypes also differed, especially
+  for Mobiluncus. Among women with Mobiluncus present (12.0% of blacks and 1.3% of whites), 73.3% of blacks
+  compared with 40.0% of whites had the highest level. Adjustment for sociodemographics, sexual activity,
+  sexually transmitted diseases, health behavior, and sexual hygiene did not explain these differences.
+  Conclusion: We observed race/ethnicity differences in vaginal flora ecology. These differences may ultimately
+  play a role in the larger proportion of preterm deliveries among black women compared with white women.'
+licence: null
+text_source: abstract
+check:
+  status: checked
+  checked_by: LLM second pass (gpt-5.2); disputes resolved by Claude (AI assistant), not by a clinical
+    expert
+  checked_on: '2026-11-13'
+  notes: 'affiliation: Department of Epidemiology, School of Public Health, University of North Carolina
+    at Chapel Hill 27599, USA. Rachel_Royce@unc.edu
+
+    design: should be ''cross_sectional'' (The abstract describes a single assessment of vaginal flora
+    at 24–29 weeks’ gestation with comparisons by race/ethnicity; no follow-up or outcome incidence is
+    described, so this is best classified as cross-sectional rather than cohort.)
+
+    cohort.ancestry: should be [''black'', ''white_european''] (The abstract states ''blacks'' and ''whites''
+    but does not specify European ancestry for whites; per rules, ''white_european'' is not directly supported.)
+
+    resolution: design set to cross_sectional as the checker asked; ''whites'' kept as white_european
+    (only white key).'

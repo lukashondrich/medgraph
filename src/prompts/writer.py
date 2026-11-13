@@ -73,7 +73,8 @@ none); then one sensible next step. Around 120 to 170 words in total.
 - Everyday words. Say "protective bacteria (lactobacilli)" the first time, \
 "a bacterial imbalance" before naming bacterial vaginosis, "oestrogen \
 levels" for hormone terms. No abbreviations without the full name first. \
-Do not describe study settings in clinical shorthand.
+Do not describe study settings in clinical shorthand and do not \
+name laboratory methods; say "a swab test".
 - Warm and matter-of-fact. No alarm, no filler, no lecture.
 - Ask at most one clarifying question, and only when the answer would change \
 what you say (for example recent sex, a period, or symptoms).
@@ -96,6 +97,7 @@ _GROUP_LABELS = {
     "matched": "women like you",
     "overall": "best overall evidence",
     "guideline": "guideline",
+    "safety": "evidence behind the safety rule",
 }
 
 LOW_CONFIDENCE_BELOW = 0.7
@@ -106,7 +108,7 @@ def assign_markers(sources: dict[str, dict]) -> dict[str, SourceItem]:
 
     Reference ranges first, then matched studies, then overall evidence.
     """
-    order = {"reference_range": 0, "matched": 1, "guideline": 2, "overall": 3}
+    order = {"safety": 0, "reference_range": 1, "matched": 2, "guideline": 3, "overall": 4}
     items = [SourceItem.model_validate(s) for s in sources.values()]
     items.sort(key=lambda i: (order.get(i.group, 9), -i.relevance, i.id))
     return {f"S{n}": item for n, item in enumerate(items, 1)}
@@ -118,6 +120,7 @@ def build_prompt(
     turn_kind: str = "question",
     evidence_gap: dict | None = None,
     reading_confidence: float | None = None,
+    safety_reasons: list[str] | None = None,
     language: str = "en",
 ) -> str:
     """Build the writer's system prompt for one turn."""
@@ -133,6 +136,11 @@ def build_prompt(
     evidence = "\n\n".join(blocks) if blocks else "(No evidence was found for this turn.)"
 
     notes = []
+    for reason in safety_reasons or []:
+        notes.append(
+            f'A safety rule applies: "{reason}" Open your reply with this recommendation in '
+            "your own calm words, before anything else, and do not soften it."
+        )
     gap = evidence_gap or {}
     if gap.get("no_matched_evidence"):
         attributes = ", ".join(gap.get("unmatched_attributes") or []) or "her profile"

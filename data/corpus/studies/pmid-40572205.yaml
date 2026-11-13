@@ -1,0 +1,56 @@
+study_id: pmid-40572205
+pmid: '40572205'
+doi: 10.3390/microorganisms13061317
+url: https://pubmed.ncbi.nlm.nih.gov/40572205/
+title: 'The Vaginal Microbiome: Associations with Vaginal pH, Menopause and Metabolic Parameters'
+authors: Chen et al.
+year: 2025
+journal: Microorganisms
+design: cross_sectional
+sample_size: 40
+cohort:
+  description: Asian premenopausal and postmenopausal women providing vaginal secretion samples
+  ancestry:
+  - asian_unspecified
+  countries:
+  - Taiwan
+  age_min: null
+  age_max: null
+  menopausal_status:
+  - premenopausal
+  - postmenopausal
+  pregnancy: []
+topics:
+- vaginal microbiome
+- menopause
+- vaginal pH
+- metabolic parameters
+- 16S rRNA sequencing
+key_finding: CST distribution varied by menopausal status and vaginal pH, with harmful CST-IV more common
+  in postmenopausal women and SGLT2 inhibitor use in postmenopausal women associated with more protective
+  CST-I+II.
+abstract: 'The vaginal microbiota, a critical determinant of women''s health, is influenced by hormonal
+  and metabolic parameters across the lifespan. While Lactobacillus species are beneficial markers of
+  vaginal health, microbial composition undergoes pronounced alterations after menopause. This study aimed
+  to elucidate the associations between vaginal microbiota composition, vaginal pH, menopausal status,
+  and metabolic parameters in Asian women. Vaginal secretion samples were collected from 40 women (20
+  premenopausal, 20 postmenopausal). Full-length 16S rRNA gene sequencing was used to characterize the
+  microbiota, categorized into Community State Types (CSTs): CST-I + II (Lactobacillus crispatus/gasseri,
+  protective), CST-III (Lactobacillus iners, neutral), and CST-IV (anaerobic bacteria, harmful). Vaginal
+  pH and clinical data were assessed in relation to microbial profiles. CST distribution differed significantly
+  by menopausal status and vaginal pH. Harmful-type CST-IV was more prevalent in postmenopausal women
+  (70% vs. 40%, p p = 0.026) and increased abundance of anaerobes including Bacteroides, Fusobacterium,
+  Porphyromonas, Prevotella, and Streptococcus. Oral antibiotic use reduced both beneficial and harmful
+  CSTs, shifting toward neutral CST-III (75%, p = 0.048). Use of sodium-glucose cotransporter-2 (SGLT2)
+  inhibitors in postmenopausal women was associated with a higher prevalence of protective CST-I + II
+  (57.14% vs. 8.33%, p < 0.05), though no significant impact on pathogen presence was observed. This study
+  highlights the dynamic interplay between menopausal status, metabolic interventions, and vaginal microbiota
+  composition. Findings may inform targeted strategies to maintain vaginal health in aging populations.'
+licence: cc by
+text_source: abstract
+check:
+  status: checked
+  checked_by: LLM second pass (gpt-5.2)
+  checked_on: '2026-11-13'
+  notes: 'affiliation: School of Nutrition and Health Sciences, College of Nutrition, Taipei Medical University,
+    Taipei 110301, Taiwan.'

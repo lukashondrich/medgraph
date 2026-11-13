@@ -13,6 +13,7 @@ logger = logging.getLogger(__name__)
 
 _PERSONAS_DIR = Path(__file__).parent / "personas"
 _READINGS_PATH = _PERSONAS_DIR / "_readings.json"
+_ORDER = ["priya", "anna", "amara"]
 
 
 def load_persona(persona_id: str) -> Optional[UserProfile]:
@@ -29,9 +30,10 @@ def load_persona(persona_id: str) -> Optional[UserProfile]:
 def list_personas() -> list[dict]:
     """Return gallery cards for all personas, sorted by file name."""
     cards = []
-    for path in sorted(_PERSONAS_DIR.glob("*.json")):
-        if path.name.startswith("_"):
-            continue
+    paths = [p for p in _PERSONAS_DIR.glob("*.json") if not p.name.startswith("_")]
+    # Demo order first, anything else alphabetically after it.
+    paths.sort(key=lambda p: (_ORDER.index(p.stem) if p.stem in _ORDER else len(_ORDER), p.stem))
+    for path in paths:
         profile = UserProfile.model_validate(json.loads(path.read_text()))
         cards.append({
             "persona_id": profile.id,

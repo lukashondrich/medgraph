@@ -47,3 +47,30 @@
   statement: Without a bacterial cause, a pH of 6.0 to 7.5 is typical after menopause.
   study_id: pmid-9215184
   quote: In the absence of bacterial pathogens, a vaginal pH of 6.0 to 7.5 is strongly suggestive of menopause.
+
+- id: postmenopausal-average
+  label: After menopause, with and without oestrogen therapy
+  applies_to:
+    menopausal_status: [postmenopausal]
+    pregnancy: [not_pregnant]
+  statement: Across several studies, women after menopause averaged pH 6.0 without oestrogen therapy and 4.5 with it.
+  study_id: pmid-15167829
+  quote: Menopausal women who do not receive estrogen therapy have a weighted average vaginal pH of 6.0, which is reduced significantly to 4.5 with estrogen therapy.
+
+- id: pregnant-threshold
+  label: During pregnancy
+  applies_to:
+    menopausal_status: []
+    pregnancy: [pregnant]
+  statement: In a large US study, pregnant women with a pH of 5.0 or above had more preterm births. This is a pattern across a group, not a prediction for one woman.
+  study_id: pmid-12634666
+  quote: Women with a vaginal pH of 5.0 or greater or a vaginal pH of 4.5 or greater and a Gram stain score of 9 to 10 had significantly increased preterm births
+
+- id: pregnant-by-race
+  label: During pregnancy, Black and white women (USA)
+  applies_to:
+    menopausal_status: []
+    pregnancy: [pregnant]
+  statement: In one US study of pregnant women, a pH of 4.5 or above was more common in Black than in white women.
+  study_id: pmid-10029984
+  quote: Vaginal pH and flora differed significantly by race/ethnicity; blacks were more likely to have pH > or = 4.5

@@ -1,0 +1,57 @@
+study_id: pmid-34489372
+pmid: '34489372'
+doi: 10.4014/jmb.2106.06022
+url: https://pubmed.ncbi.nlm.nih.gov/34489372/
+title: Changes in the Microbiome of Vaginal Fluid after Menopause in Korean Women
+authors: Kim et al.
+year: 2021
+journal: J Microbiol Biotechnol
+design: cross_sectional
+sample_size: 30
+cohort:
+  description: Premenopausal and postmenopausal women providing vaginal fluid samples
+  ancestry:
+  - east_asian
+  countries:
+  - South Korea
+  age_min: null
+  age_max: null
+  menopausal_status:
+  - premenopausal
+  - postmenopausal
+  pregnancy: []
+topics:
+- vaginal microbiome
+- menopause
+- 16S rRNA sequencing
+- Lactobacillus
+- lactic acid
+key_finding: Postmenopausal women had a significantly different vaginal microbiome, with reduced Lactobacillus
+  and lower lactic acid concentration compared with premenopausal women.
+abstract: Various microorganisms reside in the human vagina; the vaginal microbiome is closely linked
+  to both vaginal and general health, and for this reason, microbiome studies of the vagina are an area
+  of research. In this study, we analyzed the vaginal microbiome of women before and after menopause to
+  further increase our understanding of the vaginal microbiome and its contribution to general health.
+  We did a 16s rRNA gene-based metagenomic analysis on the vaginal fluids of 11 premenopausal and 19 postmenopausal
+  women in Korea. We confirmed that the taxonomic composition was significantly different between the
+  two groups. In postmenopausal women, species richness was significantly decreased, but species diversity
+  was significantly increased. In particular, among the taxonomic components corresponding to all taxon
+  ranks of the vaginal microbiome, a reduction in Lactobacillus taxa after menopause contributed the most
+  to the difference between the two groups. In addition, we confirmed through metabolic analysis that
+  the lactic-acid concentration was also decreased in the vaginal fluid of women after menopause. Our
+  findings on the correlation between menopause and the microbiome could help diagnose menopause and enhance
+  the prevention and treatment diseases related to menopause.
+licence: cc by
+text_source: abstract
+check:
+  status: checked
+  checked_by: LLM second pass (gpt-5.2); disputes resolved by Claude (AI assistant), not by a clinical
+    expert
+  checked_on: '2026-11-13'
+  notes: 'affiliation: Probiotics Microbiome Convergence Center, Soonchunhyang University, Asan, Chungnam
+    31538, Republic of Korea.
+
+    cohort.ancestry: should be [''east_asian''] (Participants were recruited in Korea and described as
+    Korean women; with a single-country recruitment in Korea, ancestry can be coded as east_asian.)
+
+    resolution: ancestry set to east_asian: Korean women recruited in Korea.'

@@ -1,0 +1,62 @@
+study_id: pmid-21373274
+pmid: '21373274'
+doi: 10.3238/arztebl.2011.0081
+url: https://pubmed.ncbi.nlm.nih.gov/21373274/
+title: 'Self-testing of vaginal pH to prevent preterm delivery: a controlled trial'
+authors: Bitzer et al.
+year: 2011
+journal: Dtsch Arztebl Int
+design: other
+sample_size: 149082
+cohort:
+  description: Pregnant women with insurer-covered deliveries in Germany
+  ancestry: []
+  countries:
+  - Germany
+  age_min: null
+  age_max: null
+  menopausal_status: []
+  pregnancy:
+  - pregnant
+topics:
+- vaginal pH self-testing
+- preterm birth prevention
+- pregnancy screening
+- claims data
+- propensity score matching
+key_finding: Self-testing of vaginal pH during pregnancy did not reduce preterm delivery before 37 weeks.
+abstract: 'Background: From 2004 to 2006, in a model project carried out by four German health insurers,
+  expectant mothers were offered self-testing of vaginal pH in order to prevent preterm delivery. They
+  were given pH test gloves on request so that they could measure their vaginal pH twice a week from the
+  12(th) to the 32(nd) week of gestation. They were instructed to consult with a gynecologist after any
+  positive result. All further diagnostic or therapeutic decisions were at the discretion of the treating
+  gynecologist. We assessed the effectiveness of the screening intervention, using delivery before the
+  37th week of gestation as the primary endpoint. Methods: In this prospective, controlled trial, we collected
+  data on deliveries from 2004 to 2006 that were covered by the four participating insurers in five German
+  federal states. We compared the outcomes of pregnancy in women who did and did not request test gloves
+  (intervention group, [IG], and control group, [CG]). The data were derived from claims data of the participating
+  insurers, as well as from a nationwide quality assurance auditing program for obstetrics and perinatal
+  care. Propensity score matching and multivariate adjustment were used to control for the expected self-selection
+  bias. Results: The study sample comprised 149 082 deliveries. 13% of the expectant mothers requested
+  test gloves, about half of them up to the 16(th) week of gestation. As expected, women with an elevated
+  risk of preterm birth requested test gloves more often. Delivery before the 37(th) week of gestation
+  was slightly more common in the intervention group than in the control group (IG 7.97%, CG 7.52%, relative
+  risk 1.06, 95% confidence interval 1.00-1.12). This result was of borderline statistical significance
+  in the propensity score matched analysis, but it was not statistically significant in the multivariate
+  model. Conclusion: This trial did not demonstrate the efficacy of self-testing of vaginal pH for the
+  prevention of preterm delivery (< 37 weeks of gestation).'
+licence: null
+text_source: abstract
+check:
+  status: checked
+  checked_by: LLM second pass (gpt-5.2); disputes resolved by Claude (AI assistant), not by a clinical
+    expert
+  checked_on: '2026-11-13'
+  notes: 'affiliation: Institut für Sozialmedizin, Epidemiologie und Gesundheitssystemforschung e. V.Bereich
+    Outcome- und Evaluationsforschung, Lavesstrasse 80, Hannover, Germany.
+
+    design: should be ''other'' (The abstract explicitly describes a prospective, controlled trial (intervention
+    vs control based on requesting test gloves), not a cohort study; it is not described as randomized,
+    so it cannot be coded as rct.)
+
+    resolution: design set to other: controlled but not randomised trial.'

@@ -1,0 +1,51 @@
+study_id: pmid-18503038
+pmid: '18503038'
+doi: 10.1093/aje/kwn103
+url: https://pubmed.ncbi.nlm.nih.gov/18503038/
+title: A longitudinal study of vaginal douching and bacterial vaginosis--a marginal structural modeling
+  analysis
+authors: Brotman et al.
+year: 2008
+journal: Am J Epidemiol
+design: cohort
+sample_size: 3620
+cohort:
+  description: Nonpregnant women attending public health clinics for routine care
+  ancestry: []
+  countries:
+  - United States
+  age_min: null
+  age_max: null
+  menopausal_status: []
+  pregnancy:
+  - not_pregnant
+topics:
+- bacterial vaginosis
+- vaginal douching
+- prospective cohort
+- marginal structural models
+- confounding by indication
+key_finding: Regular vaginal douching was associated with increased risk of bacterial vaginosis compared
+  with no douching (RR 1.21, 95% CI 1.08–1.38).
+abstract: 'The etiology of bacterial vaginosis is unknown, and there are no long-term therapies for preventing
+  this frequently recurring condition. Vaginal douching has been reported to be associated with bacterial
+  vaginosis in observational studies. However, this association may be due to confounding by indication--that
+  is, confounding by women douching in response to vaginal symptoms associated with bacterial vaginosis.
+  The authors used marginal structural modeling to estimate the causal effect of douching on bacterial
+  vaginosis risk while controlling for this confounding effect. In 1999-2002, nonpregnant women (n = 3,620)
+  were recruited into a prospective study when they visited one of 12 public health clinics in Birmingham,
+  Alabama, for routine care. Participants were assessed quarterly for 1 year. Bacterial vaginosis was
+  based on a Nugent''s Gram stain score of 7 or higher. Thirty-two percent of participants douched in
+  every study interval, and 43.0% never douched. Of the 12,349 study visits, 40.2% were classified as
+  involving bacterial vaginosis. The relative risk for regular douching as compared with no douching was
+  1.21 (95% confidence interval: 1.08, 1.38). These findings indicate that douching confers increased
+  risk of disruption of vaginal flora. In the absence of a large randomized trial, these findings provide
+  the best evidence to date for a risk of bacterial vaginosis associated with douching.'
+licence: null
+text_source: abstract
+check:
+  status: checked
+  checked_by: LLM second pass (gpt-5.2)
+  checked_on: '2026-11-13'
+  notes: 'affiliation: Department of Epidemiology, Bloomberg School of Public Health, Johns Hopkins University,
+    Baltimore, MD, USA. rbrotman@jhsph.edu'

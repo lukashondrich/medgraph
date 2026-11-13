@@ -1,0 +1,48 @@
+study_id: pmid-1988325
+pmid: '1988325'
+doi: 10.1016/0028-2243(91)90205-y
+url: https://pubmed.ncbi.nlm.nih.gov/1988325/
+title: The vaginal pH and leucocyte/epithelial cell ratio vary during normal menstrual cycles
+authors: Larsson and Platz-Christensen
+year: 1991
+journal: Eur J Obstet Gynecol Reprod Biol
+design: case_series
+sample_size: 3
+cohort:
+  description: Three healthy asymptomatic women across four menstrual cycles
+  ancestry: []
+  countries:
+  - Sweden
+  age_min: null
+  age_max: null
+  menopausal_status:
+  - premenopausal
+  pregnancy: []
+topics:
+- vaginal pH
+- leukocytosis
+- wet smear microscopy
+- menstrual cycle variation
+- genital tract infection diagnosis
+key_finding: In frequent wet smears, vaginal leucocytosis usually occurred once each menstrual cycle in
+  healthy women, so it should be considered when assessing smears for infection.
+abstract: A higher proportion white blood cells (WBC) than vaginal epithelial cells in wet smears has
+  been accepted as a sign which, together with clinical signs, can be useful in the diagnosis of infections
+  in the genital tract such as cervicitis or salpingitis. However, little is known about the normal variation
+  among healthy women without any symptoms or signs of genital-tract infection. By taking frequent wet
+  smears from three healthy asymptomatic women during four menstrual cycles we found that vaginal leucocytosis
+  usually occurred once each cycle. Normal vaginal leucocytosis must thus be taken into consideration
+  when evaluating wet smear of patients for genital tract infections.
+licence: null
+text_source: abstract
+check:
+  status: checked
+  checked_by: LLM second pass (gpt-5.2); disputes resolved by Claude (AI assistant), not by a clinical
+    expert
+  checked_on: '2026-11-13'
+  notes: 'affiliation: Department of Obstetrics and Gynecology, Central Hospital, Skövde, Sweden.
+
+    cohort.menopausal_status: should be [''premenopausal''] (Participants are described as having normal
+    menstrual cycles (four menstrual cycles monitored), which supports premenopausal status.)
+
+    resolution: menopausal status set to premenopausal: women with normal menstrual cycles.'

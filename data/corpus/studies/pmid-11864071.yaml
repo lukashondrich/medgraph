@@ -1,0 +1,46 @@
+study_id: pmid-11864071
+pmid: '11864071'
+doi: 10.1111/j.1469-0691.1997.tb00246.x
+url: https://pubmed.ncbi.nlm.nih.gov/11864071/
+title: Vaginal pH neutralization by semen as a cofactor of HIV transmission
+authors: Bouvet et al.
+year: 1997
+journal: Clin Microbiol Infect
+design: cross_sectional
+sample_size: 69
+cohort:
+  description: Women in Central African Republic providing vaginal wash samples
+  ancestry: []
+  countries:
+  - Central African Republic
+  age_min: null
+  age_max: null
+  menopausal_status: []
+  pregnancy: []
+topics:
+- HIV transmission
+- vaginal pH
+- semen retention
+- semen biomarkers
+- sexual intercourse
+key_finding: Vaginal wash specimens with high semen marker levels had a near-neutral pH compared with
+  semen-free specimens, and semen showed strong pH-neutralizing capacity in vitro.
+abstract: 'OBJECTIVE: To explain the high frequency of heterosexual transmission of AIDS in subSaharan
+  countries, by investigating post-intercourse semen retention in the vagina for local pH neutralization
+  as a possible interference factor with acidic inactivation of HIV virions. METHODS: Two semen markers,
+  prostate-specific antigen and prostatic acid phosphatase, were measured and compared with the pH values
+  in the vaginal washes of 69 women from the Central African Republic. The capacity of semen to raise
+  the vaginal pH was also investigated in vitro. RESULTS: Of 61 non-menstrual specimens, 74% contained
+  at least one semen marker. The specimens with high levels of markers (group I) displayed an almost neutral
+  pH (median 6.1), at variance with the semen-free group II (median: 3.7, P<0.003), and with group III
+  (median: 4.0) corresponding to low or past semen retention. The in vitro study confirmed the high neutralization
+  capacity of semen. CONCLUSIONS: It is expected that post-intercourse neutralization of pH will both
+  favor male-to-female transmission and prevent the acidity-associated loss of infectivity of the female-derived
+  virions, thus allowing female-to-male transmission during further sexual contact.'
+licence: null
+text_source: abstract
+check:
+  status: checked
+  checked_by: LLM second pass (gpt-5.2)
+  checked_on: '2026-11-13'
+  notes: 'affiliation: INSERM, Unité d''Immunocytochimie, CNRS URA 1961, Institut Pasteur, Paris, France.'

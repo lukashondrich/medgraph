@@ -1,164 +1,84 @@
-"""LangGraph StateGraph construction for the medgraph multiagent system.
+"""LangGraph StateGraph for pH Companion: plan, gather evidence, then write.
 
-Graph flow:
-    START -> router -> conditional_edges -> specialist(s) -> synthesizer -> END
+    START -> planner -> [safety_rules + chosen sources, in parallel] -> writer -> END
 
-The router node classifies the user query and selects 1-5 specialist agents.
-A pure routing function reads ``state["route"]`` and dispatches to the selected
-specialists in parallel via LangGraph ``Send()``.  All specialist branches
-converge at the synthesizer, which merges their outputs into the final response.
-
-When the router returns an empty route (off-topic / inappropriate query), the
-graph skips specialists and goes directly to the synthesizer for a fallback
-response.
+The planner decides which sources to consult and what to search for. Source
+nodes gather evidence without calling a language model. The writer composes
+the answer from that evidence only and validates its citations.
 """
 
 from __future__ import annotations
-
-import logging
 
 from langgraph.graph import END, START, StateGraph
 from langgraph.graph.state import CompiledStateGraph
 from langgraph.types import Send
 
-logger = logging.getLogger(__name__)
-
-from src.agents.drug_check import DrugCheckAgent
-from src.agents.evidence import EvidenceAgent
-from src.agents.lifestyle import LifestyleAgent
-from src.agents.medication import MedicationAgent
-from src.agents.router import RouterAgent
-from src.agents.sources import ReferenceRangeSource, StudyLibrarySource
-from src.agents.symptom import SymptomAgent
-from src.agents.synthesizer import SynthesizerAgent
+from src.agents.planner import PlannerAgent
+from src.agents.sources import (
+    GuidelineSource,
+    ReferenceRangeSource,
+    SafetySource,
+    StudyLibrarySource,
+)
 from src.agents.writer import WriterAgent
 from src.models.state import MedGraphState
 
-# ---------------------------------------------------------------------------
-# Map from route labels (as produced by the router) to graph node names
-# ---------------------------------------------------------------------------
-AGENT_NODE_MAP: dict[str, str] = {
-    "symptom": "symptom_agent",
-    "medication": "medication_agent",
-    "lifestyle": "lifestyle_agent",
-    "evidence": "evidence_agent",
-    "drug_check": "drug_check_agent",
-}
+# Runs on every on-topic turn, whatever the planner chooses.
+PH_ALWAYS_NODES: list[str] = ["safety_rules"]
+# Sources the planner can choose from, in display order.
+PH_OPTIONAL_NODES: list[str] = ["reference_ranges", "study_library", "guidelines"]
+PH_SOURCE_NODES: list[str] = PH_ALWAYS_NODES + PH_OPTIONAL_NODES
 
 
-def route_to_specialists(state: MedGraphState) -> list[Send]:
-    """Pure routing function -- reads ``state["route"]`` and returns ``Send`` objects.
+def planned_sources(route: list[str]) -> list[str]:
+    """Source nodes that will run for a planner route, in display order.
 
-    This function contains **no** LLM calls.  It is deterministic given the
-    current state.
-
-    Returns:
-        A list of ``Send`` objects, one per selected specialist.  If the route
-        list is empty (fallback case), a single ``Send`` to the synthesizer is
-        returned so the graph can produce a polite fallback response.
+    An empty route means the question is off-topic: nothing is looked up.
     """
-    route = state.get("route", [])
-    logger.info("Routing decision: %s", route if route else "(none — fallback)")
-
-    if not route:
-        # Fallback: no specialists selected -- go straight to synthesizer
-        return [Send("synthesizer", state)]
-
-    sends: list[Send] = []
-    for agent_label in route:
-        node_name = AGENT_NODE_MAP.get(agent_label)
-        if node_name is not None:
-            sends.append(Send(node_name, state))
-
-    # Safety net: if all labels were unrecognised, fall back to synthesizer
-    if not sends:
-        return [Send("synthesizer", state)]
-
-    return sends
+    chosen = [node for node in PH_OPTIONAL_NODES if node in route]
+    return PH_ALWAYS_NODES + chosen if chosen else []
 
 
-def build_graph() -> CompiledStateGraph:
-    """Build and compile the medgraph orchestration graph.
-
-    Returns a ``CompiledStateGraph`` ready for ``await graph.ainvoke(state)``.
-    The graph is stateless -- all conversation context must be supplied in the
-    initial state dict passed to ``ainvoke``.
-    """
-    # Instantiate agent callables ------------------------------------------------
-    router_agent = RouterAgent()
-    symptom_agent = SymptomAgent()
-    medication_agent = MedicationAgent()
-    lifestyle_agent = LifestyleAgent()
-    evidence_agent = EvidenceAgent()
-    drug_check_agent = DrugCheckAgent()
-    synthesizer_agent = SynthesizerAgent()
-
-    # Build the graph ------------------------------------------------------------
-    builder = StateGraph(MedGraphState)
-
-    # -- Nodes -------------------------------------------------------------------
-    builder.add_node("router", router_agent)
-    builder.add_node("symptom_agent", symptom_agent)
-    builder.add_node("medication_agent", medication_agent)
-    builder.add_node("lifestyle_agent", lifestyle_agent)
-    builder.add_node("evidence_agent", evidence_agent)
-    builder.add_node("drug_check_agent", drug_check_agent)
-    builder.add_node("synthesizer", synthesizer_agent)
-
-    # -- Edges -------------------------------------------------------------------
-    # START -> router (always the first node)
-    builder.add_edge(START, "router")
-
-    # Router -> conditional fan-out to specialists (or directly to synthesizer)
-    builder.add_conditional_edges("router", route_to_specialists)
-
-    # Each specialist -> synthesizer
-    builder.add_edge("symptom_agent", "synthesizer")
-    builder.add_edge("medication_agent", "synthesizer")
-    builder.add_edge("lifestyle_agent", "synthesizer")
-    builder.add_edge("evidence_agent", "synthesizer")
-    builder.add_edge("drug_check_agent", "synthesizer")
-
-    # Synthesizer -> END
-    builder.add_edge("synthesizer", END)
-
-    # Compile and return ---------------------------------------------------------
-    return builder.compile()
-
-
-# ---------------------------------------------------------------------------
-# pH Companion graph: gather evidence first, then write
-# ---------------------------------------------------------------------------
-
-# Source nodes consulted on every pH Companion turn, in display order.
-PH_SOURCE_NODES: list[str] = ["reference_ranges", "study_library"]
+def route_to_sources(state: MedGraphState) -> list[Send]:
+    """Fan out to the planned sources, or go straight to the writer."""
+    nodes = planned_sources(state.get("route", []))
+    if not nodes:
+        return [Send("writer", state)]
+    return [Send(node, state) for node in nodes]
 
 
 def build_ph_graph(
+    planner=None,
+    safety_rules=None,
     reference_ranges=None,
     study_library=None,
+    guidelines=None,
     writer=None,
 ) -> CompiledStateGraph:
     """Build the pH Companion graph.
 
     Flow:
-        START -> reference_ranges ─┐
-        START -> study_library   ─┴-> writer -> END
+        START -> planner -> [safety_rules + chosen sources, in parallel] -> writer -> END
 
-    All sources run in parallel and finish before the writer starts, so the
-    writer composes its answer from gathered evidence only. The writer also
-    runs the citation check. Node instances can be injected for tests.
+    The planner picks sources and search queries (a fixed plan for a new
+    reading, a model call for a follow-up question). All sources finish
+    before the writer starts, so the writer composes its answer from gathered
+    evidence only. The writer also runs the citation check. Node instances
+    can be injected for tests.
     """
     builder = StateGraph(MedGraphState)
 
+    builder.add_node("planner", planner or PlannerAgent())
+    builder.add_node("safety_rules", safety_rules or SafetySource())
     builder.add_node("reference_ranges", reference_ranges or ReferenceRangeSource())
     builder.add_node("study_library", study_library or StudyLibrarySource())
+    builder.add_node("guidelines", guidelines or GuidelineSource())
     builder.add_node("writer", writer or WriterAgent())
 
+    builder.add_edge(START, "planner")
+    builder.add_conditional_edges("planner", route_to_sources, PH_SOURCE_NODES + ["writer"])
     for node in PH_SOURCE_NODES:
-        builder.add_edge(START, node)
-    # A list source makes the writer wait for every source node.
-    builder.add_edge(PH_SOURCE_NODES, "writer")
+        builder.add_edge(node, "writer")
     builder.add_edge("writer", END)
 
     return builder.compile()

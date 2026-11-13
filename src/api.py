@@ -1,10 +1,8 @@
-"""FastAPI backend for the medgraph multiagent healthcare system.
+"""FastAPI backend for pH Companion.
 
 Provides:
-- POST /api/chat — SSE stream of agent pipeline events
-- GET /api/patients — patient gallery listing
-- GET /api/patients/{patient_id} — full patient profile
-- GET /api/personas — pH Companion persona gallery
+- POST /api/chat — SSE stream of one turn: plan, sources, answer
+- GET /api/personas — persona gallery
 - GET /api/personas/{persona_id} — full persona profile
 - GET /api/readings — preset strip readings
 - GET /api/health — health check
@@ -26,7 +24,6 @@ from starlette.middleware.base import BaseHTTPMiddleware
 from pydantic import BaseModel
 
 from src.config import load_config
-from src.ollama_health import ollama_health
 
 # ---------------------------------------------------------------------------
 # App & config
@@ -34,7 +31,7 @@ from src.ollama_health import ollama_health
 
 logger = logging.getLogger(__name__)
 
-app = FastAPI(title="medgraph — Patient-Aware Health Navigator")
+app = FastAPI(title="pH Companion")
 
 
 class NoCacheStaticMiddleware(BaseHTTPMiddleware):
@@ -63,9 +60,7 @@ _sessions: Dict[str, List[Dict[str, str]]] = {}
 class ChatRequest(BaseModel):
     message: str
     session_id: Optional[str] = None
-    patient_id: Optional[str] = None
     language: Optional[str] = "en"
-    # pH Companion: a persona selects the gather-then-write flow.
     persona_id: Optional[str] = None
     reading: Optional[Dict[str, Any]] = None
     turn_kind: Optional[str] = "question"
@@ -80,33 +75,6 @@ def _sse_event(event: str, data: Any = None) -> str:
     """Format a Server-Sent Event string."""
     payload = json.dumps(data) if data is not None else "{}"
     return f"event: {event}\ndata: {payload}\n\n"
-
-
-# ---------------------------------------------------------------------------
-# GET /api/patients
-# ---------------------------------------------------------------------------
-
-
-@app.get("/api/patients")
-async def get_patients():
-    """Return the patient gallery for the UI selector."""
-    from src.data.gallery import list_patients
-    return list_patients()
-
-
-# ---------------------------------------------------------------------------
-# GET /api/patients/{patient_id}
-# ---------------------------------------------------------------------------
-
-
-@app.get("/api/patients/{patient_id}")
-async def get_patient(patient_id: str):
-    """Return a full patient profile by ID."""
-    from src.data.gallery import load_patient
-    profile = load_patient(patient_id)
-    if profile is None:
-        raise HTTPException(status_code=404, detail="Patient not found")
-    return profile.to_dict()
 
 
 # ---------------------------------------------------------------------------
@@ -163,16 +131,12 @@ def _ph_initial_state(request: "ChatRequest", history: List[Dict[str, str]]) -> 
         "user_input": user_input,
         "route": [],
         "route_reasoning": "",
-        "specialist_outputs": {},
         "final_response": "",
         "handoff_chain": [],
         "safety_escalation": False,
         "patient": profile.to_dict(),
         "patient_summary": build_profile_summary(profile, reading),
-        "evidence_context": {},
-        "drug_interactions": [],
         "citations": [],
-        "router_model_source": "",
         "language": request.language or "en",
         "reading": reading.to_dict() if reading else {},
         "turn_kind": turn_kind,
@@ -185,24 +149,39 @@ def _ph_initial_state(request: "ChatRequest", history: List[Dict[str, str]]) -> 
 
 
 async def _ph_event_stream(initial_state: Dict[str, Any], session_id: str, history: List[Dict[str, str]]):
-    """Stream one pH Companion turn: sources as they finish, then the answer."""
-    from src.orchestrator.graph import PH_SOURCE_NODES, build_ph_graph
+    """Stream one pH Companion turn: the plan, sources as they finish, then the answer."""
+    from src.orchestrator.graph import PH_SOURCE_NODES, build_ph_graph, planned_sources
 
     t_start = time.perf_counter()
     try:
         graph = build_ph_graph()
-        # The route is fixed, so the source list is known before anything runs.
-        yield _sse_event("routing", {"agents": PH_SOURCE_NODES, "reasoning": "", "fixed": True})
-        for source in PH_SOURCE_NODES:
-            yield _sse_event("specialist", {"agent": source, "status": "processing"})
+        yield _sse_event("routing", {"status": "processing"})
 
+        expected: Set[str] = set()
         done: Set[str] = set()
+        safety_reasons: List[str] = []
+        safety_escalation = False
         writer_update: Dict[str, Any] = {}
+
         async for event in graph.astream(initial_state, stream_mode="updates"):
             for node_name, update in event.items():
                 if not isinstance(update, dict):
                     continue
-                if node_name in PH_SOURCE_NODES:
+                if node_name == "planner":
+                    sources = planned_sources(update.get("route", []))
+                    expected = set(sources)
+                    yield _sse_event("routing", {
+                        "agents": sources,
+                        "queries": update.get("queries", []),
+                        "reasoning": update.get("route_reasoning", ""),
+                    })
+                    for source in sources:
+                        yield _sse_event("specialist", {"agent": source, "status": "processing"})
+                    if not sources:
+                        yield _sse_event("synthesizing", {})
+                elif node_name in PH_SOURCE_NODES:
+                    safety_reasons += update.get("safety_reasons") or []
+                    safety_escalation = safety_escalation or bool(update.get("safety_escalation"))
                     trace = (update.get("retrieval_trace") or [{}])[0]
                     yield _sse_event("specialist", {
                         "agent": node_name,
@@ -210,7 +189,7 @@ async def _ph_event_stream(initial_state: Dict[str, Any], session_id: str, histo
                         "detail": trace,
                     })
                     done.add(node_name)
-                    if done >= set(PH_SOURCE_NODES):
+                    if done >= expected:
                         yield _sse_event("synthesizing", {})
                 elif node_name == "writer":
                     writer_update = update
@@ -220,7 +199,8 @@ async def _ph_event_stream(initial_state: Dict[str, Any], session_id: str, histo
             yield _sse_event("response", {
                 "content": final_response,
                 "citations": writer_update.get("citations", []),
-                "safety_escalation": writer_update.get("safety_escalation", False),
+                "safety_escalation": safety_escalation or writer_update.get("safety_escalation", False),
+                "safety_reasons": safety_reasons,
                 "session_id": session_id,
             })
             # Citation numbers are per answer; keep them out of the history so
@@ -266,7 +246,6 @@ async def chat(request: ChatRequest):
         _sessions[session_id] = []
     history = _sessions[session_id]
 
-    # pH Companion flow: gather evidence first, then write
     if request.persona_id:
         initial_ph_state = _ph_initial_state(request, history)
         return StreamingResponse(
@@ -275,186 +254,7 @@ async def chat(request: ChatRequest):
             headers=_SSE_HEADERS,
         )
 
-    # Load patient context if requested
-    patient_dict: Dict[str, Any] = {}
-    patient_summary = ""
-    if request.patient_id:
-        from src.data.gallery import load_patient
-        from src.data.patient_context import build_patient_summary
-        profile = load_patient(request.patient_id)
-        if profile:
-            patient_dict = profile.to_dict()
-            patient_summary = build_patient_summary(profile)
-
-    # Build language-aware message list
-    lang_messages: List[Dict[str, str]] = []
-    if request.language and request.language != "en":
-        lang_instruction = {
-            "de": "WICHTIG: Antworte auf Deutsch. Alle deine Antworten müssen auf Deutsch sein.",
-        }
-        instruction = lang_instruction.get(
-            request.language,
-            f"IMPORTANT: Respond in the language code '{request.language}'.",
-        )
-        lang_messages.append({"role": "system", "content": instruction})
-
-    # Build initial state
-    initial_state: Dict[str, Any] = {
-        "messages": lang_messages + history + [{"role": "user", "content": message}],
-        "user_input": message,
-        "route": [],
-        "route_reasoning": "",
-        "specialist_outputs": {},
-        "final_response": "",
-        "handoff_chain": [],
-        "safety_escalation": False,
-        "patient": patient_dict,
-        "patient_summary": patient_summary,
-        "evidence_context": {},
-        "drug_interactions": [],
-        "citations": [],
-        "router_model_source": "",
-        "language": request.language or "en",
-    }
-
-    async def event_generator():
-        """Stream SSE events as the LangGraph graph executes."""
-
-        from src.orchestrator import build_graph
-
-        graph = build_graph()
-        t_start = time.perf_counter()
-
-        try:
-            routing_sent = False
-            specialists_seen: Set[str] = set()
-            synthesizing_sent = False
-            final_state: Dict[str, Any] = dict(initial_state)
-
-            # All agent node names that should emit specialist events
-            specialist_nodes = {
-                "symptom_agent", "medication_agent", "lifestyle_agent",
-                "evidence_agent", "drug_check_agent",
-            }
-
-            # Signal that routing has started
-            yield _sse_event("routing", {"status": "processing"})
-
-            async for event in graph.astream(initial_state, stream_mode="updates"):
-                for node_name, state_update in event.items():
-                    if state_update is None:
-                        continue
-
-                    # Merge updates into our tracking copy
-                    if isinstance(state_update, dict):
-                        for key, value in state_update.items():
-                            if key in ("messages", "handoff_chain", "citations") and isinstance(value, list):
-                                if key not in final_state:
-                                    final_state[key] = []
-                                final_state[key] = final_state[key] + value
-                            elif key in ("specialist_outputs", "evidence_context") and isinstance(value, dict):
-                                if key not in final_state:
-                                    final_state[key] = {}
-                                final_state[key] = {**final_state[key], **value}
-                            else:
-                                final_state[key] = value
-
-                    # Router node completed
-                    if node_name == "router" and not routing_sent:
-                        route = final_state.get("route", [])
-                        reasoning = final_state.get("route_reasoning", "")
-                        model_source = final_state.get("router_model_source", "cloud")
-                        yield _sse_event("routing", {
-                            "agents": route,
-                            "reasoning": reasoning,
-                            "model_source": model_source,
-                        })
-                        routing_sent = True
-                        for agent in route:
-                            yield _sse_event("specialist", {
-                                "agent": agent,
-                                "status": "processing",
-                            })
-
-                    # Specialist node completed
-                    elif node_name in specialist_nodes:
-                        agent_label = node_name.replace("_agent", "")
-                        specialist_outputs = final_state.get("specialist_outputs", {})
-                        output = specialist_outputs.get(agent_label, "")
-                        if agent_label not in specialists_seen:
-                            specialists_seen.add(agent_label)
-                            event_data: Dict[str, Any] = {
-                                "agent": agent_label,
-                                "status": "done",
-                                "output": output,
-                            }
-                            # Include extra data for new agents
-                            if agent_label == "evidence":
-                                event_data["citations"] = final_state.get("citations", [])
-                            elif agent_label == "drug_check":
-                                event_data["drug_interactions"] = final_state.get("drug_interactions", [])
-                            yield _sse_event("specialist", event_data)
-
-                            # Emit synthesizing status once all routed specialists are done
-                            routed = set(final_state.get("route", []))
-                            if not synthesizing_sent and routed and specialists_seen >= routed:
-                                yield _sse_event("synthesizing", {})
-                                synthesizing_sent = True
-
-                    # Synthesizer node completed
-                    elif node_name == "synthesizer":
-                        final_response = final_state.get("final_response", "")
-                        safety = final_state.get("safety_escalation", False)
-                        if final_response:
-                            yield _sse_event("response", {
-                                "content": final_response,
-                                "safety_escalation": safety,
-                                "session_id": session_id,
-                            })
-
-            # Update session history
-            _sessions[session_id] = history + [
-                {"role": "user", "content": message},
-                {"role": "assistant", "content": final_state.get("final_response", "")},
-            ]
-
-            elapsed = time.perf_counter() - t_start
-            route = final_state.get("route", [])
-            safety = final_state.get("safety_escalation", False)
-            logger.info(
-                "Request completed: session=%s agents=%s safety=%s elapsed=%.3fs",
-                session_id, route, safety, elapsed,
-            )
-            yield _sse_event("done", {"session_id": session_id})
-
-        except Exception as exc:
-            logger.exception("Error processing chat request (session=%s)", session_id)
-            yield _sse_event("error", {"message": str(exc)})
-            yield _sse_event("done", {"session_id": session_id})
-
-    return StreamingResponse(
-        event_generator(),
-        media_type="text/event-stream",
-        headers={
-            "Cache-Control": "no-cache",
-            "Connection": "keep-alive",
-            "X-Accel-Buffering": "no",
-        },
-    )
-
-
-# ---------------------------------------------------------------------------
-# GET /api/ollama-status
-# ---------------------------------------------------------------------------
-
-
-@app.get("/api/ollama-status")
-async def ollama_status():
-    """Return Ollama availability for the frontend model indicator."""
-    import os
-    available = await ollama_health.check()
-    model = os.environ.get("OLLAMA_ROUTER_MODEL") if available else None
-    return {"available": available, "model": model}
+    raise HTTPException(status_code=422, detail="persona_id is required")
 
 
 # ---------------------------------------------------------------------------

@@ -1,0 +1,54 @@
+study_id: pmid-25873579
+pmid: '25873579'
+doi: 10.1099/jmm.0.000070
+url: https://pubmed.ncbi.nlm.nih.gov/25873579/
+title: Identification of culturable vaginal Lactobacillus species among reproductive age women in Mysore,
+  India
+authors: Madhivanan et al.
+year: 2015
+journal: J Med Microbiol
+design: cross_sectional
+sample_size: 132
+cohort:
+  description: Reproductive-age women attending a women's clinic in Mysore
+  ancestry:
+  - indian
+  countries:
+  - India
+  age_min: null
+  age_max: null
+  menopausal_status: []
+  pregnancy: []
+topics:
+- vaginal microbiome
+- Lactobacillus species
+- bacterial vaginosis
+- vaginal culture
+- Amsel criteria
+key_finding: Among 132 women with culturable samples, Lactobacillus (notably L. crispatus, L. gasseri,
+  and L. jensenii) was more often isolated from healthy women than those with bacterial vaginosis, and
+  L. reuteri was significantly associated with normal vaginal microbiota.
+abstract: 'A healthy vaginal environment is predominated by certain Lactobacillus species, which lead
+  to the prevention of infections of the reproductive tract. This study examined the characteristics of
+  cultivable Lactobacillus species in both healthy women and women with bacterial vaginosis (BV). Between
+  November 2011 and September 2013, 139 women attending a women''s clinic in Mysore, India, were evaluated
+  for BV in a cross-sectional study. BV was diagnosed using Amsel''s criteria: homogeneous vaginal discharge,
+  vaginal pH >4.5, production of amines, and presence of "clue" cells. Those with three or more of the
+  characteristics were considered to have BV. Vaginal swabs were then cultured in Rogosa agar and de Man-Rogosa-Sharpe
+  broth. Gram-positive lactobacilli generating 600-800 bp amplicons by 16 sRNA were further characterized
+  by sequencing. Cultivable vaginal samples were obtained from 132 women (94.9%). According to the Amsel
+  criteria, 83 women (62.1%) were healthy, and 49 (37.1%) had BV. Eleven different Lactobacillus species
+  were isolated from 47 women. The common lactobacilli species found in this sample included L. crispatus
+  (39.6%), L. gasseri (45.8%), and L. jensenii (14.6%). Lactobacilli were isolated from 39 healthy women
+  and eight with BV. L. gasseri was cultured from 18.8% of healthy women and 6.1% with BV. The presence
+  of L. reuteri was significantly associated with normal vaginal microbiota (P-value = 0.026). These results
+  further our understanding of vaginal lactobacilli colonization and richness in this particular population.
+  Our findings showed that lactobacilli species present in the vaginas of healthy women in India do not
+  differ from those reported from other countries.'
+licence: null
+text_source: abstract
+check:
+  status: checked
+  checked_by: LLM second pass (gpt-5.2)
+  checked_on: '2026-11-13'
+  notes: 'affiliation: Public Health Research Institute of India, Mysore, India.'

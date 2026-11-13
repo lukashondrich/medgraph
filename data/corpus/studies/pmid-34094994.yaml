@@ -1,0 +1,61 @@
+study_id: pmid-34094994
+pmid: '34094994'
+doi: 10.3389/fcimb.2021.622474
+url: https://pubmed.ncbi.nlm.nih.gov/34094994/
+title: The Vaginal Microbial Signatures of Preterm Birth Delivery in Indian Women
+authors: Kumar et al.
+year: 2021
+journal: Front Cell Infect Microbiol
+design: cohort
+sample_size: 38
+cohort:
+  description: Pregnant Indian women in a pregnancy cohort delivering term or preterm
+  ancestry:
+  - indian
+  countries:
+  - India
+  age_min: null
+  age_max: null
+  menopausal_status: []
+  pregnancy:
+  - pregnant
+topics:
+- vaginal microbiome
+- preterm birth
+- 16S rRNA sequencing
+- Lactobacillus
+- pregnancy cohort
+key_finding: Preterm birth was associated with higher abundance of Lactobacillus iners, Megasphaera sp.,
+  Gardnerella vaginalis, and Sneathia sanguinegens, while term birth was associated with higher abundance
+  of L. gasseri and findings suggesting protective roles for L. crispatus and L. gasseri.
+abstract: 'Background: The incidence of preterm birth (PTB) in India is around 13%. Specific bacterial
+  communities or individual taxon living in the vaginal milieu of pregnant women is a potential risk factor
+  for PTB and may play an important role in its pathophysiology. Besides, bacterial taxa associated with
+  PTB vary across populations. Objective: Conduct a comparative analysis of vaginal microbiome composition
+  and microbial genomic repertoires of women who enrolled in the Interdisciplinary Group for Advanced
+  Research on Birth Outcomes - A DBT India Initiative (GARBH-Ini) pregnancy cohort to identify bacterial
+  taxa associated with term birth (TB) and PTB in Indian women. Methods: Vaginal swabs were collected
+  during all three trimesters from 38 pregnant Indian women who delivered spontaneous term (n=20) and
+  preterm (n=18) neonates. Paired-end sequencing of V3-V4 region of 16S rRNA gene was performed using
+  the metagenomic DNA isolated from vaginal swabs (n=115). Whole genome sequencing of bacterial species
+  associated with birth outcomes was carried out by shotgun method. Lactobacillus species were grown anaerobically
+  in the De Man, Rogosa and Sharpe (MRS) agar culture medium for isolation of genomic DNA and whole genome
+  sequencing. Results: Vaginal microbiome of both term and preterm samples reveals similar alpha diversity
+  indices. However, significantly higher abundance of Lactobacillus iners (p-value All_TrimestersMegasphaera
+  sp (p-value1st_Trimester 0.05), Gardnerella vaginalis (p-value2nd_Trimester= 0.01) and Sneathia sanguinegens
+  (p-value2nd_Trimester 0.0001) were identified in preterm samples whereas higher abundance of L. gasseri
+  (p-value3rd_Trimester =0.010) was observed in term samples by Wilcoxon rank-sum test. The relative abundance
+  of L. iners, and Megasphaera sp. were found to be significantly different over time between term and
+  preterm mothers. Analyses of the representative genomes of L. crispatus and L. gasseri indicate presence
+  of secretory transcriptional regulator and several ribosomally synthesized antimicrobial peptides correlated
+  with anti-inflammatory condition in the vagina. These findings indicate protective role of L. crispatus
+  and L. gasseri in reducing the risk of PTB. Conclusion: Our findings indicate that the dominance of
+  specific Lactobacillus species and few other facultative anaerobes are associated with birth outcomes.'
+licence: cc by
+text_source: abstract
+check:
+  status: checked
+  checked_by: LLM second pass (gpt-5.2)
+  checked_on: '2026-11-13'
+  notes: 'affiliation: Molecular Genetics Laboratory, Translational Health Science and Technology Institute,
+    National Capital Region (NCR) Biotech Science Cluster, Faridabad, India.'

@@ -1,0 +1,75 @@
+study_id: pmid-25073854
+pmid: '25073854'
+doi: 10.1099/mic.0.081034-0
+url: https://pubmed.ncbi.nlm.nih.gov/25073854/
+title: Differences in vaginal microbiome in African American women versus women of European ancestry
+authors: Fettweis et al.
+year: 2014
+journal: Microbiology (Reading)
+design: cross_sectional
+sample_size: 1684
+cohort:
+  description: African American and European-ancestry women providing vaginal samples
+  ancestry:
+  - african_american
+  - white_european
+  countries:
+  - United States
+  age_min: null
+  age_max: null
+  menopausal_status: []
+  pregnancy:
+  - pregnant
+  - not_pregnant
+topics:
+- vaginal microbiome
+- 16S rRNA sequencing
+- ethnicity
+- bacterial vaginosis
+- pregnancy
+key_finding: Vaginal microbiome composition differed significantly between African American and European-ancestry
+  women, with ethnicity, pregnancy, and alcohol use correlating with BV-associated species abundance.
+abstract: Women of European ancestry are more likely to harbour a Lactobacillus-dominated microbiome,
+  whereas African American women are more likely to exhibit a diverse microbial profile. African American
+  women are also twice as likely to be diagnosed with bacterial vaginosis and are twice as likely to experience
+  preterm birth. The objective of this study was to further characterize and contrast the vaginal microbial
+  profiles in African American versus European ancestry women. Through the Vaginal Human Microbiome Project
+  at Virginia Commonwealth University, 16S rRNA gene sequence analysis was used to compare the microbiomes
+  of vaginal samples from 1268 African American women and 416 women of European ancestry. The results
+  confirmed significant differences in the vaginal microbiomes of the two groups and identified several
+  taxa relevant to these differences. Major community types were dominated by Gardnerella vaginalis and
+  the uncultivated bacterial vaginosis-associated bacterium-1 (BVAB1) that were common among African Americans.
+  Moreover, the prevalence of multiple bacterial taxa that are associated with microbial invasion of the
+  amniotic cavity and preterm birth, including Mycoplasma, Gardnerella, Prevotella and Sneathia, differed
+  between the two ethnic groups. We investigated the contributions of intrinsic and extrinsic factors,
+  including pregnancy, body mass index, diet, smoking and alcohol use, number of sexual partners, and
+  household income, to vaginal community composition. Ethnicity, pregnancy and alcohol use correlated
+  significantly with the relative abundance of bacterial vaginosis-associated species. Trends between
+  microbial profiles and smoking and number of sexual partners were observed; however, these associations
+  were not statistically significant. These results support and extend previous findings that there are
+  significant differences in the vaginal microbiome related to ethnicity and demonstrate that these differences
+  are pronounced even in healthy women.
+licence: null
+text_source: abstract
+check:
+  status: checked
+  checked_by: LLM second pass (gpt-5.2); disputes resolved by Claude (AI assistant), not by a clinical
+    expert
+  checked_on: '2026-11-13'
+  notes: 'affiliation: Microbiology and Immunology, Virginia Commonwealth University, Richmond, VA, USA.
+
+    design: should be ''other'' (The abstract describes a comparison of vaginal microbiomes using 16S
+    rRNA sequencing within a project cohort, but does not state a cross-sectional design explicitly (e.g.,
+    single timepoint survey). With only the abstract, the specific epidemiologic design is unclear beyond
+    being an observational comparison.)
+
+    cohort.ancestry: should be [''african_american'', ''white_european''] (The groups are described as
+    “African American women” and “women of European ancestry.” This supports african_american, but not
+    necessarily the specific category white_european (which implies European/white European). The text
+    does not explicitly say ''white'' or ''European'' as an ethnicity label beyond ancestry.)
+
+    cohort.pregnancy: should be [''pregnant'', ''not_pregnant''] (Pregnancy is explicitly discussed as
+    a factor analyzed and is reported to correlate significantly with BV-associated species, implying
+    inclusion of both pregnant and non-pregnant participants.)
+
+    resolution: pregnancy set to both, as analysed in the abstract; design kept.'

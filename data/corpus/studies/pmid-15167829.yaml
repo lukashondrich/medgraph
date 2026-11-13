@@ -1,0 +1,71 @@
+study_id: pmid-15167829
+pmid: '15167829'
+doi: 10.1016/j.ajog.2003.12.015
+url: https://pubmed.ncbi.nlm.nih.gov/15167829/
+title: Vaginal pH is similar to follicle-stimulating hormone for menopause diagnosis
+authors: Roy et al.
+year: 2004
+journal: Am J Obstet Gynecol
+design: review
+sample_size: null
+cohort:
+  description: Women evaluated for menopausal status, including practice patients
+  ancestry: []
+  countries:
+  - United States
+  - Costa Rica
+  age_min: null
+  age_max: null
+  menopausal_status:
+  - postmenopausal
+  pregnancy: []
+topics:
+- menopause diagnosis
+- vaginal pH
+- follicle-stimulating hormone
+- estrogen therapy
+- test sensitivity
+key_finding: Vaginal pH showed similar sensitivity to follicle-stimulating hormone for diagnosing menopause,
+  and estrogen therapy lowered vaginal pH in menopausal women.
+abstract: 'Objective: This paper is intended to demonstrate whether vaginal pH value is associated with
+  menopausal status and symptoms, to review the sensitivity of follicle-stimulating hormone or vaginal
+  pH to diagnose menopause, to compare these findings to a group of practice patients, and to determine
+  whether vaginal pH could be used in place of follicle-stimulating hormone as an initial screen to determine
+  menopause. Study design: Sixteen studies regarding vaginal pH and menopausal symptoms before and after
+  estrogen administration were analyzed. Two epidemiologic studies that reported follicle-stimulating
+  hormone or vaginal pH with menopause were reviewed. These findings were compared with similar data from
+  the practice of one of the authors (J.C.C.). Results: Menopausal women who do not receive estrogen therapy
+  have a weighted average vaginal pH of 6.0, which is reduced significantly to 4.5 with estrogen therapy.
+  To diagnose menopause, follicle-stimulating hormone >or=15 or >or=20 mIU/mL in the Third National Health
+  and Nutrition Examination Survey had a sensitivity of 65% to 68%. In a study in Costa Rica, where 3
+  definitions of menopause were used, a pH of >5.0 had a sensitivity of 64% to 67%. From the practice
+  patients, the 95% confidence interval sensitivities and positive predictive values of vaginal pH and
+  follicle-stimulating hormone to diagnose menopause overlapped, while a pH 4.5 indicates menopause, because
+  it demonstrates a similar sensitivity as follicle-stimulating hormone in epidemiologic studies. In the
+  practice patients, the sensitivity of follicle-stimulating hormone was no different than vaginal pH
+  in the diagnosis of menopause. Furthermore, with estrogen therapy, a vaginal pH of <or=4.5 indicates
+  a mid follicular phase estradiol.'
+licence: null
+text_source: abstract
+check:
+  status: checked
+  checked_by: LLM second pass (gpt-5.2); disputes resolved by Claude (AI assistant), not by a clinical
+    expert
+  checked_on: '2026-11-13'
+  notes: 'affiliation: Department of Obstetrics and Gynecology, Keck School of Medicine of the University
+    of Southern California, Women''s and Children''s Hospital, Los Angeles, California 90033, USA. subirro@usc.edu
+
+    design: should be ''review'' (The abstract describes analyzing and reviewing prior studies and comparing
+    to practice data, but does not indicate a systematic search/selection process typical of a systematic_review.)
+
+    cohort.countries: should be [''United States'', ''Costa Rica''] (Costa Rica is explicitly mentioned,
+    but the US is not stated as a participant recruitment country; NHANES III is referenced without naming
+    the United States in the abstract. Affiliation alone does not establish participant recruitment country
+    when specific external studies are being summarized.)
+
+    cohort.menopausal_status: should be [''postmenopausal''] (The abstract discusses diagnosing menopause
+    and reports results for menopausal women; it does not explicitly state inclusion of premenopausal
+    participants.)
+
+    resolution: design set to review and menopausal status to postmenopausal as the checker asked; countries
+    kept (practice data plus Costa Rica).'

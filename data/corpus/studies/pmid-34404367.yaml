@@ -1,0 +1,53 @@
+study_id: pmid-34404367
+pmid: '34404367'
+doi: 10.1186/s12879-021-06562-1
+url: https://pubmed.ncbi.nlm.nih.gov/34404367/
+title: Comparative study of Amsel's criteria and Nugent scoring for diagnosis of bacterial vaginosis in
+  a tertiary care hospital, Nepal
+authors: Bhujel et al.
+year: 2021
+journal: BMC Infect Dis
+design: cross_sectional
+sample_size: 141
+cohort:
+  description: Women with abnormal vaginal discharge at a Nepal hospital
+  ancestry:
+  - nepali
+  countries:
+  - Nepal
+  age_min: null
+  age_max: null
+  menopausal_status: []
+  pregnancy: []
+topics:
+- bacterial vaginosis
+- Amsel criteria
+- Nugent scoring
+- diagnostic accuracy
+- vaginal discharge
+key_finding: Compared with Nugent scoring, Amsel's criteria had 50% sensitivity and 98.2% specificity
+  for diagnosing bacterial vaginosis.
+abstract: 'Background: The most common pathological cause of abnormal vaginal discharge in reproductive-aged
+  women is bacterial vaginosis (BV). Amsel''s criteria and Nugent scoring systems are commonly employed
+  approaches for the diagnosis of BV. Despite the Nugent scoring system being the gold standard method
+  for diagnosing BV, Amsel''s criteria are generally preferred in clinical setup owing to the fact Nugent
+  scoring requires considerable time and expert microscopist. This study was conducted to determine the
+  diagnostic value of Amsel''s criteria by comparing it with the Nugent scoring system. Methods: This
+  was a descriptive cross-sectional study conducted at Tribhuvan University Teaching Hospital, Nepal from
+  October 2016 to September 2017. Vaginal specimens were collected from a total of 141 women presenting
+  with abnormal vaginal discharge. The sensitivity, specificity, positive predictive value, and negative
+  predictive value of Amsel''s criteria were calculated, and each component of Amsel''s criteria was compared
+  to the Nugent scoring system. Results: The sensitivity, specificity, positive predictive value, and
+  negative predictive value of Amsel''s criteria were 50%, 98.2%, 87.5%, and 88.8% respectively. The clue
+  cells showed 100% specificity and vaginal discharge with pH > 4.5 had 89.3% sensitivity while compared
+  with Nugent''s scoring system. Conclusions: Amsel''s criteria can be used as an adjunct method to Nugent
+  scoring for the diagnosis of BV in the hands of skilled manpower in resources limited countries. The
+  presence of clue cell and positive whiff test of Amsel''s criteria shows good match with Nugent''s score.'
+licence: cc by
+text_source: abstract
+check:
+  status: checked
+  checked_by: LLM second pass (gpt-5.2)
+  checked_on: '2026-11-13'
+  notes: 'affiliation: Department of Clinical Microbiology, Institute of Medicine, Tribhuvan University
+    Teaching Hospital, Kathmandu, Nepal. bhujelrajshree@iom.edu.np.'

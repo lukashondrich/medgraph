@@ -1,0 +1,60 @@
+study_id: pmid-32641429
+pmid: '32641429'
+doi: 10.1128/msphere.00593-20
+url: https://pubmed.ncbi.nlm.nih.gov/32641429/
+title: Daily Vaginal Microbiota Fluctuations Associated with Natural Hormonal Cycle, Contraceptives, Diet,
+  and Exercise
+authors: Song et al.
+year: 2020
+journal: mSphere
+design: cohort
+sample_size: 26
+cohort:
+  description: Healthy college-aged women providing daily self-collected vaginal swabs
+  ancestry: []
+  countries:
+  - United States
+  age_min: null
+  age_max: null
+  menopausal_status: []
+  pregnancy: []
+topics:
+- vaginal microbiome
+- menstrual cycle hormones
+- hormonal contraceptives
+- diet vegetarian
+- exercise
+- 16S rRNA sequencing
+key_finding: In 26 healthy college-aged women, vaginal microbiota diversity and Lactobacillus abundance
+  fluctuated with menses and hormonal contraceptive use and were also associated with vegetarian diet
+  and greater exercise.
+abstract: The microorganisms of the vaginal tract are critical for vaginal and reproductive health. However,
+  the regulation of these microorganisms is not well understood. Therefore, we investigated whether different
+  factors regulate the vaginal microbiota of healthy college-aged women (n = 26) with high temporal resolution
+  by collecting daily self-administered vaginal swabs and using 16S rRNA sequencing for bacterial identification.
+  As expected, vaginal microbiota clustered into five predefined community state types. Vaginal microbial
+  diversity, stability, and Lactobacillus abundances were associated with the menstrual cycle and hormonal
+  contraceptive use. Vaginal microbial diversity, as measured using the Shannon index, increased during
+  menses (P Lactobacillus abundances decreased (P = 0.01). The covariance of these microbial measures
+  with previously established estradiol levels suggests that estrogens can regulate vaginal microbiota.
+  Moreover, the use of hormonal contraceptives may alter the temporal dynamics of the vaginal microbiota
+  and decrease Lactobacillus abundances, depending on hormonal content and release method. Interestingly,
+  intrasample diversity was greater in participants on a vegetarian diet (P = 0.004) and among participants
+  who exercised more (P = 0.04). These findings indicate that ovarian hormones, diet, and exercise can
+  regulate vaginal microbial composition and stability and may impact vaginal and reproductive health.IMPORTANCE
+  The vaginal microbiome is a critical component of women's sexual and reproductive health, with variations
+  in microbial composition, particularly the loss of Lactobacillus species, being implicated in gynecologic
+  and obstetric diseases. Given that the vaginal microbiome is so crucial, why do vaginal microbial profiles
+  vary strikingly from person to person and even change over time within the same person? In the present
+  study, which tracked the daily vaginal microbiomes of young healthy women through different lifestyles,
+  we found that use of a locally released progestin contraceptive, a vegetarian diet, and intense exercise
+  appear to lead to vaginal microbiome alterations and loss of Lactobacillus species. The impact of these
+  vaginal microbiome changes on immediate and long-term health remain to be investigated.
+licence: cc by
+text_source: abstract
+check:
+  status: checked
+  checked_by: LLM second pass (gpt-5.2)
+  checked_on: '2026-11-13'
+  notes: 'affiliation: Microbiome Program, Center for Individualized Medicine, Mayo Clinic, Rochester,
+    Minnesota, USA.'

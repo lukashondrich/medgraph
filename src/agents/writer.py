@@ -43,6 +43,7 @@ class WriterAgent(HealthcareAgent):
             turn_kind=turn_kind,
             evidence_gap=state.get("evidence_gap"),
             reading_confidence=reading.get("confidence"),
+            safety_reasons=state.get("safety_reasons"),
             language=state.get("language", "en"),
         )
 

@@ -1,0 +1,64 @@
+study_id: pmid-40298120
+pmid: '40298120'
+doi: 10.1097/ju.0000000000004589
+url: https://pubmed.ncbi.nlm.nih.gov/40298120/
+title: The AUA/SUFU/AUGS Guideline on Genitourinary Syndrome of Menopause
+authors: Kaufman et al.
+year: 2025
+journal: J Urol
+design: guideline
+sample_size: null
+cohort:
+  description: Patients with genitourinary syndrome of menopause (GSM)
+  ancestry: []
+  countries: []
+  age_min: null
+  age_max: null
+  menopausal_status:
+  - perimenopausal
+  - postmenopausal
+  pregnancy: []
+topics:
+- genitourinary syndrome of menopause
+- clinical guideline
+- diagnosis
+- vaginal estrogen
+- non-hormonal therapies
+key_finding: GSM should be diagnosed based on symptoms (with or without physical findings), and local
+  low-dose vaginal estrogen has the most robust evidence among treatment options.
+abstract: 'Purpose: Genitourinary syndrome of menopause (GSM) describes the symptoms and physical changes
+  that result from declining estrogen and androgen concentrations in the genitourinary tract during the
+  menopausal transition. There has not been a consensus reached about the number or type of symptoms needed
+  to diagnose GSM, and the associated urinary symptoms are also linked with other common urologic conditions
+  such as overactive bladder. This guideline provides information to clinicians regarding identification,
+  diagnosis, counseling, and treatment for patients with GSM to optimize symptom control and quality of
+  life while minimizing adverse events. Materials and methods: The systematic review utilized in the creation
+  of this guideline is based on research conducted by the Minnesota Evidence-based Practice Center under
+  contract to the Agency for Healthcare Research and Quality and funded by the Patient Centered Outcomes
+  Research Institute. The Evidence-based Practice Center extracted and synthesized effectiveness and/or
+  harms outcomes from 68 publications. An additional 66 publications evaluating 46 non-hormonal interventions,
+  were described in an evidence map. Results: Clinicians diagnose GSM based on symptoms, with or without
+  related physical findings, and after ruling out other etiologies or co-occurring pathologies. There
+  is a large body of evidence examining the use of hormonal and non-hormonal treatment options to manage
+  the symptoms of GSM; however, the local low-dose vaginal estrogen has the most robust evidence base.
+  Conclusions: The strategies defined in this document were derived from evidence-based and consensus-based
+  processes. Given that there is insufficient information to recommend one hormonal therapy over another,
+  this guideline is not meant to support a stepwise progression through different hormonal approaches.
+  The clinician should make treatment decisions in the context of shared decision-making considering patient
+  goals and preferences, using the evidence of efficacy and adverse events of each possible intervention
+  as a guide.'
+licence: null
+text_source: abstract
+check:
+  status: checked
+  checked_by: LLM second pass (gpt-5.2); disputes resolved by Claude (AI assistant), not by a clinical
+    expert
+  checked_on: '2026-11-13'
+  notes: 'affiliation: Division of Reconstructive Urology and Pelvic Health, Department of Urology, Vanderbilt
+    University Medical Center, Nashville, Tennessee.
+
+    cohort.menopausal_status: should be [''perimenopausal'', ''postmenopausal''] (The abstract states
+    GSM occurs "during the menopausal transition," implying the guideline concerns people in the menopausal
+    transition and menopause; leaving menopausal status empty is not consistent with the text.)
+
+    resolution: menopausal status set to peri- and postmenopausal.'

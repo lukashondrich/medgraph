@@ -1,0 +1,57 @@
+study_id: pmid-31142849
+pmid: '31142849'
+doi: 10.1038/s41591-019-0450-2
+url: https://pubmed.ncbi.nlm.nih.gov/31142849/
+title: The vaginal microbiome and preterm birth
+authors: Fettweis et al.
+year: 2019
+journal: Nat Med
+design: cohort
+sample_size: 135
+cohort:
+  description: Pregnant women with preterm births and term controls
+  ancestry:
+  - african_american
+  countries:
+  - United States
+  age_min: null
+  age_max: null
+  menopausal_status: []
+  pregnancy:
+  - pregnant
+topics:
+- vaginal microbiome
+- preterm birth
+- 16S rRNA sequencing
+- metagenomics
+- cytokines
+key_finding: Compared with term controls, women delivering preterm had lower Lactobacillus crispatus,
+  higher BVAB1/Sneathia amnii/TM7-H1/Prevotella and other taxa, and these taxa correlated with proinflammatory
+  vaginal cytokines.
+abstract: The incidence of preterm birth exceeds 10% worldwide. There are significant disparities in the
+  frequency of preterm birth among populations within countries, and women of African ancestry disproportionately
+  bear the burden of risk in the United States. In the present study, we report a community resource that
+  includes 'omics' data from approximately 12,000 samples as part of the integrative Human Microbiome
+  Project. Longitudinal analyses of 16S ribosomal RNA, metagenomic, metatranscriptomic and cytokine profiles
+  from 45 preterm and 90 term birth controls identified harbingers of preterm birth in this cohort of
+  women predominantly of African ancestry. Women who delivered preterm exhibited significantly lower vaginal
+  levels of Lactobacillus crispatus and higher levels of BVAB1, Sneathia amnii, TM7-H1, a group of Prevotella
+  species and nine additional taxa. The first representative genomes of BVAB1 and TM7-H1 are described.
+  Preterm-birth-associated taxa were correlated with proinflammatory cytokines in vaginal fluid. These
+  findings highlight new opportunities for assessment of the risk of preterm birth.
+licence: cc by
+text_source: abstract
+check:
+  status: checked
+  checked_by: LLM second pass (gpt-5.2); disputes resolved by Claude (AI assistant), not by a clinical
+    expert
+  checked_on: '2026-11-13'
+  notes: 'affiliation: Department of Microbiology and Immunology, School of Medicine, Virginia Commonwealth
+    University, Richmond, VA, USA.
+
+    cohort.ancestry: should be [''african_american''] (The abstract says the cohort was "predominantly
+    of African ancestry" and discusses disparities "in the United States"; it does not specify African
+    (continent) participants. In the allowed vocabulary, African ancestry in a US cohort is best captured
+    as african_american, not african.)
+
+    resolution: ancestry set to african_american: US cohort of African ancestry.'

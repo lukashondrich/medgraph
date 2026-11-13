@@ -1,0 +1,53 @@
+study_id: pmid-27057772
+pmid: '27057772'
+doi: 10.1055/s-0036-1581057
+url: https://pubmed.ncbi.nlm.nih.gov/27057772/
+title: The Gestational Vaginal Microbiome and Spontaneous Preterm Birth among Nulliparous African American
+  Women
+authors: Nelson et al.
+year: 2016
+journal: Am J Perinatol
+design: cohort
+sample_size: 40
+cohort:
+  description: Nulliparous pregnant African American women in early pregnancy
+  ancestry:
+  - african_american
+  countries:
+  - United States
+  age_min: null
+  age_max: null
+  menopausal_status: []
+  pregnancy:
+  - pregnant
+topics:
+- vaginal microbiome
+- spontaneous preterm birth
+- pregnancy
+- microbial diversity
+- African American women
+key_finding: Nulliparous African American women who delivered preterm showed lower vaginal microbiome
+  diversity and lower abundance of several taxa than those delivering at term, though diversity differences
+  were not statistically significant.
+abstract: Introduction Early markers to identify pregnant women at high risk for spontaneous preterm birth
+  (SPTB) have not been established and preventive options are limited. Recent attention has focused on
+  examining the importance of characterizing the vaginal microbiome to predict SPTB. Results We examined
+  the diversity and structure of the vaginal microbiome in nulliparous African American women during early
+  pregnancy and compared 13 women who delivered preterm and 27 women who delivered at term. Samples were
+  taken at one of two points in gestation, before 16 weeks or between 20 and 24 weeks. Among women who
+  delivered preterm, we found lower bacterial diversity with lower abundance of Coriobacteriaceae, Sneathia,
+  Prevotella, and Aerococcus compared with women delivering at term (linear discriminant analysis score
+  > 3.0). The Shannon diversity index was not significantly different between the groups (p-value = 0.239).
+  Phylogenetic diversity and Chao1 suggested a lower diversity in the vaginal microbiota of women who
+  delivered preterm compared with term, but these findings were not significantly different (p = 0.077
+  and p = 0.066, respectively). Conclusion These data suggest that the vaginal microbiome of women delivering
+  preterm had lower diversity than women delivering after 37 weeks, although these findings need to be
+  explored in a larger sample of nulliparous African American women.
+licence: null
+text_source: abstract
+check:
+  status: checked
+  checked_by: LLM second pass (gpt-5.2)
+  checked_on: '2026-11-13'
+  notes: 'affiliation: Department of Epidemiology and Biostatistics, College of Public Health, Temple
+    University, Philadelphia, Pennsylvania.'

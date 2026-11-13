@@ -16,7 +16,13 @@ from fastapi.testclient import TestClient
 from pydantic import ValidationError
 
 from src.agents.citation_check import check_citations
-from src.agents.sources import ReferenceRangeSource, StudyLibrarySource
+from src.agents.planner import ALL_SOURCES, PlannerAgent
+from src.agents.sources import (
+    GuidelineSource,
+    ReferenceRangeSource,
+    SafetySource,
+    StudyLibrarySource,
+)
 from src.agents.writer import WriterAgent
 from src.data.personas import list_personas, list_readings, load_persona
 from src.data.profile import (
@@ -39,14 +45,17 @@ from src.knowledge_pipeline.study_schemas import (
 )
 from src.models.evidence import SourceItem
 from src.orchestrator import build_ph_graph
+from src.orchestrator.graph import planned_sources
 from src.prompts.writer import assign_markers, build_prompt
 from src.sources.matching import match_cohort
 from src.sources.queries import reading_queries
 from src.sources.reference_ranges import load_reference_ranges, lookup_reference_ranges
+from src.sources.safety import evaluate_safety, load_safety_rules
 from src.sources.study_library import (
     LaneResult,
     ScoredPassage,
     evidence_weight,
+    select_guidelines,
     select_lanes,
 )
 
@@ -164,6 +173,14 @@ class TestCohortMatch:
         pregnant = make_profile(ancestry="black", pregnancy=PregnancyStatus.SECOND_TRIMESTER)
         assert match_cohort(pregnant, record).qualifies
         assert not match_cohort(make_profile(ancestry="black"), record).qualifies
+
+    def test_majority_ancestry_is_shown_but_does_not_qualify(self):
+        anna = make_profile(age=56, ancestry="white_european", menopausal_status="postmenopausal")
+        general = make_record("s", cohort={"ancestry": ["white_european", "black"]})
+        match = match_cohort(anna, general)
+        assert not match.qualifies and "White European ancestry" in match.matched_attributes
+        after_menopause = make_record("t", cohort={"menopausal_status": ["postmenopausal"]})
+        assert match_cohort(anna, after_menopause).qualifies
 
     def test_subgroup_cohort_matches_parent_profile(self):
         record = make_record("s", cohort={"ancestry": ["african_american"]})
@@ -309,9 +326,10 @@ class TestCorpus:
             assert record.abstract and record.check.checked_by
             assert record.vocabulary_errors() == []
 
-    def test_shipped_corpus_covers_the_first_persona(self):
-        priya = load_persona("priya")
-        matched = [r for r in load_records().values() if match_cohort(priya, r).qualifies]
+    @pytest.mark.parametrize("persona_id", ["priya", "anna", "amara"])
+    def test_shipped_corpus_covers_each_persona(self, persona_id):
+        persona = load_persona(persona_id)
+        matched = [r for r in load_records().values() if match_cohort(persona, r).qualifies]
         assert len(matched) >= 2
 
 
@@ -337,7 +355,12 @@ class TestReferenceRanges:
     def test_lookup_for_postmenopausal_profile(self):
         profile = make_profile(age=56, ancestry="white_european", menopausal_status="postmenopausal")
         ids = {i.id for i in lookup_reference_ranges(profile, load_records())}
-        assert ids == {"range:postmenopausal-typical"}
+        assert ids == {"range:postmenopausal-typical", "range:postmenopausal-average"}
+
+    def test_lookup_for_pregnant_profile(self):
+        ids = {i.id for i in lookup_reference_ranges(load_persona("amara"), load_records())}
+        assert {"range:pregnant-threshold", "range:pregnant-by-race"} <= ids
+        assert "range:premenopausal-typical" not in ids
 
     def test_range_without_a_checked_study_is_dropped(self):
         assert lookup_reference_ranges(load_persona("priya"), records={}) == []
@@ -394,6 +417,10 @@ class TestCitationCheck:
         assert citation.matched_attributes == ["Indian ancestry"]
         assert citation.countries == ["India"] and citation.url
 
+    def test_same_study_cited_twice_in_a_row_shows_one_number(self):
+        result = check_citations("Range and detail [S3][S1]. Again [S1] [S3].", self.marker_map())
+        assert result.text == "Range and detail [1]. Again [1]."
+
     def test_grouped_and_adjacent_markers(self):
         result = check_citations("Both [S1][S2] and [S2; S1].", self.marker_map())
         assert result.text == "Both [1][2] and [2][1]."
@@ -418,11 +445,10 @@ def ph_state(**overrides) -> dict:
     reading = TestReading(ph=4.8, confidence=0.92, taken_at="2026-11-13T08:14:00")
     state = {
         "messages": [], "user_input": "explain", "route": [], "route_reasoning": "",
-        "specialist_outputs": {}, "final_response": "", "handoff_chain": [],
+        "final_response": "", "handoff_chain": [],
         "safety_escalation": False, "patient": profile.to_dict(),
         "patient_summary": build_profile_summary(profile, reading),
-        "evidence_context": {}, "drug_interactions": [], "citations": [],
-        "router_model_source": "", "language": "en", "reading": reading.to_dict(),
+        "citations": [], "language": "en", "reading": reading.to_dict(),
         "turn_kind": "new_reading", "queries": [], "sources": {}, "retrieval_trace": [],
         "evidence_gap": {}, "safety_reasons": [],
     }
@@ -460,6 +486,11 @@ class TestWriterPrompt:
         assert "this question only" in prompt and "'Sie'" in prompt
         assert "uncertain (confidence 55%)" in prompt and "retesting" in prompt
         assert "German" in prompt and "do not make medical claims" in prompt
+
+    def test_safety_reason_leads_the_notes(self):
+        prompt = build_prompt({}, safety_reasons=["Please show it to your midwife."])
+        assert 'A safety rule applies: "Please show it to your midwife."' in prompt
+        assert "Open your reply with this recommendation" in prompt
 
     def test_no_notes_when_nothing_to_flag(self):
         prompt = build_prompt(assign_markers(self.sources()), reading_confidence=0.95)
@@ -516,12 +547,24 @@ class FakeLibrary:
         self.candidates = candidates
         self.queries: list[str] = []
 
+    def _candidates(self):
+        if self.candidates is not None:
+            return self.candidates
+        return [passage(sid, 0.7) for sid in self.records]
+
+    def _kind(self, guidelines: bool):
+        return {
+            sid: r for sid, r in self.records.items()
+            if (r.design is StudyDesign.GUIDELINE) == guidelines
+        }
+
     def retrieve(self, queries, profile) -> LaneResult:
         self.queries = queries
-        candidates = self.candidates
-        if candidates is None:
-            candidates = [passage(sid, 0.7) for sid in self.records]
-        return select_lanes(candidates, self.records, profile)
+        return select_lanes(self._candidates(), self._kind(False), profile)
+
+    def retrieve_guidelines(self, queries):
+        self.guideline_queries = queries
+        return select_guidelines(self._candidates(), self._kind(True))
 
 
 class TestSourceNodes:
@@ -536,12 +579,17 @@ class TestSourceNodes:
     async def test_study_library_node_uses_reading_queries(self):
         library = FakeLibrary()
         out = await StudyLibrarySource(library)(ph_state())
-        assert library.queries == out["queries"] and len(library.queries) >= 3
+        assert len(library.queries) >= 3 and "queries" not in out
         counts = out["retrieval_trace"][0]["counts"]
-        assert counts["matched"] >= 2 and counts["found"] == len(library.records)
+        assert counts["matched"] >= 2 and counts["found"] == len(library._kind(False))
         assert out["evidence_gap"] == {"no_matched_evidence": False, "unmatched_attributes": []}
         groups = {s["group"] for s in out["sources"].values()}
         assert groups == {"matched", "overall"}
+
+    async def test_study_library_node_prefers_planned_queries(self):
+        library = FakeLibrary()
+        await StudyLibrarySource(library)(ph_state(queries=["vaginal pH after sex"]))
+        assert library.queries == ["vaginal pH after sex"]
 
     async def test_study_library_node_uses_question_on_follow_up(self):
         library = FakeLibrary()
@@ -562,6 +610,140 @@ class TestSourceNodes:
         assert out["retrieval_trace"][0]["error"] is True and "sources" not in out
 
 
+def fake_graph(library):
+    """The real graph with the embedding search replaced by a fake library."""
+    return build_ph_graph(
+        planner=PlannerAgent(model="test"),
+        safety_rules=SafetySource(library),
+        reference_ranges=ReferenceRangeSource(library),
+        study_library=StudyLibrarySource(library),
+        guidelines=GuidelineSource(library),
+        writer=WriterAgent(model="test"),
+    )
+
+
+class TestPlanner:
+    async def test_new_reading_needs_no_model_call(self):
+        mock = AsyncMock()
+        with patch("litellm.acompletion", new=mock):
+            out = await PlannerAgent(model="test")(ph_state())
+        assert mock.await_count == 0
+        assert out["route"] == ALL_SOURCES and len(out["queries"]) >= 3
+
+    async def test_question_plan_is_parsed(self):
+        plan = '{"on_topic": true, "sources": ["guidelines"], "queries": [" vaginal discharge advice ", ""], "reasoning": "r"}'
+        with patch("litellm.acompletion", new=AsyncMock(return_value=llm_reply(plan))):
+            out = await PlannerAgent(model="test")(ph_state(turn_kind="question", user_input="What do doctors advise?"))
+        assert out["route"] == ["guidelines"] and out["queries"] == ["vaginal discharge advice"]
+
+    async def test_off_topic_gives_empty_route(self):
+        plan = '{"on_topic": false, "sources": ["study_library"], "queries": ["x"], "reasoning": "r"}'
+        with patch("litellm.acompletion", new=AsyncMock(return_value=llm_reply(plan))):
+            out = await PlannerAgent(model="test")(ph_state(turn_kind="question", user_input="laptops?"))
+        assert out["route"] == [] and out["queries"] == []
+
+    async def test_unusable_output_falls_back_to_all_sources(self):
+        bad = AsyncMock(side_effect=[llm_reply("not json"), llm_reply('{"sources": ["astrology"]}')])
+        with patch("litellm.acompletion", new=bad):
+            out = await PlannerAgent(model="test")(ph_state(turn_kind="question", user_input="Is 4.8 fine?"))
+        assert bad.await_count == 2
+        assert out["route"] == ALL_SOURCES and out["queries"] == ["Is 4.8 fine?"]
+
+    async def test_at_most_three_queries(self):
+        plan = '{"on_topic": true, "sources": ["study_library"], "queries": ["a b c", "d e f", "g h i", "j k l"], "reasoning": ""}'
+        with patch("litellm.acompletion", new=AsyncMock(return_value=llm_reply(plan))):
+            out = await PlannerAgent(model="test")(ph_state(turn_kind="question", user_input="q"))
+        assert len(out["queries"]) == 3
+
+    def test_planned_sources_always_include_the_safety_check(self):
+        assert planned_sources(["study_library"]) == ["safety_rules", "study_library"]
+        assert planned_sources(["guidelines", "reference_ranges"]) == [
+            "safety_rules", "reference_ranges", "guidelines",
+        ]
+        assert planned_sources([]) == [] and planned_sources(["nonsense"]) == []
+
+
+class TestSafety:
+    def reading(self, ph):
+        return TestReading(ph=ph, confidence=0.9, taken_at="2026-11-13T08:14:00")
+
+    def fired(self, profile, ph=4.8):
+        return [f.rule.id for f in evaluate_safety(profile, self.reading(ph), load_records())]
+
+    def test_pregnant_with_elevated_reading(self):
+        amara = load_persona("amara")
+        assert self.fired(amara, 5.0) == ["pregnant-elevated"]
+        assert self.fired(amara, 4.5) == ["pregnant-elevated"]
+        assert self.fired(amara, 4.1) == []
+
+    def test_not_pregnant_elevated_reading_does_not_fire(self):
+        assert self.fired(load_persona("priya"), 5.5) == []
+        assert self.fired(load_persona("anna"), 6.5) == []
+
+    def test_bleeding_after_menopause(self):
+        anna = load_persona("anna").model_copy(update={"symptoms": ["light bleeding last week"]})
+        assert self.fired(anna, 6.0) == ["postmenopausal-bleeding"]
+        priya = load_persona("priya").model_copy(update={"symptoms": ["bleeding"]})
+        assert self.fired(priya) == []
+
+    def test_fever_or_pelvic_pain(self):
+        priya = load_persona("priya").model_copy(update={"symptoms": ["Fever since yesterday"]})
+        assert self.fired(priya) == ["fever-or-pelvic-pain"]
+
+    def test_recurrent_symptoms_need_current_symptoms(self):
+        history = {"history": ["recurrent bacterial vaginosis"]}
+        assert self.fired(load_persona("priya").model_copy(update=history)) == []
+        with_symptoms = load_persona("priya").model_copy(update={**history, "symptoms": ["odour"]})
+        assert self.fired(with_symptoms) == ["recurrent-symptoms"]
+
+    def test_pregnancy_rule_without_a_reading_does_not_fire(self):
+        assert evaluate_safety(load_persona("amara"), None, load_records()) == []
+
+    def test_rule_texts_and_quotes(self):
+        records = load_records()
+        for rule in load_safety_rules():
+            assert rule.message and rule.message_de and rule.text("de") == rule.message_de
+            if rule.study_id:
+                assert rule.quote and rule.quote in records[rule.study_id].abstract, rule.id
+
+    async def test_safety_node(self):
+        amara = load_persona("amara")
+        state = ph_state(patient=amara.to_dict(), reading=self.reading(5.2).to_dict(), language="de")
+        out = await SafetySource(FakeLibrary())(state)
+        assert out["safety_escalation"] is True
+        assert out["safety_reasons"][0].startswith("Sie sind schwanger")
+        assert out["retrieval_trace"][0]["counts"] == {"fired": 1}
+
+        calm = await SafetySource(FakeLibrary())(ph_state())
+        assert calm["safety_escalation"] is False and calm["safety_reasons"] == []
+
+
+class TestGuidelines:
+    def records(self):
+        return {
+            "g1": make_record("g1", design=StudyDesign.GUIDELINE),
+            "g2": make_record("g2", design=StudyDesign.GUIDELINE),
+            "g3": make_record("g3", design=StudyDesign.GUIDELINE),
+            "study": make_record("study"),
+        }
+
+    def test_only_relevant_guidelines_best_first(self):
+        candidates = [passage("g1", 0.5), passage("g2", 0.9), passage("g3", 0.1), passage("study", 0.95)]
+        guidelines = {k: v for k, v in self.records().items() if k != "study"}
+        items = select_guidelines(candidates, guidelines)
+        assert [i.study_id for i in items] == ["g2", "g1"]
+        assert all(i.group == "guideline" and i.source == "guidelines" for i in items)
+        assert items[0].id == "guideline:g2"
+
+    async def test_guidelines_are_kept_out_of_the_study_lanes(self):
+        library = FakeLibrary(records=self.records())
+        studies = await StudyLibrarySource(library)(ph_state())
+        guides = await GuidelineSource(library)(ph_state(queries=["vaginal discharge"]))
+        assert {s["study_id"] for s in studies["sources"].values()} == {"study"}
+        assert {s["study_id"] for s in guides["sources"].values()} <= {"g1", "g2", "g3"}
+        assert guides["retrieval_trace"][0]["counts"]["found"] == 2
+
+
 class TestGraph:
     async def test_reading_in_answer_with_citations_out(self):
         library = FakeLibrary()
@@ -571,23 +753,65 @@ class TestGraph:
             captured["system"] = kwargs["messages"][0]["content"]
             return llm_reply("A bit above the usual range [S1]. Seen in Indian women too [S5].")
 
-        graph = build_ph_graph(
-            reference_ranges=ReferenceRangeSource(library),
-            study_library=StudyLibrarySource(library),
-            writer=WriterAgent(model="test"),
-        )
+        graph = fake_graph(library)
         with patch("litellm.acompletion", new=fake_llm):
             out = await graph.ainvoke(ph_state())
 
-        # Both sources ran before the writer and their evidence reached the prompt.
-        assert out["handoff_chain"][-1] == "writer"
-        assert set(out["handoff_chain"][:2]) == {"reference_ranges", "study_library"}
+        # Plan first, every source next, the writer last, with the evidence in its prompt.
+        assert out["handoff_chain"][0] == "planner" and out["handoff_chain"][-1] == "writer"
+        assert set(out["handoff_chain"][1:-1]) == {
+            "safety_rules", "reference_ranges", "study_library", "guidelines",
+        }
+        assert out["queries"] == library.queries == library.guideline_queries
         assert "(reference range)" in captured["system"] and "(women like you)" in captured["system"]
         assert "Vaginal pH: 4.8" in captured["system"]
         assert out["final_response"] == "A bit above the usual range [1]. Seen in Indian women too [2]."
         assert [c["number"] for c in out["citations"]] == [1, 2]
         assert out["citations"][1]["group"] == "matched"
-        assert {t["source"] for t in out["retrieval_trace"]} == {"reference_ranges", "study_library"}
+        assert {t["source"] for t in out["retrieval_trace"]} == {
+            "safety_rules", "reference_ranges", "study_library", "guidelines",
+        }
+
+    async def test_off_topic_question_skips_all_sources(self):
+        library = FakeLibrary()
+        plan = '{"on_topic": false, "sources": [], "queries": [], "reasoning": "not about the test"}'
+        replies = AsyncMock(side_effect=[llm_reply(plan), llm_reply("I can only help with your test.")])
+        state = ph_state(turn_kind="question", user_input="Which laptop should I buy?")
+        with patch("litellm.acompletion", new=replies):
+            out = await fake_graph(library).ainvoke(state)
+        assert out["handoff_chain"] == ["planner", "writer"]
+        assert out["sources"] == {} and out["citations"] == [] and library.queries == []
+
+    async def test_follow_up_consults_only_planned_sources(self):
+        library = FakeLibrary()
+        plan = '{"on_topic": true, "sources": ["study_library"], "queries": ["vaginal pH after intercourse"], "reasoning": "r"}'
+        replies = AsyncMock(side_effect=[llm_reply(plan), llm_reply("Sex can shift it [S1].")])
+        state = ph_state(turn_kind="question", user_input="Could sex have changed it?")
+        with patch("litellm.acompletion", new=replies):
+            out = await fake_graph(library).ainvoke(state)
+        assert set(out["handoff_chain"][1:-1]) == {"safety_rules", "study_library"}
+        assert library.queries == ["vaginal pH after intercourse"]
+        assert all(s["source"] == "study_library" for s in out["sources"].values())
+
+    async def test_safety_rule_reaches_the_writer(self):
+        library = FakeLibrary()
+        captured = {}
+
+        async def fake_llm(**kwargs):
+            captured["system"] = kwargs["messages"][0]["content"]
+            return llm_reply("Please show this to your midwife [S1].")
+
+        amara = load_persona("amara")
+        reading = TestReading(ph=5.0, confidence=0.9, taken_at="2026-11-13T08:14:00")
+        state = ph_state(
+            patient=amara.to_dict(), reading=reading.to_dict(),
+            patient_summary=build_profile_summary(amara, reading),
+        )
+        with patch("litellm.acompletion", new=fake_llm):
+            out = await fake_graph(library).ainvoke(state)
+        assert out["safety_escalation"] is True
+        assert len(out["safety_reasons"]) == 1 and "pregnant" in out["safety_reasons"][0]
+        assert "A safety rule applies" in captured["system"]
 
 
 # ── API (task 1.15) ───────────────────────────────────────────────────────
@@ -609,7 +833,7 @@ class TestApi:
 
     def test_persona_endpoints(self, client):
         gallery = client.get("/api/personas").json()
-        assert gallery[0]["persona_id"] == "priya"
+        assert [p["persona_id"] for p in gallery] == ["priya", "anna", "amara"]
         assert client.get("/api/personas/priya").json()["ancestry"] == "indian"
         assert client.get("/api/personas/nobody").status_code == 404
         assert len(client.get("/api/readings").json()) >= 2
@@ -617,16 +841,9 @@ class TestApi:
     def test_new_reading_stream(self, client):
         library = FakeLibrary()
 
-        def fake_graph():
-            return build_ph_graph(
-                reference_ranges=ReferenceRangeSource(library),
-                study_library=StudyLibrarySource(library),
-                writer=WriterAgent(model="test"),
-            )
-
         reading = client.get("/api/readings").json()[0]
         reply = llm_reply("Slightly high [S1]. Indian studies exist [S5].")
-        with patch("src.orchestrator.graph.build_ph_graph", new=fake_graph), \
+        with patch("src.orchestrator.graph.build_ph_graph", new=lambda: fake_graph(library)), \
              patch("litellm.acompletion", new=AsyncMock(return_value=reply)):
             resp = client.post("/api/chat", json={
                 "message": "", "persona_id": "priya", "reading": reading, "turn_kind": "new_reading",
@@ -637,16 +854,32 @@ class TestApi:
         assert names[0] == "routing" and names[-1] == "done"
         assert names.index("synthesizing") < names.index("response")
 
-        routing = events[0][1]
-        assert routing["agents"] == ["reference_ranges", "study_library"]
+        assert events[0][1] == {"status": "processing"}
+        routing = next(d for n, d in events if n == "routing" and "agents" in d)
+        assert routing["agents"] == ["safety_rules", "reference_ranges", "study_library", "guidelines"]
+        assert len(routing["queries"]) >= 3
         done = {d["agent"]: d["detail"] for n, d in events if n == "specialist" and d["status"] == "done"}
-        assert set(done) == {"reference_ranges", "study_library"}
+        assert set(done) == set(routing["agents"])
+        assert done["safety_rules"]["counts"] == {"fired": 0}
         assert done["study_library"]["counts"]["matched"] >= 2
 
         response = next(d for n, d in events if n == "response")
         assert response["content"] == "Slightly high [1]. Indian studies exist [2]."
         assert [c["number"] for c in response["citations"]] == [1, 2]
         assert response["citations"][1]["matched_attributes"]
+        assert response["safety_escalation"] is False and response["safety_reasons"] == []
+
+    def test_pregnant_persona_gets_the_safety_notice(self, client):
+        library = FakeLibrary()
+        reading = {"ph": 5.0, "confidence": 0.9, "taken_at": "2026-11-13T08:14:00"}
+        with patch("src.orchestrator.graph.build_ph_graph", new=lambda: fake_graph(library)), \
+             patch("litellm.acompletion", new=AsyncMock(return_value=llm_reply("Please see your midwife [S1]."))):
+            resp = client.post("/api/chat", json={
+                "message": "", "persona_id": "amara", "reading": reading, "turn_kind": "new_reading",
+            })
+        response = next(d for n, d in parse_sse(resp.text) if n == "response")
+        assert response["safety_escalation"] is True
+        assert len(response["safety_reasons"]) == 1
 
     def test_unknown_persona_and_bad_reading(self, client):
         assert client.post("/api/chat", json={"message": "hi", "persona_id": "nobody"}).status_code == 404

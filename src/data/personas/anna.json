@@ -1,0 +1,17 @@
+{
+  "id": "anna",
+  "name": "Anna",
+  "age": 56,
+  "ancestry": "white_european",
+  "country_of_residence": "Germany",
+  "menopausal_status": "postmenopausal",
+  "pregnancy": "not_pregnant",
+  "cycle_regular": null,
+  "cycle_day": null,
+  "hormonal_contraception": null,
+  "hrt": null,
+  "recent_antibiotics": false,
+  "symptoms": [],
+  "history": [],
+  "headline": "56 · after menopause · no hormone therapy"
+}

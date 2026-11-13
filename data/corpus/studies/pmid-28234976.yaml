@@ -1,0 +1,62 @@
+study_id: pmid-28234976
+pmid: '28234976'
+doi: 10.1371/journal.pone.0171856
+url: https://pubmed.ncbi.nlm.nih.gov/28234976/
+title: The influence of sexual activity on the vaginal microbiota and Gardnerella vaginalis clade diversity
+  in young women
+authors: Vodstrcil et al.
+year: 2017
+journal: PLoS One
+design: cohort
+sample_size: 52
+cohort:
+  description: Young women from a university cohort in Australia
+  ancestry: []
+  countries:
+  - Australia
+  age_min: null
+  age_max: null
+  menopausal_status: []
+  pregnancy: []
+topics:
+- vaginal microbiota
+- sexual activity
+- Gardnerella vaginalis clades
+- bacterial vaginosis
+- 16S rRNA sequencing
+key_finding: Sexual activity and ethnicity were associated with vaginal microbiota composition, and penile-vaginal
+  sex increased Gardnerella vaginalis clade diversity without changing microbiota consistency over time.
+abstract: 'Objectives: To examine the influence of sexual activity on the composition and consistency
+  of the vaginal microbiota over time, and distribution of Gardnerella vaginalis clades in young women.
+  Methods: Fifty-two participants from a university cohort were selected. Vaginal swabs were self-collected
+  every 3-months for up to 12 months with 184 specimens analysed. The vaginal microbiota was characterised
+  using Roche 454 V3/4 region 16S rRNA sequencing, and G.vaginalis clade typing by qPCR. Results: A Lactobacillus
+  crispatus dominated vaginal microbiota was associated with Caucasian ethnicity (adjusted relative risk
+  ratio[ARRR] = 7.28, 95%CI:1.37,38.57,p = 0.020). An L.iners (ARRR = 17.51, 95%CI:2.18,140.33,p = 0.007)
+  or G.vaginalis (ARRR = 14.03, 95%CI:1.22,160.69, p = 0.034) dominated microbiota was associated with
+  engaging in penile-vaginal sex. Microbiota dominated by L.crispatus, L.iners or other lactobacilli exhibited
+  greater longitudinal consistency of the bacterial communities present compared to ones dominated by
+  heterogeneous non-lactobacilli (p<0.030); sexual activity did not influence consistency. Women who developed
+  BV were more likely to have clade GV4 compared to those reporting no sex/practiced non-coital activities
+  (OR = 11.82, 95%CI:1.87,74.82,p = 0.009). Specimens were more likely to contain multiple G.vaginalis
+  clades rather than a single clade if women engaged in penile-vaginal sex (RRR = 9.55, 95%CI:1.33,68.38,p
+  = 0.025) or were diagnosed with BV (RRR = 31.5, 95%CI:1.69,586.87,p = 0.021). Conclusions: Sexual activity
+  and ethnicity influenced the composition of the vaginal microbiota of these young, relatively sexually
+  inexperienced women. Women had consistent vaginal microbiota over time if lactobacilli were the dominant
+  spp. present. Penile-vaginal sex did not alter the consistency of microbial communities but increased
+  G.vaginalis clade diversity in young women with and without BV, suggesting sexual transmission of commensal
+  and potentially pathogenic clades.'
+licence: cc by
+text_source: abstract
+check:
+  status: checked
+  checked_by: LLM second pass (gpt-5.2); disputes resolved by Claude (AI assistant), not by a clinical
+    expert
+  checked_on: '2026-11-13'
+  notes: 'affiliation: Melbourne Sexual Health Centre, Alfred Health, Carlton, Melbourne, Australia.
+
+    cohort.ancestry: should be [''white_european''] (Abstract reports an association with ''Caucasian
+    ethnicity'', so ancestry/ethnicity is stated and the list should not be empty.)
+
+    resolution: ancestry left empty: ''Caucasian ethnicity'' is an association in the results, not the
+    cohort''s make-up.'

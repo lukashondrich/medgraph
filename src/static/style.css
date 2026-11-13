@@ -1931,3 +1931,21 @@ button.cite--matched:hover {
     z-index: 20;
   }
 }
+
+/* --- Safety notice and safety step --- */
+
+.safety-title {
+  display: block;
+  margin-bottom: 0.125rem;
+}
+
+.step-flag {
+  color: var(--safety-text);
+  font-weight: 600;
+}
+
+.cite--safety {
+  background: var(--safety-bg);
+  color: var(--safety-text);
+  border-color: var(--safety-border);
+}

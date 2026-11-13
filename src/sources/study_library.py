@@ -31,6 +31,8 @@ logger = logging.getLogger(__name__)
 
 MAX_OVERALL = 4
 MAX_MATCHED = 3
+MAX_GUIDELINES = 2
+SEARCH_DEPTH = 2000
 # A study must be about the question to be used. Cosine similarity of its
 # best passage to the best-fitting query has to reach this value. Measured on
 # the first corpus: unrelated questions peak near 0.2, related ones start
@@ -169,6 +171,28 @@ def select_lanes(
     return result
 
 
+def select_guidelines(
+    candidates: list[ScoredPassage],
+    guidelines: dict[str, StudyRecord],
+    *,
+    max_items: int = MAX_GUIDELINES,
+    min_relevance: float = MIN_RELEVANCE,
+) -> list[SourceItem]:
+    """Pick the guideline records that speak to the question, best first."""
+    by_study: dict[str, list[ScoredPassage]] = {}
+    for passage in candidates:
+        if passage.study_id in guidelines and passage.relevance >= min_relevance:
+            by_study.setdefault(passage.study_id, []).append(passage)
+    for passages in by_study.values():
+        passages.sort(key=lambda p: p.relevance, reverse=True)
+    ranked = sorted(by_study, key=lambda sid: by_study[sid][0].relevance, reverse=True)
+    items = [_to_item(guidelines[sid], by_study[sid], "guideline", None) for sid in ranked[:max_items]]
+    for item in items:
+        item.id = f"guideline:{item.study_id}"
+        item.source = "guidelines"
+    return items
+
+
 class StudyLibrary:
     """Semantic search over the indexed study passages."""
 
@@ -200,8 +224,13 @@ class StudyLibrary:
             self._pipeline = build_retrieval_pipeline(store, top_k=top_k)
         return self._pipeline
 
-    def search(self, queries: list[str], top_k: int = 30) -> list[ScoredPassage]:
-        """Return passages for all queries, keeping each passage's best score."""
+    def search(self, queries: list[str], top_k: int = SEARCH_DEPTH) -> list[ScoredPassage]:
+        """Return passages for all queries, keeping each passage's best score.
+
+        The search is deep enough to score every passage in the corpus, so
+        that guidelines and small matched studies are not crowded out by the
+        most similar passages; the relevance threshold does the filtering.
+        """
         if not self.available:
             logger.warning("Study store not found at %s; run the corpus build", self.store_path)
             return []
@@ -223,8 +252,19 @@ class StudyLibrary:
                         best[passage.passage_id] = passage
         return list(best.values())
 
+    def _records_by_kind(self, guidelines: bool) -> dict[str, StudyRecord]:
+        return {
+            sid: record for sid, record in self.records.items()
+            if (record.design is StudyDesign.GUIDELINE) == guidelines
+        }
+
     def retrieve(self, queries: list[str], profile: UserProfile) -> LaneResult:
-        return select_lanes(self.search(queries), self.records, profile)
+        """Two-lane retrieval over studies. Guidelines are a separate source."""
+        return select_lanes(self.search(queries), self._records_by_kind(False), profile)
+
+    def retrieve_guidelines(self, queries: list[str]) -> list[SourceItem]:
+        """The most relevant guideline passages for the queries."""
+        return select_guidelines(self.search(queries), self._records_by_kind(True))
 
 
 _library: Optional[StudyLibrary] = None

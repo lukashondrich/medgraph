@@ -1,0 +1,34 @@
+# Situations in which the answer must recommend seeing a clinician.
+# Evaluated before the writer runs; deterministic and unit tested.
+# when: all listed conditions must hold. Omitted conditions are ignored.
+# study_id / quote are optional; when present the quote must be verbatim from
+# that study's stored text (a test checks this).
+
+- id: pregnant-elevated
+  when:
+    pregnant: true
+    ph_min: 4.5
+  message: You are pregnant and this reading is above the usual range. Please show it to your midwife or doctor in the next few days.
+  message_de: Sie sind schwanger und dieser Wert liegt über dem üblichen Bereich. Bitte zeigen Sie ihn in den nächsten Tagen Ihrer Hebamme, Ihrer Ärztin oder Ihrem Arzt.
+  study_id: pmid-12634666
+  quote: Women with a vaginal pH of 5.0 or greater or a vaginal pH of 4.5 or greater and a Gram stain score of 9 to 10 had significantly increased preterm births
+
+- id: postmenopausal-bleeding
+  when:
+    menopausal_status: [postmenopausal]
+    symptoms_any: [bleeding, spotting]
+  message: Bleeding after menopause should always be checked. Please see a doctor soon.
+  message_de: Blutungen nach der Menopause sollten immer abgeklärt werden. Bitte gehen Sie bald zu einer Ärztin oder einem Arzt.
+
+- id: fever-or-pelvic-pain
+  when:
+    symptoms_any: [fever, pelvic pain, abdominal pain, lower belly pain]
+  message: Fever or pain in the lower belly together with vaginal symptoms needs a prompt check. Please see a doctor today or tomorrow.
+  message_de: Fieber oder Schmerzen im Unterbauch zusammen mit vaginalen Beschwerden sollten rasch abgeklärt werden. Bitte gehen Sie heute oder morgen zu einer Ärztin oder einem Arzt.
+
+- id: recurrent-symptoms
+  when:
+    has_symptoms: true
+    history_any: [recurrent, recurring, keeps coming back]
+  message: Your symptoms keep coming back. A clinician can test for the cause instead of guessing from pH. Please book a visit.
+  message_de: Ihre Beschwerden kehren immer wieder. Eine Fachperson kann die Ursache testen, statt sie aus dem pH-Wert zu erraten. Bitte vereinbaren Sie einen Termin.

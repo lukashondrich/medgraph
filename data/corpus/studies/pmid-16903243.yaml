@@ -1,0 +1,48 @@
+study_id: pmid-16903243
+pmid: '16903243'
+doi: null
+url: https://pubmed.ncbi.nlm.nih.gov/16903243/
+title: Estrogen effects on the vaginal pH, flora and cytology in late postmenopause after a long period
+  without hormone therapy
+authors: Galhardo et al.
+year: 2006
+journal: Clin Exp Obstet Gynecol
+design: rct
+sample_size: 48
+cohort:
+  description: Late postmenopausal women without previous hormone therapy
+  ancestry: []
+  countries:
+  - Brazil
+  age_min: null
+  age_max: null
+  menopausal_status:
+  - postmenopausal
+  pregnancy: []
+topics:
+- conjugated equine estrogen
+- vaginal pH
+- vaginal cytology
+- vaginal flora
+- postmenopausal symptoms
+key_finding: Three months of oral conjugated equine estrogens improved vaginal dryness/irritation and
+  increased Lactobacillus and vaginal cells while lowering vaginal pH versus placebo in late postmenopausal
+  women.
+abstract: In this report we evaluated the action of conjugated equine estrogens (CEE) on vaginal symptoms,
+  cytology, pH, and flora in late postmenopausal women without any previous hormone therapy. The study
+  was a randomized, double-blind, placebo-controlled trial with 48 late postmenopausal women who received
+  placebo or unopposed CEE (0.625mg/day of CEE orally) during three months of treatment. Vaginal and sexual
+  complaints were evaluated through daily diary cards. We analyzed vaginal changes through cytology and
+  pH measurements. After three months of treatment, 20% of placebo-treated patients and 80% of the CEE-treated
+  patients reported improvement in vaginal dryness and irritation. In the latter group, the vaginal cells
+  and Lactobacillus increased and the vaginal pH decreased, without other changes in sexual complaints.
+  We concluded that estrogen ameliorated the genital tract of late postmenopausal women without any previous
+  hormone therapy.
+licence: null
+text_source: abstract
+check:
+  status: checked
+  checked_by: LLM second pass (gpt-5.2)
+  checked_on: '2026-11-13'
+  notes: 'affiliation: Obstetrics Department, Federal University of Mato Grosso do Sul, Escola de Medicina
+    de Mato Grosso do Sul, Brazil.'

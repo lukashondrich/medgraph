@@ -1,0 +1,61 @@
+study_id: pmid-25053998
+pmid: '25053998'
+doi: 10.1186/2049-2618-2-23
+url: https://pubmed.ncbi.nlm.nih.gov/25053998/
+title: Characterization of the vaginal microbiota of healthy Canadian women through the menstrual cycle
+authors: Chaban et al.
+year: 2014
+journal: Microbiome
+design: cohort
+sample_size: 27
+cohort:
+  description: Healthy naturally cycling reproductive-age Canadian women
+  ancestry: []
+  countries:
+  - Canada
+  age_min: null
+  age_max: null
+  menopausal_status: []
+  pregnancy: []
+topics:
+- vaginal microbiome
+- menstrual cycle
+- Lactobacillus
+- cpn60 sequencing
+- Gardnerella vaginalis
+- Mollicutes
+key_finding: Most women's vaginal microbiomes remained relatively stable across a menstrual cycle, with
+  profiles clustering by dominant taxa such as Lactobacillus species and occasional Bifidobacterium breve
+  dominance.
+abstract: 'Background: The vaginal microbial community plays a vital role in maintaining women''s health.
+  Understanding the precise bacterial composition is challenging because of the diverse and difficult-to-culture
+  nature of many bacterial constituents, necessitating culture-independent methodology. During a natural
+  menstrual cycle, physiological changes could have an impact on bacterial growth, colonization, and community
+  structure. The objective of this study was to assess the stability of the vaginal microbiome of healthy
+  Canadian women throughout a menstrual cycle by using cpn60-based microbiota analysis. Vaginal swabs
+  from 27 naturally cycling reproductive-age women were collected weekly through a single menstrual cycle.
+  Polymerase chain reaction (PCR) was performed to amplify the universal target region of the cpn60 gene
+  and generate amplicons representative of the microbial community. Amplicons were pyrosequenced, assembled
+  into operational taxonomic units, and analyzed. Samples were also assayed for total 16S rRNA gene content
+  and Gardnerella vaginalis by quantitative PCR and screened for the presence of Mollicutes by using family
+  and genus-specific PCR. Results: Overall, the vaginal microbiome of most women remained relatively stable
+  throughout the menstrual cycle, with little variation in diversity and only modest fluctuations in species
+  richness. Microbiomes between women were more different than were those collected consecutively from
+  individual women. Clustering of microbial profiles revealed the expected groupings dominated by Lactobacillus
+  crispatus, Lactobacillus iners, and Lactobacillus jensenii. Interestingly, two additional clusters were
+  dominated by either Bifidobacterium breve or a heterogeneous mixture of nonlactobacilli. Direct G. vaginalis
+  quantification correlated strongly with its pyrosequencing-read abundance, and Mollicutes, including
+  Mycoplasma hominis, Ureaplasma parvum, and Ureaplasma urealyticum, were detected in most samples. Conclusions:
+  Our cpn60-based investigation of the vaginal microbiome demonstrated that in healthy women most vaginal
+  microbiomes remained stable through their menstrual cycle. Of interest in these findings was the presence
+  of Bifidobacteriales beyond just Gardnerella species. Bifidobacteriales are frequently underrepresented
+  in 16S rRNA gene-based studies, and their detection by cpn60-based investigation suggests that their
+  significance in the vaginal community may be underappreciated.'
+licence: cc by
+text_source: abstract
+check:
+  status: checked
+  checked_by: LLM second pass (gpt-5.2)
+  checked_on: '2026-11-13'
+  notes: 'affiliation: Department of Veterinary Microbiology, University of Saskatchewan, 52 Campus Drive,
+    Saskatoon, SK S7N 5B4, Canada.'

@@ -1,0 +1,52 @@
+study_id: pmid-35416968
+pmid: '35416968'
+doi: 10.1093/cid/ciac021
+url: https://pubmed.ncbi.nlm.nih.gov/35416968/
+title: 'Diagnosis and Management of Bacterial Vaginosis: Summary of Evidence Reviewed for the 2021 Centers
+  for Disease Control and Prevention Sexually Transmitted Infections Treatment Guidelines'
+authors: Muzny et al.
+year: 2022
+journal: Clin Infect Dis
+design: review
+sample_size: null
+cohort:
+  description: Not applicable; evidence summary for CDC STI guidelines
+  ancestry: []
+  countries: []
+  age_min: null
+  age_max: null
+  menopausal_status: []
+  pregnancy: []
+topics:
+- bacterial vaginosis
+- epidemiology
+- diagnosis
+- molecular testing
+- treatment regimens
+- risk factors
+key_finding: The article summarizes evidence on bacterial vaginosis epidemiology, risk factors, diagnostics,
+  and novel treatments for the 2021 CDC STI treatment guidelines.
+abstract: In preparation for the 2021 Centers for Disease Control and Prevention (CDC) sexually transmitted
+  infections (STIs) treatment guidelines, the CDC convened an advisory group in 2019 to examine recent
+  literature addressing updates in the epidemiology, diagnosis, and management of STIs. This article summarizes
+  recent data in each of these key topic areas as they pertain to bacterial vaginosis (BV), the most common
+  cause of vaginal discharge. The evidence reviewed primarily focused on updates in the global epidemiology
+  of BV, risk factors for BV, data supportive of sexual transmission of BV-associated bacteria, BV molecular
+  diagnostic tests, and novel treatment regimens. Additionally, recent literature on alcohol abstinence
+  in the setting of 5-nitroimidazole use was reviewed.
+licence: null
+text_source: abstract
+check:
+  status: checked
+  checked_by: LLM second pass (gpt-5.2); disputes resolved by Claude (AI assistant), not by a clinical
+    expert
+  checked_on: '2026-11-13'
+  notes: 'affiliation: Division of Infectious Diseases, University of Alabama at Birmingham, Birmingham,
+    Alabama, USA.
+
+    design: should be ''review'' (The abstract describes an evidence summary of recently reviewed literature
+    prepared for CDC guidelines; it is not itself a guideline document. No guideline development recommendations
+    are presented in the abstract.)
+
+    resolution: design set to review: an evidence summary prepared for a guideline, not the guideline
+    itself.'

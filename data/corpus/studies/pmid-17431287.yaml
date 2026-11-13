@@ -1,0 +1,60 @@
+study_id: pmid-17431287
+pmid: '17431287'
+doi: null
+url: https://pubmed.ncbi.nlm.nih.gov/17431287/
+title: Prevalence of bacterial vaginosis among women in Delhi, India
+authors: Bhalla et al.
+year: 2007
+journal: Indian J Med Res
+design: cross_sectional
+sample_size: null
+cohort:
+  description: Women aged 15-49 from urban and rural Delhi communities
+  ancestry:
+  - indian
+  countries:
+  - India
+  age_min: 15
+  age_max: 49
+  menopausal_status: []
+  pregnancy: []
+topics:
+- bacterial vaginosis prevalence
+- community survey
+- risk factors
+- sexually transmitted infections
+- Delhi
+key_finding: Bacterial vaginosis was diagnosed in 32.8% of women, with many cases asymptomatic and higher
+  prevalence in urban slum communities.
+abstract: 'Background & objective: Bacterial vaginosis is the most common cause of vaginal discharge among
+  women in reproductive age. Surveillance studies on bacterial vaginosis are mostly based on specialist
+  clinic settings. As few population-based prevalence surveys of bacterial vaginosis have been conducted,
+  we studied the prevalence of bacterial vaginosis in the urban and rural communities in Delhi, and to
+  associate the presence of bacterial vaginosis with demographic profile, risk factors and presence of
+  other reproductive tract infections (RTIs)/ sexually transmitted infections (STIs). Methods: Vaginal
+  specimens for Gram-stain evaluation of vaginal flora for diagnosis of bacterial vaginosis and culture
+  of Trichomonas vaginalis and Candida spp, blood samples for HIV and syphilis serology, and urine for
+  detection of Neisseria gonorrhoeae and Chlamydia trachomatis were collected from women (15-49 yr) from
+  rural and urban areas. Information on demographic characteristics, risk factors and clinical symptoms
+  was obtained. Results: Bacterial vaginosis was diagnosed in 70 (32.8%) subjects. A high percentage though
+  asymptomatic (31.2%) were found to have bacterial vaginosis. Highest prevalence was seen in urban slum
+  (38.6%) followed by rural (28.8%) and urban middle class community (25.4%). All women with vaginal trichomoniasis
+  were found to have bacterial vaginosis while 50 per cent of subjects having syphilis also had bacterial
+  vaginosis.. Interpretation & conclusion: The study showed high prevalence of bacterial vaginosis. The
+  asymptomatic women having bacterial vaginosis are less likely to seek treatment for the morbidity and
+  thus are more likely to acquire other STIs. Women attending various healthcare facilities should be
+  screened and treated for bacterial vaginosis to reduce the risk of acquisition of other STIs.'
+licence: null
+text_source: abstract
+check:
+  status: checked
+  checked_by: LLM second pass (gpt-5.2); disputes resolved by Claude (AI assistant), not by a clinical
+    expert
+  checked_on: '2026-11-13'
+  notes: 'affiliation: Department of Microbiology, Maulana Azad Medical College and LN Hospital, New Delhi,
+    India.
+
+    sample_size: should be None (The abstract reports 70 (32.8%) with bacterial vaginosis but does not
+    explicitly state the total number of women sampled; 213 is not directly stated.)
+
+    resolution: sample size cleared: total not stated in the abstract.'

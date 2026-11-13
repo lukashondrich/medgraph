@@ -1,0 +1,64 @@
+study_id: pmid-18445948
+pmid: '18445948'
+doi: 10.4103/0255-0857.40526
+url: https://pubmed.ncbi.nlm.nih.gov/18445948/
+title: Prevalence and correlates of bacterial vaginosis among young women of reproductive age in Mysore,
+  India
+authors: Madhivanan et al.
+year: 2008
+journal: Indian J Med Microbiol
+design: cross_sectional
+sample_size: 898
+cohort:
+  description: Sexually active women aged 15-30 attending clinics in Mysore
+  ancestry:
+  - indian
+  countries:
+  - India
+  age_min: 15
+  age_max: 30
+  menopausal_status: []
+  pregnancy: []
+topics:
+- bacterial vaginosis
+- prevalence
+- reproductive tract infections
+- Trichomonas vaginalis
+- HSV-2
+key_finding: Among 863 women with evaluable smears, BV prevalence was 19.1% and BV was independently associated
+  with concurrent T. vaginalis infection and other correlates including HSV-2 seropositivity.
+abstract: 'Purpose: Bacterial vaginosis (BV) is the most common cause of abnormal vaginal discharge among
+  women of childbearing age and is associated with STI/HIV and adverse birth outcomes. The objective of
+  this study was to determine the prevalence and correlates of BV among young women of reproductive age
+  in Mysore, India. Methods: Between October 2005 and December 2006, 898 sexually active women of 15-30
+  years of age were enrolled from two reproductive health clinics in Mysore. The women underwent an interview
+  followed by physical examination, HSV-2 serologic testing, endocervical culture for Neisseria gonorrhoeae
+  , and vaginal swabs for diagnosis of BV, Trichomonas vaginalis infection and candidiasis. Statistical
+  analyses included conventional descriptive statistics and multivariable analysis using logistic regression.
+  Results: Of the 898 women, 391 (43.5%) were diagnosed with >or=1 endogenous reproductive tract infection
+  and 157 (17.4%) with >or=1 sexually transmitted infection. Only 863 women had Gram-stained vaginal smears
+  available, out of which 165 (19.1, 95% confidence interval [CI]: 16.3%-22.2%) were found to have BV
+  and 133 (15.4, 95% CI: 12.9%-18.3%) were in the ''intermediate'' stage. BV was related to concurrent
+  infections with T. vaginalis (odds ratio [OR]=4.07, 95% CI: 2.45-6.72) and HSV-2 seropositivity (OR=2.22,
+  95% CI: 1.39-3.53). Conclusions: In this population, the prevalence of BV at 19% was relatively low.
+  Coinfection with T. vaginalis , however, was common. BV was independently associated with concurrent
+  T. vaginalis infection and partner''s alcohol use. Muslim women had reduced odds of BV as compared to
+  non-Muslim women. Further research is needed to understand the role of T. vaginalis infection in the
+  pathogenesis of BV and the sociocultural context surrounding the condition in India.'
+licence: null
+text_source: abstract
+check:
+  status: checked
+  checked_by: LLM second pass (gpt-5.2); disputes resolved by Claude (AI assistant), not by a clinical
+    expert
+  checked_on: '2026-11-13'
+  notes: 'affiliation: Division of Epidemiology, School of Public Health, University of California, Berkeley,
+    USA. mpurnima@berkeley.edu
+
+    sample_size: should be 898 (The abstract states 898 women were enrolled and analyzed for correlates;
+    863 is only the subset with Gram-stained smears available for BV diagnosis.)
+
+    cohort.menopausal_status: should be [] (Menopausal status is not stated; ''women of reproductive age''
+    does not explicitly specify premenopausal status per the rules.)
+
+    resolution: sample size set to 898 enrolled; menopausal status cleared (not stated).'

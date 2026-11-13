@@ -1,0 +1,59 @@
+study_id: pmid-31455211
+pmid: '31455211'
+doi: 10.1186/s12866-019-1568-6
+url: https://pubmed.ncbi.nlm.nih.gov/31455211/
+title: Contrasting diversity of vaginal lactobacilli among the females of Northeast India
+authors: Das Purkayastha et al.
+year: 2019
+journal: BMC Microbiol
+design: cross_sectional
+sample_size: 69
+cohort:
+  description: Pregnant and non-pregnant females from Northeast India
+  ancestry:
+  - indian
+  countries:
+  - India
+  age_min: null
+  age_max: null
+  menopausal_status: []
+  pregnancy:
+  - pregnant
+  - not_pregnant
+topics:
+- vaginal microbiome
+- Lactobacillus diversity
+- 16S rRNA sequencing
+- pregnancy
+- bacterial isolates
+key_finding: Vaginal samples from Northeast Indian women showed diverse bacteria with dominant Lactobacillus
+  mucosae and Enterococcus faecalis, and lactobacilli decreased from young pregnant to aged non-pregnant
+  women with highest colonization in trimester II.
+abstract: 'Background: Lactobacilli are gatekeepers of vaginal ecosystem impeding growth of pathogenic
+  microbes and their diversity varies across populations worldwide. The present study investigated diversity
+  of human vaginal microbiota among females of Northeast India, who are distinct in dietary habits, lifestyle,
+  and genomic composition from rest of India. Results: Altogether, 154 bacterial isolates were obtained
+  from vaginal swab samples of 40 pregnant and 29 non-pregnant females. The samples were sequenced for
+  16 s rRNA gene and analysed for identification using a dual approach of homology search and maximum
+  likelihood based clustering. Molecular identification based on 16S rRNA gene sequence confirmed the
+  isolates belonging to 31 species. Lactobacilli constituted 37.7% of the bacterial isolates with 10 species
+  and other Lactic Acid Bacteria (39.61%) represented another 10 species, some of which are opportunistic
+  pathogens. The remaining of the communities are mostly dominated by species of Staphylococcus (14.28%)
+  and rarely by Propionibacterium avidum (3.90%), Bacillus subtilis, Escherchia coli, Janthinobacterium
+  lividum, and Kocuria kristinae (each 0.64%). Interestingly Lactobacillus mucosae and Enterococcus faecalis,
+  which are globally uncommon vaginal microbes is found dominant among women of Northeast India. This
+  tentatively reflects adaptability of particular Lactobacillus species, in distinct population, to better
+  compete for receptors and nutrients in vaginal epithelium than other species. Further, intrageneric
+  16S rRNA gene exchange was observed among Enterococcus, Staphylococcus, and two species of Lactobacillus,
+  and deep intraspecies divergence among L. mucosae, which pinpointed possibility of emergence of new
+  strains with evolved functionality. Lactobacilli percentage decreased from young pregnant to aged non-pregnant
+  women with maximum colonization in trimester II. Conclusion: The study highlighted importance of assessment
+  of vaginal microbiota, Lactobacillus in particular, across different population to gain more insight
+  on female health.'
+licence: cc by
+text_source: abstract
+check:
+  status: checked
+  checked_by: LLM second pass (gpt-5.2)
+  checked_on: '2026-11-13'
+  notes: 'affiliation: Karimganj College, Karimganj, Assam, India.'

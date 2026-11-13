@@ -1,0 +1,63 @@
+study_id: pmid-22901000
+pmid: '22901000'
+doi: 10.1186/1471-2490-12-22
+url: https://pubmed.ncbi.nlm.nih.gov/22901000/
+title: Investigation of vaginal microbiota in sexually active women using hormonal contraceptives in Pakistan
+authors: Kazi et al.
+year: 2012
+journal: BMC Urol
+design: cohort
+sample_size: 200
+cohort:
+  description: Sexually active Pakistani women using hormonal contraceptives and controls
+  ancestry:
+  - pakistani
+  countries:
+  - Pakistan
+  age_min: 20
+  age_max: 40
+  menopausal_status:
+  - premenopausal
+  pregnancy: []
+topics:
+- vaginal microbiota
+- hormonal contraception
+- Lactobacillus fermentum
+- Candida
+- E. coli
+key_finding: Hormonal contraceptive use was associated with age-related changes in vaginal microbiota,
+  with Lactobacillus fermentum predominating and differing patterns of E. coli and Candida compared with
+  controls.
+abstract: 'Background: Previous studies report association of contraceptives with moderate increase in
+  urinary tract infection among sexually active premenopausal women. The aim of our study was to find
+  out whether the use of hormonal contraceptives has any effect on microbiota of the vagina in the contraceptives
+  users in Khairpur Sindh Pakistan. Methods: A prospective study in woman population of Khairpur Sindh
+  Pakistan aged 20-30 years and 31-40 years, using Hormonal contraceptives was carried out. High vaginal
+  swab samples (n = 100) were collected from the test populations as well as control group (n = 100) and
+  investigated for vaginal microbial flora using standard microbiological and biochemical techniques.
+  Results: Vaginal swabs culturing from hormonal contraceptives users in the age group 20-30 years showed
+  statistically insignificant Candida sp (10% samples), and statistically significant (p < 0.05) Staphylococcus
+  saprophyticus. (18% samples), Streptococcus agalactiae (23% samples), Escherichia coli (28% samples)
+  and Lactobacillus fermentum (32% samples). In the age group 31-40 years, statistically significant percentage
+  of samples (p < 0.05) showed Lactobacillus fermentum (28%), Candida sp (24%), and E. coli, (24%) where
+  statistically insignificant samples showed Staphylococcus saprophyticus (13%) and Streptococcus agalactiae
+  (11%). Conclusions: The use of hormonal contraceptives alters the normal microbiota of vagina in women
+  according to the age. Lactobacillus fermentum appeared as the predominant species followed by E. coli
+  among the age group of 20-30 years and, Lactobacillus fermentum, Candida sp and E. coli as predominant
+  among women of age group 31-40 years when compared to corresponding control groups. An inverse relationship
+  between E. coli and Lactobacillus fermentum was observed in the women aged 20-30 years.'
+licence: cc by
+text_source: abstract
+check:
+  status: checked
+  checked_by: LLM second pass (gpt-5.2); disputes resolved by Claude (AI assistant), not by a clinical
+    expert
+  checked_on: '2026-11-13'
+  notes: 'affiliation: Department of Microbiology, Shah Abdul Latif University, Khairpur, Sindh, Pakistan.
+    yasmeen.kazi@salu.edu.pk
+
+    design: should be ''cohort'' (The abstract describes a ''prospective study'' with contraceptive users
+    and a control group; there is no mention of randomization or an intervention assignment consistent
+    with an RCT.)
+
+    resolution: design set to cohort: prospective comparison, no randomisation.'

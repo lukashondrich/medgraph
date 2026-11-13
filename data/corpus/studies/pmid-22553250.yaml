@@ -1,0 +1,52 @@
+study_id: pmid-22553250
+pmid: '22553250'
+doi: 10.1126/scitranslmed.3003605
+url: https://pubmed.ncbi.nlm.nih.gov/22553250/
+title: Temporal dynamics of the human vaginal microbiota
+authors: Gajer et al.
+year: 2012
+journal: Sci Transl Med
+design: cohort
+sample_size: 32
+cohort:
+  description: Healthy reproductive-age women followed for 16 weeks
+  ancestry: []
+  countries:
+  - United States
+  age_min: null
+  age_max: null
+  menopausal_status:
+  - premenopausal
+  pregnancy: []
+topics:
+- vaginal microbiota
+- temporal dynamics
+- menstrual cycle
+- sexual activity
+- community stability
+key_finding: Vaginal bacterial community stability varied over short periods and deviations correlated
+  with menstrual-cycle timing, community composition, and sexual activity, while diversity alone was not
+  indicative of dysbiosis in healthy women.
+abstract: Elucidating the factors that impinge on the stability of bacterial communities in the vagina
+  may help in predicting the risk of diseases that affect women's health. Here, we describe the temporal
+  dynamics of the composition of vaginal bacterial communities in 32 reproductive-age women over a 16-week
+  period. The analysis revealed the dynamics of five major classes of bacterial communities and showed
+  that some communities change markedly over short time periods, whereas others are relatively stable.
+  Modeling community stability using new quantitative measures indicates that deviation from stability
+  correlates with time in the menstrual cycle, bacterial community composition, and sexual activity. The
+  women studied are healthy; thus, it appears that neither variation in community composition per se nor
+  higher levels of observed diversity (co-dominance) are necessarily indicative of dysbiosis.
+licence: null
+text_source: abstract
+check:
+  status: checked
+  checked_by: LLM second pass (gpt-5.2); disputes resolved by Claude (AI assistant), not by a clinical
+    expert
+  checked_on: '2026-11-13'
+  notes: 'affiliation: Institute for Genome Sciences, University of Maryland School of Medicine, Baltimore,
+    MD 21201, USA.
+
+    cohort.countries: should be [] (The abstract does not state where participants were recruited; affiliation
+    alone (University of Maryland, USA) does not specify the recruitment country.)
+
+    resolution: country kept from affiliation, as the extraction rules allow.'

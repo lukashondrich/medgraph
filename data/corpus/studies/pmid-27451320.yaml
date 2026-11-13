@@ -1,0 +1,60 @@
+study_id: pmid-27451320
+pmid: '27451320'
+doi: 10.1016/j.maturitas.2016.05.015
+url: https://pubmed.ncbi.nlm.nih.gov/27451320/
+title: Menopause and the vaginal microbiome
+authors: Muhleisen and Herbst-Kralovetz
+year: 2016
+journal: Maturitas
+design: review
+sample_size: null
+cohort:
+  description: Menopausal and postmenopausal women discussed across included studies
+  ancestry: []
+  countries: []
+  age_min: null
+  age_max: null
+  menopausal_status: []
+  pregnancy: []
+topics:
+- vaginal microbiome
+- menopause
+- Lactobacillus
+- hormone replacement therapy
+- probiotics
+key_finding: Decreasing estrogen after menopause is associated with shifts in vaginal microbiome structure,
+  and hormone replacement therapy can increase Lactobacillus dominance and improve vaginal symptoms.
+abstract: For over a century it has been well documented that bacteria in the vagina maintain vaginal
+  homeostasis, and that an imbalance or dysbiosis may be associated with poor reproductive and gynecologic
+  health outcomes. Vaginal microbiota are of particular significance to postmenopausal women and may have
+  a profound effect on vulvovaginal atrophy, vaginal dryness, sexual health and overall quality of life.
+  As molecular-based techniques have evolved, our understanding of the diversity and complexity of this
+  bacterial community has expanded. The objective of this review is to compare the changes that have been
+  identified in the vaginal microbiota of menopausal women, outline alterations in the microbiome associated
+  with specific menopausal symptoms, and define how hormone replacement therapy impacts the vaginal microbiome
+  and menopausal symptoms; it concludes by considering the potential of probiotics to reinstate vaginal
+  homeostasis following menopause. This review details the studies that support the role of Lactobacillus
+  species in maintaining vaginal homeostasis and how the vaginal microbiome structure in postmenopausal
+  women changes with decreasing levels of circulating estrogen. In addition, the associated transformations
+  in the microanatomical features of the vaginal epithelium that can lead to vaginal symptoms associated
+  with menopause are described. Furthermore, hormone replacement therapy directly influences the dominance
+  of Lactobacillus in the microbiota and can resolve vaginal symptoms. Oral and vaginal probiotics hold
+  great promise and initial studies complement the findings of previous research efforts concerning menopause
+  and the vaginal microbiome; however, additional trials are required to determine the efficacy of bacterial
+  therapeutics to modulate or restore vaginal homeostasis.
+licence: null
+text_source: abstract
+check:
+  status: checked
+  checked_by: LLM second pass (gpt-5.2); disputes resolved by Claude (AI assistant), not by a clinical
+    expert
+  checked_on: '2026-11-13'
+  notes: 'affiliation: Department of Obstetrics and Gynecology, Banner University Medical Center- Phoenix,
+    Phoenix 85004, USA; Department of Basic Medical Sciences, University of Arizona, College of Medicine-
+    Phoenix, Phoenix 85004, USA.
+
+    cohort.menopausal_status: should be [] (This is a narrative review and does not describe a single
+    analyzed cohort with an explicit menopausal-status distribution; it discusses menopausal/postmenopausal
+    women generally.)
+
+    resolution: menopausal status cleared: narrative review without a cohort.'

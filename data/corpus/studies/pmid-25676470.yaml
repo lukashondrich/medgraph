@@ -1,0 +1,58 @@
+study_id: pmid-25676470
+pmid: '25676470'
+doi: 10.1093/infdis/jiv079
+url: https://pubmed.ncbi.nlm.nih.gov/25676470/
+title: Rapid and Profound Shifts in the Vaginal Microbiota Following Antibiotic Treatment for Bacterial
+  Vaginosis
+authors: Mayer et al.
+year: 2015
+journal: J Infect Dis
+design: other
+sample_size: 15
+cohort:
+  description: Women with bacterial vaginosis treated with metronidazole
+  ancestry: []
+  countries: []
+  age_min: null
+  age_max: null
+  menopausal_status: []
+  pregnancy: []
+topics:
+- bacterial vaginosis
+- metronidazole
+- vaginal microbiota
+- microbiome dynamics
+- Lactobacillus
+- Gardnerella vaginalis
+key_finding: Vaginal bacterial composition reorganized within a day of starting metronidazole, anaerobic
+  BV-associated species cleared rapidly but commonly reemerged after treatment stopped.
+abstract: 'Background: Bacterial vaginosis (BV) is a common polymicrobial disease associated with numerous
+  negative reproductive health outcomes, including an increased risk of human immunodeficiency virus acquisition.
+  BV is treatable with antibiotics, but relapse is common. A more detailed understanding of bacterial
+  dynamics during antibiotic therapy for BV could identify conditions that favor establishment, maintenance,
+  and eradication of BV-associated bacterial species, thereby improving treatment outcomes. Methods: We
+  used mathematical models to analyze daily quantitative measurements of 11 key bacterial species during
+  metronidazole treatment for 15 cases of BV. Results: We identified complete reorganization of vaginal
+  bacterial composition within a day of initiating therapy. Although baseline bacterial levels predicted
+  a longer time to clearance, all anaerobic species were eliminated rapidly within a median of 3 days.
+  However, reemergence of BV-associated species was common following treatment cessation. Gardnerella
+  vaginalis, a facultative anaerobe, was cleared more slowly than anaerobic BV-associated species, and
+  levels of G. vaginalis often rebounded during treatment. We observed gradual Lactobacillus species growth,
+  indicating that untargeted microbes fill the transient vacuum formed during treatment. Conclusions:
+  Under antibiotic pressure, the human microbiome can undergo rapid shifts on a scale of hours. When treatment
+  is stopped, BV-associated bacteria quickly reemerge, suggesting a possible role for intermittent prophylactic
+  treatment.'
+licence: null
+text_source: abstract
+check:
+  status: checked
+  checked_by: LLM second pass (gpt-5.2); disputes resolved by Claude (AI assistant), not by a clinical
+    expert
+  checked_on: '2026-11-13'
+  notes: 'affiliation: Vaccine and Infectious Disease Division.
+
+    design: should be ''other'' (The abstract describes mathematical modeling of daily bacterial measurements
+    during metronidazole treatment in 15 BV cases; it does not describe a clinical case series design
+    (no case descriptions/outcomes beyond modeled microbiota dynamics).)
+
+    resolution: design set to other: modelling of daily measurements during treatment.'

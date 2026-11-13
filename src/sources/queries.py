@@ -16,7 +16,10 @@ def reading_queries(profile: UserProfile, reading: TestReading) -> list[str]:
     if profile.menopausal_status is MenopausalStatus.POSTMENOPAUSAL:
         queries = ["vaginal pH after menopause"]
     elif profile.pregnancy.is_pregnant:
-        queries = ["vaginal pH during pregnancy"]
+        queries = [
+            "vaginal pH during pregnancy",
+            "vaginal pH self-testing in pregnancy and preterm birth",
+        ]
     else:
         queries = ["normal vaginal pH in healthy women of reproductive age"]
 

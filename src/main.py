@@ -1,233 +1,80 @@
-"""Terminal CLI for the healthcare multiagent orchestration system.
+"""Terminal CLI for pH Companion.
 
-Interactive async chat loop that invokes the LangGraph graph and displays
-routing decisions, specialist processing, and synthesized responses.
+    python -m src.main --persona priya --ph 4.8
+    python -m src.main --persona amara --ph 5.0 --ask "Should I be worried?"
+
+Runs one turn through the graph and prints what was looked up, the answer
+and its sources.
 """
 
 from __future__ import annotations
 
+import argparse
 import asyncio
 import logging
-import sys
-import time
+from datetime import datetime
 
 
-# ---------------------------------------------------------------------------
-# ANSI colour helpers (degrade gracefully on dumb terminals)
-# ---------------------------------------------------------------------------
+async def run(persona_id: str, ph: float, confidence: float, question: str | None, language: str) -> int:
+    from src.agents.writer import NEW_READING_INPUT
+    from src.data.personas import list_personas, load_persona
+    from src.data.profile import TestReading, build_profile_summary
+    from src.orchestrator import build_ph_graph
 
-_SUPPORTS_COLOR = hasattr(sys.stdout, "isatty") and sys.stdout.isatty()
+    profile = load_persona(persona_id)
+    if profile is None:
+        known = ", ".join(p["persona_id"] for p in list_personas())
+        print(f"Unknown persona '{persona_id}'. Available: {known}")
+        return 1
+    reading = TestReading(ph=ph, confidence=confidence, taken_at=datetime.now())
 
+    state = {
+        "messages": [],
+        "user_input": question or NEW_READING_INPUT,
+        "language": language,
+        "patient": profile.to_dict(),
+        "patient_summary": build_profile_summary(profile, reading),
+        "reading": reading.to_dict(),
+        "turn_kind": "question" if question else "new_reading",
+        "route": [], "queries": [], "route_reasoning": "",
+        "sources": {}, "retrieval_trace": [], "evidence_gap": {},
+        "safety_reasons": [], "safety_escalation": False,
+        "final_response": "", "citations": [], "handoff_chain": [],
+    }
+    result = await build_ph_graph().ainvoke(state)
 
-def _c(code: str, text: str) -> str:
-    if _SUPPORTS_COLOR:
-        return f"\033[{code}m{text}\033[0m"
-    return text
-
-
-logger = logging.getLogger(__name__)
-
-
-def _bold(text: str) -> str:
-    return _c("1", text)
-
-
-def _dim(text: str) -> str:
-    return _c("2", text)
-
-
-def _blue(text: str) -> str:
-    return _c("34", text)
-
-
-def _green(text: str) -> str:
-    return _c("32", text)
-
-
-def _yellow(text: str) -> str:
-    return _c("33", text)
-
-
-def _red(text: str) -> str:
-    return _c("31", text)
-
-
-def _cyan(text: str) -> str:
-    return _c("36", text)
-
-
-# ---------------------------------------------------------------------------
-# Main loop
-# ---------------------------------------------------------------------------
+    print(f"\n{profile.name}, pH {reading.ph:.1f}\n")
+    print("Looked up:")
+    for trace in result["retrieval_trace"]:
+        counts = ", ".join(f"{k} {v}" for k, v in trace.get("counts", {}).items())
+        print(f"  - {trace['source']}: {counts}")
+    for reason in result["safety_reasons"]:
+        print(f"\n! {reason}")
+    print("\n" + result["final_response"] + "\n")
+    if result["citations"]:
+        print("Sources:")
+    for c in result["citations"]:
+        size = f"{c['sample_size']:,} participants" if c["sample_size"] else "size not stated"
+        match = f" | matches: {', '.join(c['matched_attributes'])}" if c["matched_attributes"] else ""
+        print(f"  [{c['number']}] {c['authors']} {c['year']} · {c['design']} · {size}{match}\n      {c['url']}")
+    return 0
 
 
-async def main() -> None:
-    # Load config (sets env vars for litellm)
+def main() -> None:
     from src.config import load_config
 
+    parser = argparse.ArgumentParser(description="Run one pH Companion turn in the terminal.")
+    parser.add_argument("--persona", default="priya")
+    parser.add_argument("--ph", type=float, default=4.8)
+    parser.add_argument("--confidence", type=float, default=0.92)
+    parser.add_argument("--ask", help="a follow-up question instead of the first interpretation")
+    parser.add_argument("--language", default="en", choices=["en", "de"])
+    args = parser.parse_args()
+
     load_config()
-
-    # Import graph builder (may fail if orchestrator not yet implemented)
-    from src.orchestrator import build_graph
-
-    graph = build_graph()
-
-    # Session state
-    messages: list[dict[str, str]] = []
-
-    # Welcome banner
-    print()
-    print(_bold("=" * 56))
-    print(_bold("  medgraph AI Assistant"))
-    print(_dim("  Healthcare guidance powered by specialist agents"))
-    print(_bold("=" * 56))
-    print()
-    print(
-        _dim(
-            "  Type your health question and press Enter.\n"
-            '  Type "quit" or "exit" to end the session.\n'
-        )
-    )
-    print(
-        _yellow(
-            "  Disclaimer: This AI cannot diagnose or prescribe.\n"
-            "  Always consult a healthcare provider for medical concerns.\n"
-        )
-    )
-
-    while True:
-        # Prompt
-        try:
-            user_input = input(_bold("You: ")).strip()
-        except (EOFError, KeyboardInterrupt):
-            print("\n" + _dim("Goodbye!"))
-            break
-
-        if not user_input:
-            continue
-        if user_input.lower() in ("quit", "exit"):
-            print(_dim("Goodbye!"))
-            break
-
-        # Build initial state for this turn
-        initial_state = {
-            "messages": messages + [{"role": "user", "content": user_input}],
-            "user_input": user_input,
-            "route": [],
-            "route_reasoning": "",
-            "specialist_outputs": {},
-            "final_response": "",
-            "handoff_chain": [],
-            "safety_escalation": False,
-        }
-
-        print()
-        t_start = time.perf_counter()
-
-        try:
-            # Stream node-level updates from the graph
-            final_state = dict(initial_state)
-            routing_shown = False
-            specialists_shown: set[str] = set()
-            synthesizer_shown = False
-
-            async for event in graph.astream(initial_state, stream_mode="updates"):
-                for node_name, state_update in event.items():
-                    if state_update is None:
-                        continue
-
-                    # Merge update into tracking state
-                    if isinstance(state_update, dict):
-                        for key, value in state_update.items():
-                            if key in ("messages", "handoff_chain") and isinstance(value, list):
-                                if key not in final_state:
-                                    final_state[key] = []
-                                final_state[key] = final_state[key] + value
-                            else:
-                                final_state[key] = value
-
-                    # Router completed
-                    if node_name == "router" and not routing_shown:
-                        routing_shown = True
-                        route = final_state.get("route", [])
-                        reasoning = final_state.get("route_reasoning", "")
-                        agents_str = ", ".join(
-                            _cyan(a.capitalize()) for a in route
-                        )
-                        print(
-                            _blue("  [Router]")
-                            + f" Routing to: {agents_str}"
-                        )
-                        if reasoning:
-                            print(
-                                _dim(f"  Reasoning: {reasoning}")
-                            )
-                        print()
-
-                    # Specialist completed
-                    elif node_name in ("symptom_agent", "medication_agent", "lifestyle_agent"):
-                        agent_label = node_name.replace("_agent", "")
-                        if agent_label not in specialists_shown:
-                            specialists_shown.add(agent_label)
-                            print(
-                                _green(f"  [{agent_label.capitalize()}]")
-                                + _dim(" done")
-                            )
-
-                    # Synthesizer completed
-                    elif node_name == "synthesizer" and not synthesizer_shown:
-                        synthesizer_shown = True
-
-            # Show final response
-            final_response = final_state.get("final_response", "")
-            safety = final_state.get("safety_escalation", False)
-
-            print()
-            print(_bold("Assistant: ") + final_response)
-
-            if safety:
-                print()
-                print(
-                    _yellow(
-                        "  [Safety Notice] Please consult a qualified healthcare "
-                        "provider for personalized medical advice. This AI assistant "
-                        "cannot diagnose conditions or prescribe treatments."
-                    )
-                )
-
-            # Show handoff chain
-            handoff = final_state.get("handoff_chain", [])
-            if handoff:
-                chain_str = " -> ".join(handoff)
-                print(_dim(f"\n  Pipeline: {chain_str}"))
-
-            print()
-
-            # Log request summary
-            elapsed = time.perf_counter() - t_start
-            route = final_state.get("route", [])
-            logger.info(
-                "Request completed: agents=%s safety=%s elapsed=%.3fs",
-                route, safety, elapsed,
-            )
-
-            # Update conversation history
-            messages.append({"role": "user", "content": user_input})
-            messages.append(
-                {"role": "assistant", "content": final_response}
-            )
-
-        except Exception as exc:
-            print(_red(f"\n  Error: {exc}\n"))
-
-
-def run() -> None:
-    """Entry point for the CLI."""
-    try:
-        asyncio.run(main())
-    except KeyboardInterrupt:
-        print(_dim("\nGoodbye!"))
+    logging.getLogger().setLevel(logging.WARNING)
+    raise SystemExit(asyncio.run(run(args.persona, args.ph, args.confidence, args.ask, args.language)))
 
 
 if __name__ == "__main__":
-    run()
+    main()

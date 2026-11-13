@@ -1,0 +1,64 @@
+study_id: pmid-24641730
+pmid: '24641730'
+doi: 10.1186/1471-2393-14-107
+url: https://pubmed.ncbi.nlm.nih.gov/24641730/
+title: 'Basic vaginal pH, bacterial vaginosis and aerobic vaginitis: prevalence in early pregnancy and
+  risk of spontaneous preterm delivery, a prospective study in a low socioeconomic and multiethnic South
+  American population'
+authors: Krauss-Silva et al.
+year: 2014
+journal: BMC Pregnancy Childbirth
+design: cohort
+sample_size: null
+cohort:
+  description: Early-pregnancy women screened for BV, AV, and preterm delivery
+  ancestry:
+  - black
+  - white_european
+  countries:
+  - Brazil
+  age_min: null
+  age_max: null
+  menopausal_status: []
+  pregnancy:
+  - pregnant
+topics:
+- bacterial vaginosis
+- vaginal pH
+- aerobic vaginitis
+- preterm birth
+- pregnancy
+key_finding: In this early-pregnancy cohort, asymptomatic BV prevalence was high and BV (or elevated vaginal
+  pH) was not significantly associated with spontaneous preterm delivery.
+abstract: 'Background: Bacterial vaginosis (BV) increases the risk of spontaneous preterm deliveries (PD)
+  in developed countries. Its prevalence varies with ethnicity, socioeconomic conditions and gestational
+  age. Aerobic vaginitis (AV) has also been implicated with spontaneous PD. The present study aimed to
+  estimate the prevalence of asymptomatic BV, the accuracy of vaginal pH level to predict BV and to estimate
+  the risk of spontaneous PD = 4.5 were collected to determine the Nugent score; a sample of those smears
+  was also classified according to a modified Donders'' score. Primary outcomes were spontaneous PD 4.5
+  and = > 5.0 to predict BV status was 100% and 82%, correspondingly; the 5.0 cutoff value doubled the
+  specificity, from 41% to 84%. The incidence of 4.5 was 3.8%. The RR of spontaneous PD =4.5, as compared
+  with those with intermediate state, were 1.24 and 1.86, respectively (Fisher''s exact test, p value
+  = 1; 0.52, respectively, both ns). No spontaneous case of PD or abortion was associated with severe
+  or moderate AV. Conclusions: A high prevalence of asymptomatic BV was observed without statistically
+  significant difference between black and white women. The RRs of spontaneous PD < 34 and <37 weeks among
+  women with BV, as compared with those with intermediate state were not statistically significant but
+  were consistent with those found in the literature.'
+licence: cc by
+text_source: abstract
+check:
+  status: checked
+  checked_by: LLM second pass (gpt-5.2); disputes resolved by Claude (AI assistant), not by a clinical
+    expert
+  checked_on: '2026-11-13'
+  notes: 'affiliation: Health Technology Assessment Unit, National School of Public Health, Oswaldo Cruz
+    Foundation, Brazilian Health Ministry, R Leopoldo Bulhões, 1480, room 714, Manguinhos, Rio de Janeiro
+    21041-210, Brazil. leticiak@ensp.fiocruz.br.
+
+    sample_size: should be None (The abstract text provided does not state the number of participants
+    analyzed; 1046 is not supported by the given title/abstract/metadata.)
+
+    cohort.ancestry: should be [''black'', ''white_european''] (The conclusions explicitly compare ''black
+    and white women'', so ancestry should not be empty.)
+
+    resolution: sample size cleared (not clearly stated); ancestry set to the groups compared in the abstract.'

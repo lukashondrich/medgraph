@@ -1,5 +1,5 @@
-"""Orchestrator module -- LangGraph graphs for the multiagent system."""
+"""Orchestrator module -- the LangGraph graph for pH Companion."""
 
-from .graph import build_graph, build_ph_graph
+from .graph import build_ph_graph
 
-__all__ = ["build_graph", "build_ph_graph"]
+__all__ = ["build_ph_graph"]

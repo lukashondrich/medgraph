@@ -19,6 +19,7 @@ logger = logging.getLogger(__name__)
 
 _MARKER = re.compile(r"\[\s*(S\d+(?:\s*[,;]\s*S\d+)*)\s*\]")
 _SPACE_BEFORE_PUNCTUATION = re.compile(r"[ \t]+([.,;:!?])")
+_REPEATED_NUMBER = re.compile(r"(\[\d+\])(?:[ \t]*\1)+")
 
 
 class CheckedAnswer(BaseModel):
@@ -66,6 +67,8 @@ def check_citations(text: str, marker_map: dict[str, SourceItem]) -> CheckedAnsw
         return "".join(out)
 
     checked = _MARKER.sub(rewrite, text)
+    # Two keys of the same study next to each other would show one number twice.
+    checked = _REPEATED_NUMBER.sub(r"\1", checked)
     checked = _SPACE_BEFORE_PUNCTUATION.sub(r"\1", checked)
 
     if removed:

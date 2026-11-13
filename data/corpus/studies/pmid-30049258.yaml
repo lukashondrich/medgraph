@@ -1,0 +1,50 @@
+study_id: pmid-30049258
+pmid: '30049258'
+doi: 10.1177/0956462418785451
+url: https://pubmed.ncbi.nlm.nih.gov/30049258/
+title: 2018 European (IUSTI/WHO) International Union against sexually transmitted infections (IUSTI) World
+  Health Organisation (WHO) guideline on the management of vaginal discharge
+authors: Sherrard et al.
+year: 2018
+journal: Int J STD AIDS
+design: guideline
+sample_size: null
+cohort:
+  description: ''
+  ancestry: []
+  countries: []
+  age_min: null
+  age_max: null
+  menopausal_status: []
+  pregnancy: []
+topics:
+- vaginal discharge
+- bacterial vaginosis
+- candidosis
+- trichomoniasis
+- cervicitis
+key_finding: The guideline states vaginal discharge can result from infections (e.g., BV, candidosis,
+  trichomoniasis, chlamydia/gonorrhoea) and other physiological, inflammatory, dermatologic, allergic,
+  irritant, or psychosexual causes.
+abstract: 'Four common pathological conditions are associated with vaginal discharge: bacterial vaginosis,
+  aerobic vaginitis, candidosis, and the sexually transmitted infection, trichomoniasis. Chlamydial or
+  gonococcal cervical infection may result in vaginal discharge. Vaginal discharge may be caused by a
+  range of other physiological and pathological conditions including atrophic vaginitis, desquamative
+  inflammatory vaginitis, cervicitis, and mucoid ectopy. Psychosexual problems may present with recurrent
+  episodes of vaginal discharge and vulval burning. These need to be considered if tests for specific
+  infections are negative. Many of the symptoms and signs are non-specific and a number of women may have
+  other conditions such as vulval dermatoses or allergic and irritant reactions.'
+licence: null
+text_source: abstract
+check:
+  status: checked
+  checked_by: LLM second pass (gpt-5.2); disputes resolved by Claude (AI assistant), not by a clinical
+    expert
+  checked_on: '2026-11-13'
+  notes: 'affiliation: 1 Department of Genitourinary Medicine, Sexual Health Department, Buckinghamshire
+    Healthcare NHS Trust, Amersham, UK.
+
+    cohort.description: should be None (This is a guideline and the abstract does not describe a specific
+    participant cohort; it discusses causes/conditions generally.)
+
+    resolution: cohort description cleared: guideline without a participant cohort.'

@@ -1,0 +1,56 @@
+study_id: pmid-10546713
+pmid: '10546713'
+doi: 10.1016/s0029-7844(99)00384-1
+url: https://pubmed.ncbi.nlm.nih.gov/10546713/
+title: Vaginal pH and parabasal cells in postmenopausal women
+authors: Brizzolara et al.
+year: 1999
+journal: Obstet Gynecol
+design: cross_sectional
+sample_size: 70
+cohort:
+  description: Postmenopausal gynecology office patients having routine exams
+  ancestry: []
+  countries:
+  - United States
+  age_min: null
+  age_max: null
+  menopausal_status:
+  - postmenopausal
+  pregnancy: []
+topics:
+- vaginal pH
+- parabasal cells
+- vaginal cytology
+- postmenopause
+- genitourinary syndrome of menopause
+key_finding: In postmenopausal women, vaginal pH above 6.0 was associated with having 20% or more parabasal
+  cells on midvaginal smears.
+abstract: 'Objective: To determine the vaginal pH level that correlates with elevated parabasal cells
+  in vaginal smears. Methods: Postmenopausal women presenting to a gynecology office for routine annual
+  and incontinence examinations were studied prospectively. Women were excluded if they had vaginal infections
+  or pelvic organ prolapses past the hymen. pH was measured and cytology smears made from the midvagina.
+  A pathologist who was not aware of pH results evaluated the smears. Spearman rho was used to correlate
+  pH and percentage of parabasal cells. Logistic regression was used to analyze the relationship between
+  pH and increased parabasal cells in vaginal smears. Predictive values were used to select a pH level
+  as a cutoff point to predict increased parabasal cells. Results: Seventy-four women were enrolled and
+  70 completed the study. The correlation coefficient between pH and percentage of parabasal cells was
+  0.6 (P < .001). Logistic regression showed association of pH with 20% or more parabasal cells (P < .001).
+  Positive and negative predictive values for pH level above 6.0 as a predictor of 20% or more parabasal
+  cells were 96.3% and 87.5%, respectively. The prevalence of elevated parabasal cells was 22.9%. Conclusion:
+  Vaginal pH above 6.0 correlates with high levels of parabasal cells (20% or more) from the midvagina.'
+licence: null
+text_source: abstract
+check:
+  status: checked
+  checked_by: LLM second pass (gpt-5.2); disputes resolved by Claude (AI assistant), not by a clinical
+    expert
+  checked_on: '2026-11-13'
+  notes: 'affiliation: Department of Obstetrics and Gynecology, John A. Burns School of Medicine, University
+    of Hawaii, Honolulu 96826, USA. brizzola@jabsom.biomed.hawaii.edu
+
+    design: should be ''other'' (The abstract describes a prospective observational study of office patients
+    without defining a cohort with follow-up for outcomes over time; it is not clearly a cohort study
+    per the allowed design categories.)
+
+    resolution: design set to cross_sectional: pH and cytology taken at one visit.'

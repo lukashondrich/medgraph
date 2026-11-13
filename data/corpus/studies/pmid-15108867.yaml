@@ -1,0 +1,51 @@
+study_id: pmid-15108867
+pmid: '15108867'
+doi: 10.1080/10647440300025523
+url: https://pubmed.ncbi.nlm.nih.gov/15108867/
+title: 'Improving appropriate use of antifungal medications: the role of an over-the-counter vaginal pH
+  self-test device'
+authors: Roy et al.
+year: 2003
+journal: Infect Dis Obstet Gynecol
+design: cross_sectional
+sample_size: 151
+cohort:
+  description: Women with suspected vaginal infection using OTC vaginal pH test
+  ancestry: []
+  countries:
+  - United States
+  age_min: null
+  age_max: null
+  menopausal_status: []
+  pregnancy: []
+topics:
+- vaginitis
+- vaginal pH self-test
+- over-the-counter antifungals
+- diagnostic accuracy
+- patient usability
+key_finding: Most women could correctly use and interpret a vaginal pH self-test, matching provider readings,
+  and it could reduce inappropriate OTC antifungal use by about 50%.
+abstract: 'Objectives: To determine whether patients can understand and use the vaginal pH device in the
+  diagnosis of vaginitis. To compare whether vaginal pH readings determined by patients and healthcare
+  providers are similar. To determine whether vaginal pH can reduce inappropriate over-the-counter (OTC)
+  antifungal medication use and improve the correct diagnosis of vaginitis. Methods: One hundred and fifty-one
+  women indicated their belief about the cause of their vaginal infection, read the instructions of the
+  vaginal pH device package insert, used the device and interpreted the findings. The patient interpretations
+  were compared with results obtained by healthcare providers, blinded to patient findings. Results: Over
+  96% of patients stated that they could easily read the instructions, use the vaginal pH device and interpret
+  the readings. They obtained the same readings as healthcare professionals (Kappa = 0.9). Restricting
+  the use of OTC antifungal medications to those individuals with vaginitis symptoms and vaginal pH 4.5,
+  leads to correct diagnosis of vaginitis. Conclusions: The vaginal pH device can be used as an OTC diagnostic
+  tool by consumers when a vaginal infection is suspected. Vaginal pH readings would direct patients whether
+  to purchase an antifungal medication or seek professional diagnosis from a healthcare provider. Understanding
+  and use of this vaginal pH device could reduce inappropriate use of OTC antifungal medications by approximately
+  50% and improve the correct diagnosis of vaginitis.'
+licence: cc by
+text_source: abstract
+check:
+  status: checked
+  checked_by: LLM second pass (gpt-5.2)
+  checked_on: '2026-11-13'
+  notes: 'affiliation: Keck School of Medicine of the University of Southern California, Women''s and
+    Children''s Hospital, Los Angeles, CA 90033, USA. subirro@usc.edu'

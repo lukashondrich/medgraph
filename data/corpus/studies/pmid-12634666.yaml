@@ -1,0 +1,55 @@
+study_id: pmid-12634666
+pmid: '12634666'
+doi: 10.1067/mob.2003.184
+url: https://pubmed.ncbi.nlm.nih.gov/12634666/
+title: Early pregnancy threshold vaginal pH and Gram stain scores predictive of subsequent preterm birth
+  in asymptomatic women
+authors: Hauth et al.
+year: 2003
+journal: Am J Obstet Gynecol
+design: cohort
+sample_size: 12041
+cohort:
+  description: Asymptomatic pregnant women screened for vaginal pH in early pregnancy
+  ancestry: []
+  countries:
+  - United States
+  age_min: null
+  age_max: null
+  menopausal_status: []
+  pregnancy:
+  - pregnant
+topics:
+- vaginal pH
+- Gram stain Nugent score
+- bacterial vaginosis
+- preterm birth
+- birth weight
+key_finding: Vaginal pH ≥5.0, or pH ≥4.5 with Nugent score 9–10, predicted higher risk of subsequent preterm
+  birth and low birth weight.
+abstract: 'Objective: The study was undertaken to identify early pregnancy vaginal markers predictive
+  of subsequent preterm birth. Study design: In a multicenter Bacterial Vaginosis (BV) Trial, 21,554 women
+  were screened with a vaginal pH and of these, two populations were studied. These included 12,041 who
+  had a pregnancy outcome in the database and 6838 women who had a vaginal pH of 4.5 or greater and a
+  Gram stain score and a pregnancy outcome in the database. ColorpHast Indicator Strips were used to determine
+  the vaginal pH and the Nugent criteria were used to determine a vaginal Gram stain score of 0 to 10.
+  Results: Delivery at or =50 ng/mL (P or =50 mg/mL did not differ by Gram stain score. Conclusion: Women
+  with a vaginal pH of 5.0 or greater or a vaginal pH of 4.5 or greater and a Gram stain score of 9 to
+  10 had significantly increased preterm births at <37, <35, and 32 weeks'' gestation and/or a birth weight
+  less than 2500 g or less than 1500 g.'
+licence: null
+text_source: abstract
+check:
+  status: checked
+  checked_by: LLM second pass (gpt-5.2); disputes resolved by Claude (AI assistant), not by a clinical
+    expert
+  checked_on: '2026-11-13'
+  notes: 'affiliation: Department of Obstetrics and Gynecology, University of Alabama at Birmingham, 35249,
+    USA.
+
+    design: should be ''other'' (The abstract describes a multicenter Bacterial Vaginosis Trial with screening
+    and observational prediction of outcomes; it does not provide enough information to classify confidently
+    as a specific allowed design (e.g., rct/cohort). Thus ''other'' may be acceptable, but the claimed
+    value is not clearly justified by the text as a design label.)
+
+    resolution: design set to cohort: women screened in early pregnancy and followed to birth outcome.'

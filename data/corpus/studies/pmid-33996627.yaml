@@ -1,0 +1,71 @@
+study_id: pmid-33996627
+pmid: '33996627'
+doi: 10.3389/fcimb.2021.641005
+url: https://pubmed.ncbi.nlm.nih.gov/33996627/
+title: Vaginal Microbiome Composition in Early Pregnancy and Risk of Spontaneous Preterm and Early Term
+  Birth Among African American Women
+authors: Dunlop et al.
+year: 2021
+journal: Front Cell Infect Microbiol
+design: cohort
+sample_size: 436
+cohort:
+  description: African American pregnant women at 8-14 weeks gestation
+  ancestry:
+  - african_american
+  countries:
+  - United States
+  age_min: null
+  age_max: null
+  menopausal_status: []
+  pregnancy:
+  - pregnant
+topics:
+- vaginal microbiome
+- early pregnancy
+- spontaneous preterm birth
+- early term birth
+- 16S rRNA sequencing
+key_finding: Among African American women, early-pregnancy vaginal CST III or CST IV was associated with
+  higher odds of spontaneous preterm birth but not early term birth.
+abstract: 'Objective: To evaluate the association between the early pregnancy vaginal microbiome and spontaneous
+  preterm birth (sPTB) and early term birth (sETB) among African American women. Methods: Vaginal samples
+  collected in early pregnancy (8-14 weeks'' gestation) from 436 women enrolled in the Emory University
+  African American Vaginal, Oral, and Gut Microbiome in Pregnancy Study underwent 16S rRNA gene sequencing
+  of the V3-V4 region, taxonomic classification, and community state type (CST) assignment. We compared
+  vaginal CST and abundance of taxa for women whose pregnancy ended in sPTB (N = 44) or sETB (N= 84) to
+  those who delivered full term (N = 231). Results: Nearly half of the women had a vaginal microbiome
+  classified as CST IV (Diverse CST), while one-third had CST III (L. iners dominated) and just 16% had
+  CST I, II, or V (non-iners Lactobacillus dominated). Compared to vaginal CST I, II, or V (non-iners
+  Lactobacillus dominated), both CST III (L. iners dominated) and CST IV (Diverse) were associated with
+  sPTB with an adjusted odds ratio (95% confidence interval) of 4.1 (1.1, infinity) and 7.7 (2.2, infinity),
+  respectively, in multivariate logistic regression. In contrast, no vaginal CST was associated with sETB.
+  The linear decomposition model (LDM) based on amplicon sequence variant (ASV) relative abundance found
+  a significant overall effect of the vaginal microbiome on sPTB (p=0.034) but not sETB (p=0.320), whereas
+  the LDM based on presence/absence of ASV found no overall effect on sPTB (p=0.328) but a significant
+  effect on sETB (p=0.030). In testing for ASV-specific effects, the LDM found that no ASV was significantly
+  associated with sPTB considering either relative abundance or presence/absence data after controlling
+  for multiple comparisons (FDR 10%), although in marginal analysis the relative abundance of Gardnerella
+  vaginalis (p=0.011), non-iners Lactobacillus (p=0.016), and Mobiluncus curtisii (p=0.035) and the presence
+  of Atopobium vaginae (p=0.049), BVAB2 (p=0.024), Dialister microaerophilis (p=0.011), and Prevotella
+  amnii (p=0.044) were associated with sPTB. The LDM identified the higher abundance of 7 ASVs and the
+  presence of 13 ASVs, all commonly residents of the gut, as associated with sETB at FDR < 10%. Conclusions:
+  In this cohort of African American women, an early pregnancy vaginal CST III or IV was associated with
+  an increased risk of sPTB but not sETB. The relative abundance and presence of distinct taxa within
+  the early pregnancy vaginal microbiome was associated with either sPTB or sETB.'
+licence: cc by
+text_source: abstract
+check:
+  status: checked
+  checked_by: LLM second pass (gpt-5.2); disputes resolved by Claude (AI assistant), not by a clinical
+    expert
+  checked_on: '2026-11-13'
+  notes: 'affiliation: Emory University Nell Hodgson Woodruff School of Nursing, Atlanta, GA, United States.
+
+    cohort.ancestry: should be [''african_american'', ''black''] (The abstract repeatedly states participants
+    were ''African American women''. The allowed ancestry list includes both ''african_american'' and
+    ''black''; ''black'' is not explicitly stated, so only ''african_american'' is clearly supported.
+    Therefore the claimed value is supported as-is; however, because the field is already correct, no
+    correction is needed.)
+
+    resolution: ancestry kept as african_american, which is a subgroup of black in the vocabulary.'

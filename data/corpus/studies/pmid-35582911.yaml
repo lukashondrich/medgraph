@@ -1,0 +1,81 @@
+study_id: pmid-35582911
+pmid: '35582911'
+doi: 10.1128/msystems.00017-22
+url: https://pubmed.ncbi.nlm.nih.gov/35582911/
+title: Race, the Vaginal Microbiome, and Spontaneous Preterm Birth
+authors: Sun et al.
+year: 2022
+journal: mSystems
+design: case_control
+sample_size: 824
+cohort:
+  description: Pregnant Black and White women from the PIN Study
+  ancestry:
+  - black
+  - white_european
+  countries:
+  - United States
+  age_min: null
+  age_max: null
+  menopausal_status: []
+  pregnancy:
+  - pregnant
+topics:
+- vaginal microbiome
+- spontaneous preterm birth
+- race differences
+- Lactobacillus crispatus
+- vaginal douching
+key_finding: Lower vaginal Lactobacillus crispatus abundance was associated with increased odds of spontaneous
+  preterm birth, and associations were limited to women who do not douche.
+abstract: Previous studies have investigated the associations between the vaginal microbiome and preterm
+  birth, with the aim of determining whether differences in community patterns meaningfully alter risk
+  and could therefore be the target of intervention. We report on vaginal microbial analysis of a nested
+  case-control subset of the Pregnancy, Infection, and Nutrition (PIN) Study, including 464 White women
+  (375 term birth and 89 spontaneous preterm birth, sPTB) and 360 Black women (276 term birth and 84 sPTB).
+  We found that the microbiome of Black women has higher alpha-diversity, higher abundance of Lactobacillus
+  iners, and lower abundance of Lactobacillus crispatus. However, among women who douche, there were no
+  significant differences in microbiome by race. The sPTB-associated microbiome exhibited a lower abundance
+  of L. crispatus, while alpha diversity and L. iners were not significantly associated with sPTB. For
+  each order of magnitude increase in the normalized relative abundance of L. crispatus, multivariable
+  adjusted odds of sPTB decreased by approximately 20% (odds ratio, 0.81; 95% confidence interval, 0.70,
+  0.94). When we considered the impact of douching, associations between the microbiome and sPTB were
+  limited to women who do not douche. We also observed strong intercorrelations between a range of maternal
+  factors, including poverty, education, marital status, age, douching, and race, with microbiome effect
+  sizes in the range of 1.8 to 5.2% in univariate models. Therefore, race may simply be a proxy for other
+  socially driven factors that differentiate microbiome community structures. Future work will continue
+  to refine reliable microbial biomarkers for preterm birth across diverse cohorts. IMPORTANCE Approximately
+  10% of all pregnancies in the United States end in preterm birth, and over 14% of pregnancies end in
+  preterm birth among Black women. Knowledge on the associations between vaginal microbiome and preterm
+  birth is important for understanding the potential cause and assessing risk of preterm birth. Our study
+  is one of the largest studies performed to date to investigate the associations between vaginal microbiome
+  and spontaneous preterm birth (sPTB), with stratified design for Black and White women. We found that
+  the vaginal microbiome was different between Black and White women. The vaginal microbiome was associated
+  with sPTB, and a lower abundance of L. crispatus increased the risk of sPTB independent of racial differences
+  in microbial community structures. Furthermore, we also found that vaginal douching obscured the associations
+  between vaginal microbiome, race, and preterm birth, suggesting that vaginal douching is an important
+  factor to consider in future studies.
+licence: cc by
+text_source: abstract
+check:
+  status: checked
+  checked_by: LLM second pass (gpt-5.2); disputes resolved by Claude (AI assistant), not by a clinical
+    expert
+  checked_on: '2026-11-13'
+  notes: 'affiliation: Department of Bioinformatics and Genomics, University of North Carolina at Charlottegrid.266859.6,
+    Charlotte, North Carolina, USA.
+
+    design: should be ''case_control'' (The abstract specifies a nested case-control subset, but the allowed
+    design options do not include nested case-control; it should still be coded as case_control.)
+
+    cohort.ancestry: should be [''black'', ''other''] (Participants are described as ''Black'' and ''White''
+    women. ''white_european'' is not stated; the correct mapping for unspecified ''White'' (not explicitly
+    European) is ''other'' under the allowed ancestry values.)
+
+    key_finding: should be ''Lower vaginal Lactobacillus crispatus abundance was associated with increased
+    odds of spontaneous preterm birth, and associations were limited to women who do not douche (douching
+    obscured associations).'' (The claim states ''lower L. crispatus ... decreased odds'' which reverses
+    the direction. The abstract reports OR 0.81 per order-of-magnitude increase in L. crispatus (i.e.,
+    higher L. crispatus decreases odds; lower increases risk).)
+
+    resolution: key finding replaced with the checker''s wording; ''White'' kept as white_european.'

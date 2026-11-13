@@ -99,6 +99,19 @@ Not done in M1, by plan: router for follow-up questions (2.6), safety rules (2.4
 | 2.8 | Matched-citation accent and grouped source list | Persona switch with the same reading visibly changes the matched group |
 | 2.9 | Remove the unused specialists, drug check and patient endpoints; update affected tests | `pytest tests/ -v --ignore=tests/eval` passes |
 
+### M2 status (2026-11-13)
+
+Done: all 63 candidate records drafted and checked (335 passages); three personas; reference ranges for each; safety rules with a banner; a guidelines source; a planner for follow-up questions; old agents, prompts, patient data and their tests removed (88 tests remain, all passing).
+
+Notes:
+
+- The second check disputed 37 of the 63 records in total, mostly on design labels, country and the wording of ancestry. Each dispute was resolved by the assistant and the resolution is written on the record. No clinical expert was involved.
+- Being of white European ancestry does not count as a distinguishing match, for the same reason that being premenopausal does not: it describes most cohorts in this literature.
+- Only two documents are true guidelines (European vaginal discharge 2018, US menopause symptoms 2025). The CDC item turned out to be an evidence summary and is filed as a review. Task 0.4 (a US pregnancy screening recommendation and a German guideline) is still open.
+- The German trial of pH self-testing in pregnancy is in the corpus but is not reliably surfaced for the pregnant persona. Scenario A8 (matched and general evidence disagree) is therefore not yet demonstrated.
+- `tests/eval/` still targets the removed agents and does not run. It is replaced in task 3.1.
+- `src/config.py` still carries the Ollama settings and a fallback model that the provider no longer serves.
+
 ## M3 — Polish and proof
 
 | # | Task | Done when |

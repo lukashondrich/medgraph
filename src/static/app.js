@@ -22,14 +22,18 @@
   var lookupCounter = 0;
   var citeTrigger = null;
 
-  var GROUP_ORDER = ["matched", "reference_range", "guideline", "overall"];
+  var GROUP_ORDER = ["safety", "matched", "reference_range", "guideline", "overall"];
   var GROUP_KEYS = {
+    safety: "groupSafety",
     matched: "groupMatched",
     reference_range: "groupRange",
     guideline: "groupGuideline",
     overall: "groupOverall",
   };
   var SOURCE_KEYS = {
+    plan: "srcPlan",
+    safety_rules: "srcSafetyRules",
+    guidelines: "srcGuidelines",
     reference_ranges: "srcReferenceRanges",
     study_library: "srcStudyLibrary",
     writer: "srcWriter",
@@ -584,7 +588,8 @@
     switch (event.type) {
       case "routing":
         if (event.data.agents) {
-          setLookupSteps(lookupEl, event.data.agents);
+          setStepState(lookupEl, "plan", "done");
+          addLookupSteps(lookupEl, event.data.agents);
         }
         scrollToBottom();
         break;
@@ -609,7 +614,8 @@
         appendAssistantMessage(
           event.data.content,
           event.data.safety_escalation,
-          event.data.citations || []
+          event.data.citations || [],
+          event.data.safety_reasons || []
         );
         break;
 
@@ -648,8 +654,9 @@
           "</span>" +
           '<span class="chevron" aria-hidden="true"></span>' +
         "</button>" +
-        '<ul class="lookup-steps" id="' + listId + '"></ul>' +
+        '<ul class="lookup-steps" id="' + listId + '">' + stepHTML("plan") + "</ul>" +
       "</div>";
+    setStepState(el, "plan", "processing");
 
     var toggle = el.querySelector(".pipeline-toggle");
     toggle.addEventListener("click", function () {
@@ -677,10 +684,12 @@
     );
   }
 
-  function setLookupSteps(el, agents) {
+  function addLookupSteps(el, agents) {
     var list = el.querySelector(".lookup-steps");
-    list.innerHTML = agents.concat(["writer"]).map(stepHTML).join("");
-    announce(t("lookingUp") + ": " + agents.map(sourceName).join(", "));
+    list.insertAdjacentHTML("beforeend", agents.concat(["writer"]).map(stepHTML).join(""));
+    if (agents.length) {
+      announce(t("lookingUp") + ": " + agents.map(sourceName).join(", "));
+    }
   }
 
   function setStepState(el, agent, state) {
@@ -712,6 +721,14 @@
     }
     if (agent === "reference_ranges") {
       return escapeHTML(t("detailRanges", { found: counts.found || 0, query: detail.query || "" }));
+    }
+    if (agent === "safety_rules") {
+      return counts.fired
+        ? '<span class="step-flag">' + escapeHTML(t("detailSafetyFired", { n: counts.fired })) + "</span>"
+        : escapeHTML(t("detailSafetyNone"));
+    }
+    if (agent === "guidelines") {
+      return escapeHTML(t("detailGuidelines", { found: counts.found || 0 }));
     }
     if (agent === "study_library") {
       var queries = detail.queries || (detail.query ? [detail.query] : []);
@@ -778,7 +795,7 @@
     scrollToBottom();
   }
 
-  function appendAssistantMessage(text, safetyEscalation, citations) {
+  function appendAssistantMessage(text, safetyEscalation, citations, safetyReasons) {
     var el = document.createElement("article");
     el.className = "message message-assistant";
     el.setAttribute("aria-label", t("responseFrom"));
@@ -792,9 +809,15 @@
     var html =
       '<div class="message-label" aria-hidden="true">' + escapeHTML(t("assistant")) + "</div>";
     if (safetyEscalation) {
+      var reasons = (safetyReasons || []).length ? safetyReasons : [t("safetyDisclaimer")];
       html +=
         '<div class="safety-disclaimer" role="alert">' +
-        escapeHTML(t("safetyDisclaimer")) +
+        '<strong class="safety-title">' + escapeHTML(t("safetyTitle")) + "</strong>" +
+        reasons
+          .map(function (reason) {
+            return "<p>" + escapeHTML(reason) + "</p>";
+          })
+          .join("") +
         "</div>";
     }
     html +=

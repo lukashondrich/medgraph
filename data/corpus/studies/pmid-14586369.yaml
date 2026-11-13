@@ -1,0 +1,46 @@
+study_id: pmid-14586369
+pmid: '14586369'
+doi: 10.1067/s0002-9378(03)00582-9
+url: https://pubmed.ncbi.nlm.nih.gov/14586369/
+title: Elevated vaginal pH and neutrophils are associated strongly with early spontaneous preterm birth
+authors: Simhan et al.
+year: 2003
+journal: Am J Obstet Gynecol
+design: cohort
+sample_size: 13917
+cohort:
+  description: Pregnant women at 23 and 26 weeks gestation
+  ancestry: []
+  countries:
+  - United States
+  age_min: null
+  age_max: null
+  menopausal_status: []
+  pregnancy:
+  - pregnant
+topics:
+- preterm birth
+- vaginal pH
+- vaginal neutrophils
+- pregnancy
+- sexually transmitted infections
+key_finding: Elevated vaginal pH (≥5.0) and increased vaginal neutrophils were associated with spontaneous
+  preterm birth, most strongly for the earliest preterm deliveries.
+abstract: 'Objective: The purpose of this study was to determine the association of vaginal pH>or=5.0
+  and vaginal neutrophils >5 per oil-field with early preterm birth. Study design This is a secondary
+  analysis of the vaginal infections and prematurity cohort comprised of 13,917 women at 23 and 26 weeks
+  of gestation. All women were tested for sexually transmitted infections and vaginal pH. Gram-stained
+  smears were used for the detection of neutrophils. Results: There were 5751 women (41.3%) with neutrophils
+  >5 per oil-field and 2500 women (18.0%) with pH>or=5.0. Both elevated pH and neutrophils were present
+  in 1149 women (8.3%). Neutrophils and pH were each significantly associated with spontaneous preterm
+  birth, and the point estimate of the strength of that association increased as the gestational age at
+  delivery decreased. Conclusion: Elevated vaginal pH and neutrophils are associated most strongly with
+  the earliest preterm births.'
+licence: null
+text_source: abstract
+check:
+  status: checked
+  checked_by: LLM second pass (gpt-5.2)
+  checked_on: '2026-11-13'
+  notes: 'affiliation: Department of Obstetrics, Gynecology, and Reproductive Sciences, Magee-Womens Research
+    Institute, University of Pittsburgh School of Medicine, PA, USA. hsimhan@mail.magee.edu'

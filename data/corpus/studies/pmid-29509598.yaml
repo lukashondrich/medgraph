@@ -1,0 +1,58 @@
+study_id: pmid-29509598
+pmid: '29509598'
+doi: 10.1097/gme.0000000000001081
+url: https://pubmed.ncbi.nlm.nih.gov/29509598/
+title: 'Vaginal pH: a simple assessment highly correlated with vaginal morphology and symptoms in postmenopausal
+  women'
+authors: Tucker et al.
+year: 2018
+journal: Menopause
+design: other
+sample_size: null
+cohort:
+  description: Postmenopausal women with vulvovaginal atrophy symptoms
+  ancestry: []
+  countries:
+  - United States
+  age_min: null
+  age_max: null
+  menopausal_status:
+  - postmenopausal
+  pregnancy: []
+topics:
+- vaginal pH
+- vulvovaginal atrophy
+- estradiol therapy
+- vaginal epithelium maturation
+- dyspareunia
+key_finding: In postmenopausal women treated with vaginal estradiol, changes in vaginal pH significantly
+  correlated with vaginal cell maturation, epithelial physical changes, and symptoms of dryness and dyspareunia.
+abstract: 'Objective: The aim of the study was to determine the utility of vaginal pH as a marker of menopause
+  and vulvar and vaginal atrophy (VVA) before and after local estrogen treatment. Methods: Vaginal pH
+  was determined using standard pH paper strips in two clinical trials involving postmenopausal women
+  with signs and symptoms of VVA evaluated before and after intervention with vaginal estradiol in softgel
+  capsules. The utility of vaginal pH was evaluated as a screening method for VVA due to menopause and
+  correlations were analyzed between vaginal pH and VVA symptoms, physical changes, and maturation of
+  the vaginal epithelium. Results: Changes in vaginal pH were significantly correlated with changes in
+  superficial and parabasal cell counts; vaginal epithelial changes of color, integrity, thickness, and
+  secretion; and the VVA symptoms of vaginal dryness and dyspareunia (vaginal pain with intercourse).
+  Conclusions: Vaginal pH consistently correlated with parabasal and superficial cells and the visual
+  vaginal epithelial changes and symptoms of dryness and dyspareunia, and is thus a simple outpatient
+  procedure that reflects the hormonal milieu and its effects on the vaginal epithelium.'
+licence: null
+text_source: abstract
+check:
+  status: checked
+  checked_by: LLM second pass (gpt-5.2); disputes resolved by Claude (AI assistant), not by a clinical
+    expert
+  checked_on: '2026-11-13'
+  notes: 'affiliation: CONRAD Clinical Research Center, Department of Obstetrics and Gynecology, Eastern
+    Virginia Medical School, Norfolk, VA.
+
+    design: should be ''other'' (The abstract describes analyses from ''two clinical trials'' before and
+    after vaginal estradiol, but it does not state randomization or a randomized controlled trial design.)
+
+    cohort.countries: should be [''USA''] (No recruitment country is stated in the abstract, but the affiliation
+    is in Norfolk, Virginia (USA), so USA should be listed per the rules.)
+
+    resolution: design set to other (analysis of two trials, randomisation not stated); country from affiliation.'

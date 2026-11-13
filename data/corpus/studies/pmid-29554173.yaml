@@ -1,0 +1,67 @@
+study_id: pmid-29554173
+pmid: '29554173'
+doi: 10.1001/jamainternmed.2018.0116
+url: https://pubmed.ncbi.nlm.nih.gov/29554173/
+title: 'Efficacy of Vaginal Estradiol or Vaginal Moisturizer vs Placebo for Treating Postmenopausal Vulvovaginal
+  Symptoms: A Randomized Clinical Trial'
+authors: Mitchell et al.
+year: 2018
+journal: JAMA Intern Med
+design: rct
+sample_size: 302
+cohort:
+  description: Postmenopausal women with moderate-to-severe vulvovaginal symptoms
+  ancestry: []
+  countries:
+  - United States
+  age_min: null
+  age_max: null
+  menopausal_status:
+  - postmenopausal
+  pregnancy: []
+topics:
+- vulvovaginal symptoms
+- vaginal estradiol
+- vaginal moisturizer
+- placebo-controlled trial
+- female sexual function
+key_finding: Over 12 weeks, vaginal estradiol tablets and a vaginal moisturizer did not reduce most bothersome
+  vulvovaginal symptom severity more than placebo.
+abstract: 'Importance: Nearly half of postmenopausal women report bothersome vulvovaginal symptoms, but
+  few data support the efficacy of 2 commonly recommended treatments. Objective: To compare the efficacy
+  of a low-dose vaginal estradiol tablet and a vaginal moisturizer, each vs placebo, for treatment of
+  moderate-to-severe postmenopausal vulvovaginal symptoms. Design, setting, and participants: This 12-week
+  multicenter randomized clinical trial enrolled postmenopausal women with moderate to severe symptoms
+  of vulvovaginal itching, pain, dryness, irritation, or pain with penetration. Interventions: Vaginal
+  10-μg estradiol tablet (daily for 2 weeks, then twice weekly) plus placebo gel (3 times a week) (n =
+  102) vs placebo tablet plus vaginal moisturizer (n = 100) vs dual placebo (n = 100). Main outcomes and
+  measures: The main outcome was decrease in severity (0-3) of most bothersome symptom (MBS) between enrollment
+  and 12 weeks. Additional measures included a composite vaginal symptom score, Female Sexual Function
+  Index (FSFI) score (2-36), modified Female Sexual Distress Score-Revised item 1, treatment satisfaction
+  and meaningful benefit, Vaginal Maturation Index, and vaginal pH. Results: The 302 women had a mean
+  (SD) age of 61 (4) years and were primarily white (267 [88%]), college educated (200 [66%]), and sexually
+  active (245 [81%]). Most women (294 [97%]) provided data for the primary analysis. The most commonly
+  reported MBS was pain with vaginal penetration (182 [60%]), followed by vulvovaginal dryness (63 [21%]).
+  Mean baseline MBS severity was similar between treatment groups: estradiol, 2.4 (95% CI, 2.3 to 2.6);
+  moisturizer, 2.5 (95% CI, 2.3 to 2.6); placebo, 2.5 (95% CI, 2.4 to 2.6). All treatment groups had similar
+  mean reductions in MBS severity over 12 weeks: estradiol, -1.4 (95% CI, -1.6 to -1.2); moisturizer,
+  -1.2 (95% CI, -1.4 to -1.0); and placebo, -1.3 (95% CI, -1.5 to -1.1). No significant differences were
+  seen between estradiol (P = .25) or moisturizer (P = .31) compared with placebo. Mean total FSFI improvement
+  was similar between estradiol (5.4; 95% CI, 4.0 to 6.9) and placebo (4.5; 95% CI, 2.8 to 6.1) (P = .64),
+  and between moisturizer (3.1; 95% CI, 1.7 to 4.5) and placebo (P = .17). Conclusions and relevance:
+  Our results suggest that neither prescribed vaginal estradiol tablet nor over-the-counter vaginal moisturizer
+  provides additional benefit over placebo vaginal tablet and gel in reducing postmenopausal vulvovaginal
+  symptoms. Trial registration: clinicaltrials.gov Identifier: NCT02516202.'
+licence: null
+text_source: abstract
+check:
+  status: checked
+  checked_by: LLM second pass (gpt-5.2); disputes resolved by Claude (AI assistant), not by a clinical
+    expert
+  checked_on: '2026-11-13'
+  notes: 'affiliation: Vincent Obstetrics and Gynecology, Massachusetts General Hospital, Boston.
+
+    cohort.ancestry: should be [] (Abstract reports participants were primarily "white" (267 [88%]) but
+    does not specify white European ancestry; the allowed value "white_european" is not directly stated.)
+
+    resolution: ancestry cleared: ''primarily white'' is not a single-group cohort.'

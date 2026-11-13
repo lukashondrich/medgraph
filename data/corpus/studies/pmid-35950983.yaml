@@ -1,0 +1,55 @@
+study_id: pmid-35950983
+pmid: '35950983'
+doi: 10.2217/fmb-2021-0209
+url: https://pubmed.ncbi.nlm.nih.gov/35950983/
+title: Meta-analysis of race and age influence on the vaginal microbiome in pregnant and nonpregnant healthy
+  women
+authors: Hotkani et al.
+year: 2022
+journal: Future Microbiol
+design: meta_analysis
+sample_size: null
+cohort:
+  description: Pregnant and nonpregnant healthy women of different ages and races
+  ancestry: []
+  countries: []
+  age_min: null
+  age_max: null
+  menopausal_status: []
+  pregnancy:
+  - pregnant
+  - not_pregnant
+topics:
+- vaginal microbiome
+- pregnancy
+- age differences
+- race/ethnicity
+- 16S rRNA sequencing
+key_finding: Age and ethnicity influenced the vaginal microbiome, with Chinese women showing a more distinct
+  microbiome than other ethnicities.
+abstract: 'Aim: The presence of microbial species in reproductive tubes plays an essential protective
+  role against the proliferation of harmful organisms and is an important factor in reproductive health.
+  High-throughput culture-independent technologies allow the study of the vaginal microbiome on a large
+  scale. This study aimed to compare the vaginal microbiota between pregnant and nonpregnant women of
+  different ages and races using the meta-analysis method. Materials & methods: Seven articles with 16S
+  rRNA gene sequences were studied and analyzed using CLC Genomics Workbench 20.1.1. Results & conclusion:
+  This study revealed new insights into the effects of age and ethnicity on the pregnant and nonpregnant
+  vaginal microbiome and found that the microbiome of Chinese women is more distinct than that of other
+  ethnicities.'
+licence: null
+text_source: abstract
+check:
+  status: checked
+  checked_by: LLM second pass (gpt-5.2); disputes resolved by Claude (AI assistant), not by a clinical
+    expert
+  checked_on: '2026-11-13'
+  notes: 'affiliation: Department of Biosciences, University of Milan, Milan, 20133, Italy.
+
+    cohort.ancestry: should be [''east_asian''] (The abstract explicitly mentions "Chinese women"; this
+    supports recording an ancestry group (east_asian) rather than leaving the list empty.)
+
+    cohort.pregnancy: should be [''pregnant'', ''not_pregnant''] (The abstract repeatedly states comparisons
+    between "pregnant and nonpregnant women", so pregnancy status categories are explicitly given and
+    should not be left empty.)
+
+    resolution: pregnancy set to both; ancestry left empty for a pooled analysis.'

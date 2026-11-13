@@ -1,0 +1,67 @@
+study_id: pmid-18043622
+pmid: '18043622'
+doi: 10.1038/ismej.2007.12
+url: https://pubmed.ncbi.nlm.nih.gov/18043622/
+title: Differences in the composition of vaginal microbial communities found in healthy Caucasian and
+  black women
+authors: Zhou et al.
+year: 2007
+journal: ISME J
+design: cross_sectional
+sample_size: 144
+cohort:
+  description: Healthy Caucasian and black reproductive-age women in North America
+  ancestry:
+  - white_european
+  - black
+  countries: []
+  age_min: null
+  age_max: null
+  menopausal_status: []
+  pregnancy: []
+topics:
+- vaginal microbiome
+- Lactobacillus
+- racial differences
+- bacterial vaginosis risk
+- 16S rRNA profiling
+key_finding: Vaginal microbial community types differed significantly between black and Caucasian women,
+  with non-lactobacilli-dominant communities more common in black women (33% vs 7%).
+abstract: The maintenance of a low pH in the vagina through the microbial production of lactic acid is
+  known to be an important defense against infectious disease in reproductive age women. Previous studies
+  have shown that this is largely accomplished through the metabolism of lactic acid bacteria, primarily
+  species of Lactobacillus. Despite the importance of this defense mechanism to women's health, differences
+  in the species composition of vaginal bacterial communities among women have not been well defined,
+  nor is it known if and how these differences might be linked to differences in the risk of infection.
+  In this study, we defined and compared the species composition of vaginal bacterial communities in 144
+  Caucasian and black women in North America. This was carried out based on the profiles of terminal restriction
+  fragments of 16S rRNA genes, and phylogenetic analysis of 16S rRNA gene sequences of the numerically
+  dominant microbial populations. Among all the women sampled, there were eight major kinds of vaginal
+  communities ('supergroups') that occurred in the general populace at a frequency of at least 0.05 (P=0.99).
+  From the distribution of these supergroups among women, it was possible to draw several conclusions.
+  First, there were striking, statistically significant differences (P=0.0) in the rank abundance of community
+  types among women in these racial groups. Second, the incidence of vaginal communities in which lactobacilli
+  were not dominant was higher in black women (33%) as compared to Caucasian women (7%). Communities not
+  dominated by lactobacilli had Atopobium and a diverse array of phylotypes from the order Clostridiales.
+  Third, communities dominated by roughly equal numbers of more than one species of Lactobacillus were
+  rare in black women, but common in Caucasian women. We postulate that because of these differences in
+  composition, not all vaginal communities are equally resilient, and that differences in the vaginal
+  microbiota of Caucasian and black women may at least partly account for known disparities in the susceptibility
+  of women in these racial groups to bacterial vaginosis and sexually transmitted diseases.
+licence: null
+text_source: abstract
+check:
+  status: checked
+  checked_by: LLM second pass (gpt-5.2); disputes resolved by Claude (AI assistant), not by a clinical
+    expert
+  checked_on: '2026-11-13'
+  notes: 'affiliation: Department of Biological Sciences, University of Idaho, Moscow, ID 83844, USA.
+
+    cohort.ancestry: should be [''white_european'', ''black''] (The abstract states only ''144 Caucasian
+    and black women'' and does not specify European ancestry; mapping ''Caucasian'' to ''white_european''
+    is not directly supported by the text.)
+
+    cohort.countries: should be [] (Participants are described as ''in North America'' with no country
+    specified; USA cannot be assumed from the author affiliation alone.)
+
+    resolution: countries cleared: abstract says only ''North America''. ''Caucasian'' kept as white_european.'

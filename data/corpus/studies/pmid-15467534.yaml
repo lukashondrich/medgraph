@@ -1,0 +1,55 @@
+study_id: pmid-15467534
+pmid: '15467534'
+doi: 10.1016/j.ajog.2004.03.032
+url: https://pubmed.ncbi.nlm.nih.gov/15467534/
+title: Are racial differences in vaginal pH explained by vaginal flora?
+authors: Fiscella and Klebanoff
+year: 2004
+journal: Am J Obstet Gynecol
+design: cohort
+sample_size: 13917
+cohort:
+  description: Pregnant women at 23–26 weeks gestation in prenatal care
+  ancestry:
+  - black
+  - white_european
+  countries:
+  - United States
+  age_min: null
+  age_max: null
+  menopausal_status: []
+  pregnancy:
+  - pregnant
+topics:
+- vaginal pH
+- vaginal flora
+- race differences
+- pregnancy
+- bacterial vaginosis exclusion
+key_finding: Any modest racial difference in vaginal pH disappeared after adjustment for Gram stain score,
+  age, and study site, indicating no significant black–white difference once vaginal flora and confounders
+  were controlled.
+abstract: 'Objectives: The study assessed racial differences in vaginal pH among women without bacterial
+  vaginosis. Study design: Data from the Vaginal Infections and Prematurity (VIP) Study were analyzed.
+  From 1984 to 1989, 13,917 largely low-income women were enrolled during routine prenatal visits from
+  23 to 26 weeks'' gestation. Vaginal cultures, Gram stains, and pH levels were collected. Comparisons
+  of pH by race were made among women with Gram stain scores <7 and without trichomoniasis before and
+  after adjustment for actual Gram stain score. Results: Among women with Gram stain scores <7, there
+  was a modest but statistically significant racial difference in vaginal pH level. However, after controlling
+  for difference in Gram stain score, age, and study site, there was no longer a significant difference
+  in vaginal pH. Conclusion: There is no significant difference in vaginal pH level between black and
+  white women after controlling for differences in confounding factors, particularly vaginal flora.'
+licence: null
+text_source: abstract
+check:
+  status: checked
+  checked_by: LLM second pass (gpt-5.2); disputes resolved by Claude (AI assistant), not by a clinical
+    expert
+  checked_on: '2026-11-13'
+  notes: 'affiliation: Department of Family Medicine and Community and Preventive Medicine, University
+    of Rochester School of Medicine and Dentistry, Rochester, NY, USA. Kevin_Fiscella@urmc.rochester.edu
+
+    cohort.ancestry: should be [''black'', ''other''] (The abstract contrasts "black and white women"
+    but does not specify that the white group is "white_european" (European ancestry is not stated).)
+
+    resolution: ''white'' kept as white_european (only white key in the vocabulary).'

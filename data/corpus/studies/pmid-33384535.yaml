@@ -1,0 +1,51 @@
+study_id: pmid-33384535
+pmid: '33384535'
+doi: 10.4103/jmh.jmh_1_20
+url: https://pubmed.ncbi.nlm.nih.gov/33384535/
+title: 'Vaginal pH as a Diagnostic Tool for Menopause: A Preliminary Analysis'
+authors: Makwana et al.
+year: 2020
+journal: J Midlife Health
+design: cross_sectional
+sample_size: 120
+cohort:
+  description: Women with last menstrual period over 1 year ago
+  ancestry:
+  - indian
+  countries:
+  - India
+  age_min: null
+  age_max: null
+  menopausal_status:
+  - postmenopausal
+  pregnancy: []
+topics:
+- vaginal pH
+- serum FSH
+- menopause diagnosis
+- diagnostic sensitivity
+- gynecology outpatient
+key_finding: Among women without vaginal infection, vaginal pH (90%) had similar sensitivity to serum
+  FSH (85%) for diagnosing menopause.
+abstract: 'Introduction: Menopause is defined as the permanent cessation of menstruation, as a result
+  of decrease in ovarian follicles and the loss of ovarian activity. There is decrease in inhibin B level
+  which causes decrease in negative feedback on the serum follicle-stimulating hormone (FSH), which in
+  turn increases the level of serum FSH. Serum FSH is routinely used as a marker of menopause. Decline
+  in the estrogen level causes thinning of vaginal epithelium, resulting in less exfoliation of the vaginal
+  epithelial cells, lesser available glycogen, and decreased substrate for acid production, leading to
+  increase in vaginal pH. Aims: The aim of this study is to compare the sensitivity of vaginal pH versus
+  serum FSH level to diagnose menopause. Settings and design: This is a cross-sectional study, performed
+  in obstetrics and gynecology outpatient department of a teaching hospital of central Gujarat. Subjects
+  and methods: A total of 120 women who had their last menstrual period >1 year back (menopause) were
+  included in the study. Vaginal pH was measured and serum sample was taken to measure FSH level. Sensitivity
+  of both vaginal pH and serum FSH to diagnose menopause was compared. McNemar test was used to analyze
+  the convergence of the two methods for the diagnosis of menopause. Results: In the absence of vaginal
+  infection, sensitivity of vaginal pH to diagnose menopause was 90%, while sensitivity of the serum FSH
+  was 85%. Conclusions: Sensitivity of the vaginal pH is similar to the serum FSH for diagnosis of menopause.'
+licence: cc by-nc-sa
+text_source: abstract
+check:
+  status: checked
+  checked_by: LLM second pass (gpt-5.2)
+  checked_on: '2026-11-13'
+  notes: 'affiliation: Department of Obstetrics and Gynecology, Medical College, Baroda, Gujarat, India.'

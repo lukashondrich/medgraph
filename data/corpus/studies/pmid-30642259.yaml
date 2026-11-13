@@ -1,0 +1,63 @@
+study_id: pmid-30642259
+pmid: '30642259'
+doi: 10.1186/s12866-019-1388-8
+url: https://pubmed.ncbi.nlm.nih.gov/30642259/
+title: 'Vaginal pH measured in vivo: lactobacilli determine pH and lactic acid concentration'
+authors: O'Hanlon et al.
+year: 2019
+journal: BMC Microbiol
+design: other
+sample_size: 20
+cohort:
+  description: Women with low Nugent score lactobacilli-predominant microbiota
+  ancestry: []
+  countries:
+  - United States
+  age_min: null
+  age_max: null
+  menopausal_status: []
+  pregnancy: []
+topics:
+- vaginal pH
+- lactobacilli
+- lactic acid
+- vaginal microbiome
+- antimicrobial activity
+key_finding: In 20 women with lactobacilli-predominant microbiota, vaginal pH (~3.8) tightly correlated
+  with lactate levels, and lactobacilli proton/lactate production appeared limited mainly by low pH sensitivity
+  rather than lactate concentration.
+abstract: 'Background: Lactic acid (protonated lactate) has broad antimicrobial activity. Vaginal lactobacilli
+  produce lactic acid, and are known to confer protection against reproductive tract infections when they
+  are predominant in the vaginal microbiota. Using novel ex vivo methods, we showed that cervicovaginal
+  fluid (CVF) from women with a predominantly lactobacilli-morphotype microbiota contains significantly
+  more lactic acid than previously thought, sufficient to inactivate reproductive tract pathogens. Here,
+  we measured vaginal pH in vivo in 20 women with a predominantly lactobacilli-morphotype (low Nugent
+  score) microbiota. We also investigated the in vitro production of protons (as hydrogen ions) and lactate
+  by vaginal lactobacilli. Results: The average vaginal pH in these women was 3.80 ± 0.20, and the average
+  lactate concentration was 0.79% ± 0.22% w/v, with pH and lactate concentration tightly correlated for
+  each sample. In vitro, lactobacilli cultured from these CVF samples reached an average pH of 3.92 ±
+  0.22, but the average lactate concentration was only 0.14% ± 0.06% w/v, approximately five-fold less
+  than in the corresponding CVF samples. When the pH of the cultures was raised, lactate and hydrogen
+  ion production resumed, indicating that production of lactate and hydrogen ions by vaginal lactobacilli
+  is limited primarily by their sensitivity to hydrogen ion concentration (low pH) not lactate concentration.
+  Conclusions: Some vaginal lactobacilli cultures have a lower limiting pH than others, and limiting pHs
+  in vitro showed good correlation with pHs measured in vivo. The limiting pH of the lactobacilli predominant
+  in a woman''s vaginal microbiota seems critical in determining the concentration of antimicrobial lactic
+  acid protecting her.'
+licence: cc by
+text_source: abstract
+check:
+  status: checked
+  checked_by: LLM second pass (gpt-5.2); disputes resolved by Claude (AI assistant), not by a clinical
+    expert
+  checked_on: '2026-11-13'
+  notes: 'affiliation: Institute for Genomic Sciences, University of Maryland School of Medicine, 801
+    West Baltimore Street, Baltimore, MD, USA. DOhanlon@SOM.UMaryland.edu.
+
+    design: should be ''other'' (The abstract includes both an in vivo measurement in 20 women and in
+    vitro experiments on cultured lactobacilli; this is not a purely lab-only study design.)
+
+    cohort.countries: should be [] (No recruitment country/location is stated in the abstract; affiliation
+    alone does not establish where participants were recruited.)
+
+    resolution: design set to other (in-body measurement plus laboratory work); country kept from affiliation.'

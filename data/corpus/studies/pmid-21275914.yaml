@@ -1,0 +1,48 @@
+study_id: pmid-21275914
+pmid: '21275914'
+doi: 10.1111/j.1600-0412.2010.01011.x
+url: https://pubmed.ncbi.nlm.nih.gov/21275914/
+title: Factors related to elevated vaginal pH in the first trimester of pregnancy
+authors: Zodzika et al.
+year: 2011
+journal: Acta Obstet Gynecol Scand
+design: cross_sectional
+sample_size: 139
+cohort:
+  description: First-trimester pregnant women at first prenatal visit
+  ancestry: []
+  countries:
+  - Latvia
+  age_min: null
+  age_max: null
+  menopausal_status: []
+  pregnancy:
+  - pregnant
+topics:
+- vaginal pH
+- first trimester pregnancy
+- bacterial vaginosis
+- aerobic vaginitis
+- vaginal microbiology
+key_finding: Elevated vaginal pH (≥4.5) in first-trimester pregnant women was associated with abnormal
+  vaginal flora (including bacterial vaginosis and aerobic vaginitis) and presence of sperm cells in smears.
+abstract: 'Objective: To assess different bacterial and epidemiological factors associations with increased
+  vaginal pH in the pregnant women population during the first trimester. Design: A cross-sectional, observational
+  study. Setting: Three outpatient clinics in Riga. Population: From July 2009 until January 2010, 139
+  unselected consecutive pregnant women at the first prenatal visit. Methods: Pregnant women were submitted
+  to an interview, vaginal examination and vaginal specimen collection for pH measurement and native microscopy.
+  Main outcome measures: Vaginal pH ≥4.5 was considered as elevated. Abnormal bacterial microflora was
+  classified according to Donders. Results: Elevated vaginal pH was significantly associated with bacterial
+  vaginosis (p < 0.001), aerobic vaginitis (p < 0.001) and mixed aerobic vaginitis and bacterial vaginosis
+  flora (p < 0.001) and presence of sperm cells in the smears (p= 0.024). Most cases with sperm were associated
+  with abnormal vaginal flora. Normal lactobacillary morphotypes were more often found in the pH ≤4.4
+  group (p < 0.001), while leptosomic and short types were found more frequently with increased pH. Conclusions:
+  Elevated vaginal pH is associated with different types of abnormal vaginal flora and the presence of
+  sperm cells.'
+licence: null
+text_source: abstract
+check:
+  status: checked
+  checked_by: LLM second pass (gpt-5.2)
+  checked_on: '2026-11-13'
+  notes: 'affiliation: Department of Obstetrics and Gynecology, Riga Stradins University, Latvia. zodzika@inbox.lv'

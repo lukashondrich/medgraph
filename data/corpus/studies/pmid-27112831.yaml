@@ -1,0 +1,48 @@
+study_id: pmid-27112831
+pmid: '27112831'
+doi: 10.1016/j.diagmicrobio.2015.12.018
+url: https://pubmed.ncbi.nlm.nih.gov/27112831/
+title: Screening for abnormal vaginal microflora by self-assessed vaginal pH does not enable detection
+  of sexually transmitted infections in Ugandan women
+authors: Donders et al.
+year: 2016
+journal: Diagn Microbiol Infect Dis
+design: cross_sectional
+sample_size: 360
+cohort:
+  description: Ugandan women self-testing vaginal pH and PCR-tested for STIs
+  ancestry: []
+  countries:
+  - Uganda
+  age_min: null
+  age_max: null
+  menopausal_status: []
+  pregnancy: []
+topics:
+- vaginal pH self-testing
+- abnormal vaginal flora
+- bacterial vaginosis
+- sexually transmitted infections
+- PCR diagnostics
+key_finding: Self-assessed vaginal pH correlated with BV-associated bacteria markers but did not correlate
+  with detection of STIs by PCR.
+abstract: 'Objective: Is self-assessed vaginal pH measurement to detect abnormal vaginal bacterial microflora
+  (AVF) an adequate prescreening method for detection of genital sexually transmitted infections (STIs)?
+  Materials and methods: A total of 360 Ugandan women tested themselves with a gloved finger and a pH
+  color strip. PCR for bacterial vaginosis (BV)-associated bacteria was tested by PCR for Mycoplasma hominis,
+  Ureaplasma urealyticum, and/or Atopobium vaginae, while the STIs were diagnosed by positive PCR for
+  Chlamydia trachomatis, Neisseria gonorrhoeae, Mycoplasma genitalium, and/or Trichomonas vaginalis. Results:
+  A strong correlation was found between self-assessed pH values and BV-associated bacteria (P<0.0001),
+  but not with STIs, not as single infections, nor in general. Conclusion: Self-measured vaginal pH correlated
+  well with markers of high-risk microflora types such as BV or aerobic vaginitis, but not with STIs.
+  Hence, in a screening program addressing AVF in low-resource countries, extra specific tests are required
+  to exclude STIs.'
+licence: null
+text_source: abstract
+check:
+  status: checked
+  checked_by: LLM second pass (gpt-5.2)
+  checked_on: '2026-11-13'
+  notes: 'affiliation: Femicare vzw, Clinical Research for Women, Tienen, Belgium; Department of Obstetrics
+    and Gynaecology, University Hospital Antwerpen, Antwerp, Belgium; Department of Obstetrics and Gynaecology,
+    General Hospital H Hart, Tienen, Belgium. Electronic address: gilbert.donders@femicare.net.'

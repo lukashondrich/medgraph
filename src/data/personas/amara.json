@@ -1,0 +1,17 @@
+{
+  "id": "amara",
+  "name": "Amara",
+  "age": 33,
+  "ancestry": "black",
+  "country_of_residence": "Germany",
+  "menopausal_status": "premenopausal",
+  "pregnancy": "second_trimester",
+  "cycle_regular": null,
+  "cycle_day": null,
+  "hormonal_contraception": null,
+  "hrt": null,
+  "recent_antibiotics": false,
+  "symptoms": [],
+  "history": [],
+  "headline": "33 · Black · pregnant, second trimester"
+}

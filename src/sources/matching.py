@@ -19,6 +19,11 @@ W_NOT_PREGNANT = 0.5
 W_AGE = 0.5
 W_COUNTRY = 0.25
 
+# Groups that most studies in this literature already include. Matching on
+# them is shown and scored, but does not make a study "about women like
+# you", for the same reason that being premenopausal does not.
+NON_DISTINGUISHING_ANCESTRY = {"white_european"}
+
 
 class CohortMatch(BaseModel):
     """Result of comparing one study cohort with one profile."""
@@ -62,9 +67,10 @@ def match_cohort(profile: UserProfile, record: StudyRecord) -> CohortMatch:
     match.ancestry_match = _ancestry_match(profile.ancestry, cohort.ancestry)
     if match.ancestry_match == "exact":
         match.score += W_ANCESTRY_EXACT
-        match.qualifying_score += W_ANCESTRY_EXACT
         match.matched_attributes.append(f"{ancestry_label(profile.ancestry)} ancestry")
-        qualifies = True
+        if profile.ancestry not in NON_DISTINGUISHING_ANCESTRY:
+            match.qualifying_score += W_ANCESTRY_EXACT
+            qualifies = True
     elif match.ancestry_match == "broader":
         parent = ANCESTRY_PARENTS[profile.ancestry]
         match.score += W_ANCESTRY_BROADER
@@ -109,7 +115,9 @@ def match_cohort(profile: UserProfile, record: StudyRecord) -> CohortMatch:
 
 def distinguishing_attributes(profile: UserProfile) -> list[str]:
     """Attributes on which a matched study would be expected for this profile."""
-    attributes = [f"{ancestry_label(profile.ancestry)} ancestry"]
+    attributes = []
+    if profile.ancestry not in NON_DISTINGUISHING_ANCESTRY:
+        attributes.append(f"{ancestry_label(profile.ancestry)} ancestry")
     if profile.pregnancy.is_pregnant:
         attributes.append("pregnancy")
     if profile.menopausal_status is MenopausalStatus.POSTMENOPAUSAL:

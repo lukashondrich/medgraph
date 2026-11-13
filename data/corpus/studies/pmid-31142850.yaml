@@ -1,0 +1,67 @@
+study_id: pmid-31142850
+pmid: '31142850'
+doi: 10.1038/s41591-019-0465-8
+url: https://pubmed.ncbi.nlm.nih.gov/31142850/
+title: Racioethnic diversity in the dynamics of the vaginal microbiome during pregnancy
+authors: Serrano et al.
+year: 2019
+journal: Nat Med
+design: other
+sample_size: 2672
+cohort:
+  description: Pregnant and non-pregnant women in cross-sectional and longitudinal cohorts
+  ancestry:
+  - african_american
+  - hispanic
+  - white_european
+  countries:
+  - United States
+  age_min: null
+  age_max: null
+  menopausal_status: []
+  pregnancy:
+  - pregnant
+  - not_pregnant
+topics:
+- vaginal microbiome
+- pregnancy
+- Lactobacillus
+- vaginal dysbiosis
+- race/ethnicity
+key_finding: During pregnancy, the vaginal microbiome shifted early toward Lactobacillus-dominated profiles
+  with reduced metabolic capacity, and these shifts were significant only in women of African or Hispanic
+  ancestry.
+abstract: 'The microbiome of the female reproductive tract has implications for women''s reproductive
+  health. We examined the vaginal microbiome in two cohorts of women who experienced normal term births:
+  a cross-sectionally sampled cohort of 613 pregnant and 1,969 non-pregnant women, focusing on 300 pregnant
+  and 300 non-pregnant women of African, Hispanic or European ancestry case-matched for race, gestational
+  age and household income; and a longitudinally sampled cohort of 90 pregnant women of African or non-African
+  ancestry. In these women, the vaginal microbiome shifted during pregnancy toward Lactobacillus-dominated
+  profiles at the expense of taxa often associated with vaginal dysbiosis. The shifts occurred early in
+  pregnancy, followed predictable patterns, were associated with simplification of the metabolic capacity
+  of the microbiome and were significant only in women of African or Hispanic ancestry. Both genomic and
+  environmental factors are likely contributors to these trends, with socioeconomic status as a likely
+  environmental influence.'
+licence: null
+text_source: abstract
+check:
+  status: checked
+  checked_by: LLM second pass (gpt-5.2); disputes resolved by Claude (AI assistant), not by a clinical
+    expert
+  checked_on: '2026-11-13'
+  notes: 'affiliation: Department of Microbiology and Immunology, School of Medicine, Virginia Commonwealth
+    University, Richmond, VA, USA.
+
+    design: should be ''other'' (The abstract describes two cohorts, one cross-sectionally sampled and
+    one longitudinally sampled; it is not a single standard ''cohort'' study design per the allowed design
+    categories (it combines cross_sectional and cohort elements).)
+
+    sample_size: should be 2672 (The total stated is 613 pregnant + 1,969 non-pregnant + 90 pregnant in
+    a separate cohort; counting all participants described gives 2,672 + 90 = 2,762.)
+
+    cohort.ancestry: should be [''african'', ''hispanic'', ''white_european'', ''other''] (In addition
+    to African, Hispanic and European ancestry, the longitudinal cohort includes ''non-African ancestry'',
+    which does not map to a specific allowed category and should be captured as ''other''.)
+
+    resolution: design set to other (two cohorts, one cross-sectional, one longitudinal); 613 + 1,969
+    + 90 = 2,672 kept; African ancestry in a US cohort recorded as african_american.'

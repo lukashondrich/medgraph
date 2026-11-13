@@ -1,0 +1,53 @@
+study_id: pmid-21051849
+pmid: '21051849'
+doi: 10.1159/000314019
+url: https://pubmed.ncbi.nlm.nih.gov/21051849/
+title: Prevention of preterm birth is possible by vaginal pH screening, early diagnosis of bacterial vaginosis
+  or abnormal vaginal flora and treatment
+authors: Hoyme and Huebner
+year: 2010
+journal: Gynecol Obstet Invest
+design: other
+sample_size: null
+cohort:
+  description: Pregnant women in Germany screened for abnormal vaginal flora
+  ancestry: []
+  countries:
+  - Germany
+  age_min: null
+  age_max: null
+  menopausal_status: []
+  pregnancy:
+  - pregnant
+topics:
+- preterm birth prevention
+- vaginal pH screening
+- bacterial vaginosis
+- abnormal vaginal flora
+- pregnancy outcomes
+key_finding: Vaginal pH screening with early diagnosis and treatment of abnormal vaginal flora was associated
+  with lower very preterm birth and very low birth weight rates versus controls.
+abstract: Abnormal vaginal flora as well as bacterial vaginosis have a significant relative risk for miscarriage
+  or preterm birth of 1.4-6.9. In the initial Erfurt trial, 0.3% of the neonates with gestational age
+  <32+0 weeks were seen in an intervention group vs. 3.3% (p < 0.01) in the control group; in the larger
+  Thuringia campaign, the figures were 0.94 vs. 1.36% (p < 0.01). The rate of newborns <1,000 g was reduced
+  to 0.38%, the lowest incidence ever seen in any of the German states. This should count even more, as
+  there was no success in reducing the rate of low-birth-weight children in the decades preceding these
+  prospective studies. However, after discontinuation of the campaign in 2000, the preterm birth rates
+  mounted in 2005 in our hospital and the state to the same rate as prior to the programme.
+licence: null
+text_source: abstract
+check:
+  status: checked
+  checked_by: LLM second pass (gpt-5.2); disputes resolved by Claude (AI assistant), not by a clinical
+    expert
+  checked_on: '2026-11-13'
+  notes: 'affiliation: Department of Obstetrics and Gynecology, HELIOS Klinikum Erfurt GmbH, Erfurt, Germany.
+    udo.hoyme @ helios-kliniken.de
+
+    design: should be ''other'' (The abstract describes prospective intervention studies with intervention
+    vs control groups (Erfurt trial; Thuringia campaign) but does not specify the exact design type (e.g.,
+    RCT). “Other” is acceptable only if this is explicitly treated as a non-standard/unspecified prospective
+    intervention; the claimed value is not justified as the only correct design from the text.)
+
+    resolution: checker agreed with ''other''; no change.'

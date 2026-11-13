@@ -1,0 +1,62 @@
+study_id: pmid-24080849
+pmid: '24080849'
+doi: 10.1097/gme.0b013e3182a4690b
+url: https://pubmed.ncbi.nlm.nih.gov/24080849/
+title: Association between the vaginal microbiota, menopause status, and signs of vulvovaginal atrophy
+authors: Brotman et al.
+year: 2014
+journal: Menopause
+design: cross_sectional
+sample_size: 87
+cohort:
+  description: Premenopausal, perimenopausal, and postmenopausal women aged 35-60
+  ancestry: []
+  countries:
+  - United States
+  age_min: 35
+  age_max: 60
+  menopausal_status:
+  - premenopausal
+  - perimenopausal
+  - postmenopausal
+  pregnancy: []
+topics:
+- vaginal microbiome
+- menopause
+- vulvovaginal atrophy
+- 16S rRNA sequencing
+- Lactobacillus community state types
+key_finding: A low-Lactobacillus community state (CST IV-A) was associated with vulvovaginal atrophy and
+  varied by menopausal stage.
+abstract: 'Objective: The vaginal microbiota helps protect the female genital tract from disease. We sought
+  to describe the composition of the vaginal microbiota in premenopausal, perimenopausal, and postmenopausal
+  women and to explore the association between the microbiota and vulvovaginal atrophy (VVA). Methods:
+  Eighty-seven women (aged 35-60 y) were classified as premenopausal (n = 30), perimenopausal (n = 29),
+  or postmenopausal (n = 28) according to Stages of Reproductive Aging Workshop guidelines. Midvaginal
+  bacterial community composition was characterized by 16S ribosomal RNA gene analysis. Results: Bacterial
+  communities clustered into six community state types (CSTs), of which four were dominated by Lactobacillus
+  crispatus, Lactobacillus gasseri, Lactobacillus iners, or Lactobacillus jensenii, and two (CST IV-A
+  and CST IV-B) had low relative abundance of Lactobacillus. CST IV-A was characterized by Streptococcus
+  and Prevotella, whereas CST IV-B was characterized by Atopobium. There were significant associations
+  between menopause stage and CST (P = 0.004) and between VVA and CST (P = 0.002). Perimenopausal women
+  were more likely to be classified as CST IV-A or L. gasseri CST, whereas postmenopausal women were often
+  classified as CST IV-A. CSTs dominated by L. crispatus and L. iners were more prevalent in premenopausal
+  women. Nineteen participants had signs of mild or moderate VVA. Compared with women with no VVA, the
+  vaginal microbiota of women with mild or moderate atrophy had 25-fold greater odds of being classified
+  as CST IV-A versus L. crispatus CST (adjusted odds ratio, 25.89; 95% credible interval, 2.98-406.79).
+  Conclusions: A distinct bacterial community state (CST IV-A) with a low relative abundance of Lactobacillus
+  is associated with VVA. Future studies recruiting a larger number of women are needed to replicate the
+  findings. This study provides an impetus for future longitudinal studies designed to manage, modulate,
+  and restore vaginal microbiota homeostasis, which would provide stronger evidence for a causal relationship
+  with VVA and ultimately improve the treatment and prevention of atrophic vaginitis in menopause.'
+licence: null
+text_source: abstract
+check:
+  status: checked
+  checked_by: LLM second pass (gpt-5.2)
+  checked_on: '2026-11-13'
+  notes: 'affiliation: From the 1Institute for Genome Sciences and 2Department of Epidemiology and Public
+    Health, University of Maryland School of Medicine, Baltimore, MD; 3Department of Epidemiology, Johns
+    Hopkins Bloomberg School of Public Health, Baltimore, MD; Departments of 4Pediatrics and Neurovirology
+    and 5Obstetrics and Gynecology, Johns Hopkins School of Medicine, Baltimore, MD; and 6Department of
+    Microbiology and Immunology, University of Maryland School of Medicine, Baltimore, MD.'

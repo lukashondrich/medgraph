@@ -1,0 +1,62 @@
+study_id: pmid-24672204
+pmid: '24672204'
+doi: 10.4103/0976-7800.127789
+url: https://pubmed.ncbi.nlm.nih.gov/24672204/
+title: 'Vaginal pH: A marker for menopause'
+authors: Panda et al.
+year: 2014
+journal: J Midlife Health
+design: cross_sectional
+sample_size: 173
+cohort:
+  description: Women with menopausal symptoms attending a menopausal clinic
+  ancestry:
+  - indian
+  countries:
+  - India
+  age_min: 31
+  age_max: 60
+  menopausal_status:
+  - perimenopausal
+  - postmenopausal
+  pregnancy: []
+topics:
+- menopause diagnosis
+- vaginal pH
+- follicle stimulating hormone
+- diagnostic accuracy
+- menopausal symptoms
+key_finding: In 173 symptomatic women, vaginal pH >4.5 showed higher sensitivity (84.9%) than serum FSH
+  ≥40 IU/L (77.4%) for diagnosing menopause.
+abstract: 'Introduction: Menopause is suspected with age, cessation of menstruation for more than a year
+  and presence of symptoms. The diagnosis of menopause is confirmed by follicle stimulating hormone (FSH)
+  levels >40 IU/L. Few studies have focused on vaginal pH for menopausal diagnosis. It is a simple, non-invasive
+  and inexpensive method for this purpose. Aim of the study: The following study is to correlate the serum
+  follicle stimulating hormone (FSH) level with vaginal pH estimation in menopause. Materials and methods:
+  This is a cross-sectional descriptive study conducted in 173 women aged 31-60 years with menopausal
+  symptoms who attended the Menopausal Clinic of our hospital from January 2012 to January 2013. Vaginal
+  pH was measured using pH micro-meter strips and serum FSH levels were measured using immunoassay methods.
+  The data obtained was then analyzed using Statistical Package for the Social Sciences software (version
+  17) and results were evaluated statistically by the Chi-square and Kappa tests. P ≤ 0.05 was considered
+  to be statistically significant. Results: According to our study of the 173 women studied, mean FSH
+  level was 46.5 IU/L and mean vaginal pH was 5.3. If the menopausal hallmark is considered to be vaginal
+  pH >4.5 and serum FSH ≥40 IU/L, the sensitivity of vaginal pH for menopausal diagnosis was 84.9% and
+  of serum FSH is 77.4%, respectively. Conclusion: Vaginal pH is a simple, accurate and cost-effective
+  tool that can be suggested as a suitable and better alternative to serum FSH estimation for the diagnosis
+  of menopause.'
+licence: cc by-nc-sa
+text_source: abstract
+check:
+  status: checked
+  checked_by: LLM second pass (gpt-5.2); disputes resolved by Claude (AI assistant), not by a clinical
+    expert
+  checked_on: '2026-11-13'
+  notes: 'affiliation: Department of Obstetrics and Gynaecology, NEIGRIHMS, Mawdiangdiang, Shillong, Meghalaya,
+    India.
+
+    cohort.menopausal_status: should be [''perimenopausal'', ''postmenopausal''] (Participants were women
+    with menopausal symptoms attending a menopausal clinic; the study concerns diagnosing menopause (implying
+    peri/postmenopausal status is represented). Leaving this empty is not consistent with the abstract
+    focus.)
+
+    resolution: menopausal status set to peri- and postmenopausal: menopause clinic patients.'

@@ -11,7 +11,7 @@ from typing import Literal, Optional
 
 from pydantic import BaseModel, Field
 
-EvidenceGroup = Literal["overall", "matched", "reference_range", "guideline"]
+EvidenceGroup = Literal["overall", "matched", "reference_range", "guideline", "safety"]
 
 
 class SourceItem(BaseModel):
@@ -84,4 +84,4 @@ class Citation(BaseModel):
 
 # When one study is cited as several kinds of evidence, show it under the
 # most specific group.
-_GROUP_PRIORITY = {"matched": 0, "reference_range": 1, "guideline": 2, "overall": 3}
+_GROUP_PRIORITY = {"safety": 0, "matched": 1, "reference_range": 2, "guideline": 3, "overall": 4}
