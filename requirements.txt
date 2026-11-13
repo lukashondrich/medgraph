@@ -8,9 +8,14 @@ python-dotenv==1.2.1
 pytest==8.4.2
 pytest-asyncio==1.2.0
 openpyxl==3.1.5
-haystack-ai>=2.12.0
-qdrant-haystack>=6.0.0
-qdrant-client>=1.13.0
-sentence-transformers>=3.4.0
-httpx>=0.28.0
-pyyaml>=6.0
+# Search stack pinned to the versions the study store was built and tested with.
+# Newer haystack-ai releases moved the sentence-transformers embedders.
+haystack-ai==2.27.0
+qdrant-haystack==10.3.0
+qdrant-client==1.17.1
+sentence-transformers==5.3.0
+transformers==5.5.0
+torch==2.11.0
+numpy==2.4.4
+httpx==0.28.1
+pyyaml==6.0.3
