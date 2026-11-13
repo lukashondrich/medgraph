@@ -1,0 +1,51 @@
+study_id: pmid-3259075
+pmid: '3259075'
+doi: 10.1016/0002-9378(88)90078-6
+url: https://pubmed.ncbi.nlm.nih.gov/3259075/
+title: Diagnosis and clinical manifestations of bacterial vaginosis
+authors: Eschenbach et al.
+year: 1988
+journal: Am J Obstet Gynecol
+design: cross_sectional
+sample_size: 640
+cohort:
+  description: Women attending an STD clinic without trichomoniasis
+  ancestry: []
+  countries:
+  - United States
+  age_min: null
+  age_max: null
+  menopausal_status: []
+  pregnancy: []
+topics:
+- bacterial vaginosis
+- diagnostic criteria
+- Gram stain
+- clinical signs and symptoms
+- pelvic inflammatory disease
+key_finding: In 640 STD-clinic women without trichomoniasis, 33% had bacterial vaginosis, Gram-stain criteria
+  correlated better than cultures with clinical criteria, and bacterial vaginosis was independently associated
+  with adnexal tenderness/pelvic inflammatory disease.
+abstract: 'Among 640 randomly selected women who were attending a sexually transmitted disease clinic
+  and did not have trichomoniasis, 33% had bacterial vaginosis as defined by a composite of four clinical
+  criteria: (1) Vaginal discharge was homogeneous; (2) vaginal discharge had a pH greater than or equal
+  to 4.7; (3) vaginal discharge had an amine-like odor when mixed with 10% potassium hydroxide; (4) vaginal
+  discharge contained clue cells representing greater than or equal to 20% of vaginal epithelial cells.
+  Previously published Gram stain criteria for bacterial vaginosis correlated better than results of semiquantitative
+  cultures for Gardnerella vaginalis with presence or absence of clue cells and with composite clinical
+  criteria. Of 293 women with bacterial vaginosis by Gram stain criteria, 65% had symptoms of increased
+  vaginal discharge and/or vaginal malodor, while 74% had signs of characteristic homogeneous vaginal
+  discharge or amine-like odor. Elevated vaginal pH was the least specific and amine-like odor the least
+  sensitive sign of bacterial vaginosis. Gram stain criteria for bacterial vaginosis were not associated
+  with the concentrations of endocervical or vaginal inflammatory cells but were significantly associated
+  with a clinical diagnosis of pelvic inflammatory disease. After adjusting for coinfection, sexual behavior,
+  and other variables, bacterial vaginosis remained associated with adnexal tenderness (odds ratio = 9.2,
+  p = 0.04). Bacterial vaginosis, previously implicated as a risk factor for obstetric infections, may
+  be a risk factor for pelvic inflammatory disease.'
+licence: null
+text_source: abstract
+check:
+  status: checked
+  checked_by: LLM second pass (gpt-5.2)
+  checked_on: '2026-11-13'
+  notes: 'affiliation: Department of Obstetrics and Gynecology, University of Washington, Seattle 98195.'

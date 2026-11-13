@@ -1,0 +1,17 @@
+{
+  "id": "priya",
+  "name": "Priya",
+  "age": 29,
+  "ancestry": "indian",
+  "country_of_residence": "Germany",
+  "menopausal_status": "premenopausal",
+  "pregnancy": "not_pregnant",
+  "cycle_regular": true,
+  "cycle_day": 18,
+  "hormonal_contraception": null,
+  "hrt": null,
+  "recent_antibiotics": false,
+  "symptoms": [],
+  "history": [],
+  "headline": "29 · Indian ancestry · lives in Germany · regular cycle"
+}

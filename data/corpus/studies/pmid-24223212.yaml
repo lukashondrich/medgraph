@@ -1,0 +1,62 @@
+study_id: pmid-24223212
+pmid: '24223212'
+doi: 10.1371/journal.pone.0080074
+url: https://pubmed.ncbi.nlm.nih.gov/24223212/
+title: Vaginal pH and microbicidal lactic acid when lactobacilli dominate the microbiota
+authors: O'Hanlon et al.
+year: 2013
+journal: PLoS One
+design: cross_sectional
+sample_size: 56
+cohort:
+  description: Healthy women with lactobacillus-dominated vaginal microbiota
+  ancestry: []
+  countries:
+  - United States
+  age_min: null
+  age_max: null
+  menopausal_status: []
+  pregnancy: []
+topics:
+- vaginal pH
+- lactate concentration
+- lactic acid microbicidal activity
+- lactobacilli-dominated microbiota
+- cervicovaginal fluid
+key_finding: In cervicovaginal fluid from women with lactobacillus-dominated microbiota, average pH was
+  3.5 and total lactate 1.0% w/v, implying much higher microbicidal (protonated) lactic acid levels than
+  previously reported.
+abstract: Lactic acid at sufficiently acidic pH is a potent microbicide, and lactic acid produced by vaginal
+  lactobacilli may help protect against reproductive tract infections. However, previous observations
+  likely underestimated healthy vaginal acidity and total lactate concentration since they failed to exclude
+  women without a lactobacillus-dominated vaginal microbiota, and also did not account for the high carbon
+  dioxide, low oxygen environment of the vagina. Fifty-six women with low (0-3) Nugent scores (indicating
+  a lactobacillus-dominated vaginal microbiota) and no symptoms of reproductive tract disease or infection,
+  provided a total of 64 cervicovaginal fluid samples using a collection method that avoided the need
+  for sample dilution and rigorously minimized aerobic exposure. The pH of samples was measured by microelectrode
+  immediately after collection and under a physiological vaginal concentration of CO2. Commercial enzymatic
+  assays of total lactate and total acetate concentrations were validated for use in CVF, and compared
+  to the more usual HPLC method. The average pH of the CVF samples was 3.5 ± 0.3 (mean ± SD), range 2.8-4.2,
+  and the average total lactate was 1.0% ± 0.2% w/v; this is a five-fold higher average hydrogen ion concentration
+  (lower pH) and a fivefold higher total lactate concentration than in the prior literature. The microbicidal
+  form of lactic acid (protonated lactic acid) was therefore eleven-fold more concentrated, and a markedly
+  more potent microbicide, than indicated by prior research. This suggests that when lactobacilli dominate
+  the vaginal microbiota, women have significantly more lactic acid-mediated protection against infections
+  than currently believed. Our results invite further evaluations of the prophylactic and therapeutic
+  actions of vaginal lactic acid, whether provided in situ by endogenous lactobacilli, by probiotic lactobacilli,
+  or by products that reinforce vaginal lactic acid.
+licence: cc by
+text_source: abstract
+check:
+  status: checked
+  checked_by: LLM second pass (gpt-5.2); disputes resolved by Claude (AI assistant), not by a clinical
+    expert
+  checked_on: '2026-11-13'
+  notes: 'affiliation: Thomas C. Jenkins Department of Biophysics, Johns Hopkins University, Baltimore,
+    Maryland, United States of America.
+
+    cohort.countries: should be [''United States of America''] (Participant recruitment location is not
+    stated in the abstract, but the only provided affiliation is Johns Hopkins University in Baltimore,
+    Maryland, USA, which can be used to infer the country.)
+
+    resolution: countries set from affiliation as the checker asked.'

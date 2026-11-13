@@ -68,6 +68,23 @@ M0 produces a list, not code. If a cohort turns out thin, this is where we find 
 | 1.18 | Inline citation numbers, tap card (bottom sheet on phone, popover on wide), "Sources (n)" list | Tapping a number shows study, design, size, match, passage and link |
 | 1.19 | Run the slice end to end on a phone-sized screen and on desktop | **(you)** look at it and say what feels wrong |
 
+### M1 status (2026-11-13)
+
+Built and working end to end for the Indian persona: 13 checked studies (69 passages), automatic interpretation, follow-up questions, tappable citations, phone and desktop layouts. 186 unit tests pass (61 new).
+
+How the build differs from the design:
+
+| Design said | Built | Why |
+|---|---|---|
+| Citation check is its own graph step | A function the writer calls | The writer needs the result to retry once when nothing valid was cited |
+| Each citation carries one passage | One number per study, with every cited passage | The same study can be cited as a reference range and as a study; two numbers for one paper read badly |
+| Popover on wide screens | Centred card on wide screens, bottom sheet on a phone | Same component, no positioning logic |
+| Lanes selected with Qdrant filters | Qdrant returns scored passages; lanes are chosen in Python from the study records | Simple and fully unit-tested at this corpus size |
+| Second check by a different model | Same model with a separate error-hunting prompt | The Gemini key has no quota for a suitable model; `CORPUS_CHECK_MODEL` switches it when one is available |
+| Matched group needs relevance | Both groups need relevance | Otherwise an unrelated question still pulled in studies |
+
+Not done in M1, by plan: router for follow-up questions (2.6), safety rules (2.4), guidelines (2.2), removing the old agents (2.9), architecture docs (3.5), accessibility pass (3.3).
+
 ## M2 — Full demo
 
 | # | Task | Done when |

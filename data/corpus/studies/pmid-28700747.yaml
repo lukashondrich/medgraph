@@ -1,0 +1,71 @@
+study_id: pmid-28700747
+pmid: '28700747'
+doi: 10.1371/journal.pone.0181135
+url: https://pubmed.ncbi.nlm.nih.gov/28700747/
+title: The association between ethnicity and vaginal microbiota composition in Amsterdam, the Netherlands
+authors: Borgdorff et al.
+year: 2017
+journal: PLoS One
+design: cross_sectional
+sample_size: 610
+cohort:
+  description: Non-pregnant women aged 18-34 in Amsterdam, six ethnic groups
+  ancestry:
+  - white_european
+  - afro_caribbean
+  - south_asian
+  - other
+  - african
+  countries:
+  - Netherlands
+  age_min: 18
+  age_max: 34
+  menopausal_status: []
+  pregnancy:
+  - not_pregnant
+topics:
+- vaginal microbiota
+- ethnicity
+- bacterial vaginosis
+- 16S rRNA sequencing
+- Amsterdam
+key_finding: In Amsterdam women aged 18-34, African Surinamese and Ghanaian ethnicity was independently
+  associated with a polybacterial Gardnerella vaginalis-containing vaginal microbiota compared with Dutch
+  women.
+abstract: 'Objective: To evaluate whether ethnicity is independently associated with vaginal microbiota
+  (VMB) composition in women living in Amsterdam, the Netherlands, as has been shown for American women.
+  Methods: Women (18-34 years, non-pregnant, N = 610) representing the six largest ethnic groups (Dutch,
+  African Surinamese, South-Asian Surinamese, Turkish, Moroccan, and Ghanaian) were sampled from the population-based
+  HELIUS study. Sampling was performed irrespective of health status or healthcare seeking behavior. DNA
+  was extracted from self-sampled vaginal swabs and sequenced by Illumina MiSeq (16S rRNA gene V3-V4 region).
+  Results: The overall prevalence of VMBs not dominated by lactobacilli was 38.5%: 32.2% had a VMB resembling
+  bacterial vaginosis and another 6.2% had a VMB dominated by Bifidobacteriaceae (not including Gardnerella
+  vaginalis), Corynebacterium, or pathobionts (streptococci, staphylococci, Proteus or Enterobacteriaceae).
+  The most prevalent VMB in ethnically Dutch women was a Lactobacillus crispatus-dominated VMB, in African
+  Surinamese and Ghanaian women a polybacterial G. vaginalis-containing VMB, and in the other ethnic groups
+  a L. iners-dominated VMB. After adjustment for sociodemographic, behavioral and clinical factors, African
+  Surinamese ethnicity (adjusted odds ratio (aOR) 5.1, 95% confidence interval (CI) 2.1-12.0) and Ghanaian
+  ethnicity (aOR 4.8, 95% CI 1.8-12.6) were associated with having a polybacterial G. vaginalis-containing
+  VMB, and African Surinamese ethnicity with a L. iners-dominated VMB (aOR 2.8, 95% CI 1.2-6.2). Shorter
+  steady relationship duration, inconsistent condom use with casual partners, and not using hormonal contraception
+  were also associated with having a polybacterial G. vaginalis-containing VMB, but human papillomavirus
+  infection was not. Other sexually transmitted infections were uncommon. Conclusions: The overall prevalence
+  of having a VMB not dominated by lactobacilli in this population-based cohort of women aged 18-34 years
+  in Amsterdam was high (38.5%), and women of sub-Saharan African descent were significantly more likely
+  to have a polybacterial G. vaginalis-containing VMB than Dutch women independent of modifiable behaviors.'
+licence: cc by
+text_source: abstract
+check:
+  status: checked
+  checked_by: LLM second pass (gpt-5.2); disputes resolved by Claude (AI assistant), not by a clinical
+    expert
+  checked_on: '2026-11-13'
+  notes: 'affiliation: Amsterdam Institute for Global Health and Development, Amsterdam, The Netherlands.
+
+    cohort.ancestry: should be [''white_european'', ''black'', ''south_asian'', ''other'', ''african'']
+    (Abstract specifies ethnic groups: Dutch, African Surinamese, South-Asian Surinamese, Turkish, Moroccan,
+    and Ghanaian. Mapping ''African Surinamese'' to ''afro_caribbean'' is not stated; a closer allowed
+    label is ''black''. Turkish and Moroccan are mentioned but only ''other'' is an allowed catch-all.)
+
+    resolution: ancestry kept: African Surinamese -> afro_caribbean and Ghanaian -> african are both subgroups
+    of ''black'' in the vocabulary; Turkish and Moroccan -> other.'

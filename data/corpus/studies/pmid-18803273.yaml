@@ -1,0 +1,49 @@
+study_id: pmid-18803273
+pmid: '18803273'
+doi: 10.1002/jcla.20273
+url: https://pubmed.ncbi.nlm.nih.gov/18803273/
+title: Use of vaginal pH in diagnosis of infections and its association with reproductive manifestations
+authors: Mania-Pramanik et al.
+year: 2008
+journal: J Clin Lab Anal
+design: cross_sectional
+sample_size: 358
+cohort:
+  description: Women attending gynecology outpatient department at a general hospital
+  ancestry:
+  - indian
+  countries:
+  - India
+  age_min: null
+  age_max: null
+  menopausal_status: []
+  pregnancy: []
+topics:
+- vaginal pH
+- bacterial vaginosis
+- Chlamydia trachomatis
+- infertility
+- spontaneous abortion
+key_finding: High vaginal pH correlated with bacterial vaginosis and may be used for diagnosis, while
+  Chlamydia trachomatis infection and reproductive manifestations did not change vaginal pH.
+abstract: Increase in vaginal secretion pH is an indicator of bacterial vaginosis (BV), but is yet to
+  be in use as a diagnostic tool by clinicians. Similarly, no reports are available on the effect of cervical
+  chlamydia infection and different reproductive manifestations on vaginal secretion pH. This study evaluated
+  the use of vaginal pH for screening of BV, the effect of Chlamydia trachomatis (C. trachomatis) infection,
+  and different reproductive manifestations on vaginal pH of women attending the gynecology outpatient
+  department of a general hospital. Vaginal pH was recorded while diagnosing infections in 358 women,
+  among which 45 were with repeated spontaneous abortion, 79 with infertility, 185 had sign and symptoms
+  of lower genital tract infection, and 49 had no history or symptom of any complications or infections.
+  Normal vaginal pH, BV, and C. trachomatis infection were observed in 72.6, 21.5, and 10.1% of women,
+  respectively. BV and C. trachomatis were observed in 78.6 and 4.1% of women, respectively, with high
+  vaginal pH; 12.3% of women with normal vaginal pH had C. trachomatis infection. C. trachomatis infection
+  or different reproductive manifestations do not lead to change in vaginal pH but high vaginal pH correlated
+  with BV and should be used as a simple tool for its diagnosis.
+licence: null
+text_source: abstract
+check:
+  status: checked
+  checked_by: LLM second pass (gpt-5.2)
+  checked_on: '2026-11-13'
+  notes: 'affiliation: National Institute for Research in Reproductive Health, Indian Council of Medical
+    Research, Mumbai, India. jayantimania@rediffmail.com'

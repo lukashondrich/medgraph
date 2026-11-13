@@ -1,5 +1,5 @@
 /* ==========================================================
-   medgraph Health Navigator - Frontend Client
+   pH Companion - Frontend Client
    WCAG 2.2 AA · DE/EN · Speech input · Dark/High-contrast
    ========================================================== */
 
@@ -10,56 +10,88 @@
   var t = MedGraphI18n.t;
 
   // --- State ---
-  var sessionId = crypto.randomUUID ? crypto.randomUUID() : generateUUID();
+  var sessionId = newSessionId();
   var isProcessing = false;
-  var selectedPatientId = null;
+  var personas = [];
+  var readings = [];
+  var selectedPersona = null; // gallery card
+  var selectedProfile = null; // full profile
+  var selectedReading = null;
   var isListening = false;
   var recognition = null;
+  var lookupCounter = 0;
+  var citeTrigger = null;
+
+  var GROUP_ORDER = ["matched", "reference_range", "guideline", "overall"];
+  var GROUP_KEYS = {
+    matched: "groupMatched",
+    reference_range: "groupRange",
+    guideline: "groupGuideline",
+    overall: "groupOverall",
+  };
+  var SOURCE_KEYS = {
+    reference_ranges: "srcReferenceRanges",
+    study_library: "srcStudyLibrary",
+    writer: "srcWriter",
+  };
+  var LOW_CONFIDENCE = 0.7;
+  var SCALE_MIN = 3.5;
+  var SCALE_MAX = 7.5;
 
   // --- DOM refs ---
   var chatContainer = document.getElementById("chatContainer");
   var chatForm = document.getElementById("chatForm");
   var messageInput = document.getElementById("messageInput");
   var sendBtn = document.getElementById("sendBtn");
-  var patientGallery = document.getElementById("patientGallery");
-  var patientCard = document.getElementById("patientCard");
-  var patientName = document.getElementById("patientName");
-  var patientDemo = document.getElementById("patientDemo");
-  var patientHeadline = document.getElementById("patientHeadline");
-  var patientTags = document.getElementById("patientTags");
-  var clearPatientBtn = document.getElementById("clearPatient");
+  var personaGallery = document.getElementById("personaGallery");
+  var profileCard = document.getElementById("profileCard");
+  var profileName = document.getElementById("profileName");
+  var profileHeadline = document.getElementById("profileHeadline");
+  var profileDetails = document.getElementById("profileDetails");
+  var resultCard = document.getElementById("resultCard");
+  var readingGallery = document.getElementById("readingGallery");
+  var phScale = document.getElementById("phScale");
+  var phMarker = document.getElementById("phMarker");
+  var phMeta = document.getElementById("phMeta");
   var langToggle = document.getElementById("langToggle");
   var themeToggle = document.getElementById("themeToggle");
   var contrastToggle = document.getElementById("contrastToggle");
   var micBtn = document.getElementById("micBtn");
   var srAnnouncements = document.getElementById("srAnnouncements");
-  var modelIndicator = document.getElementById("modelIndicator");
-  var modelIndicatorLabel = document.getElementById("modelIndicatorLabel");
-  var patientInfoBtn = document.getElementById("patientInfoBtn");
-  var patientInfoTooltip = document.getElementById("patientInfoTooltip");
+  var personaInfoBtn = document.getElementById("personaInfoBtn");
+  var personaInfoTooltip = document.getElementById("personaInfoTooltip");
+  var citeSheet = document.getElementById("citeSheet");
+  var citeBackdrop = document.getElementById("citeBackdrop");
+  var citeClose = document.getElementById("citeClose");
+  var citeGroup = document.getElementById("citeGroup");
+  var citeTitle = document.getElementById("citeTitle");
+  var citeContent = document.getElementById("citeContent");
 
   // --- Init ---
   initTheme();
   initContrast();
   initSpeechRecognition();
   MedGraphI18n.applyTranslations();
-  checkOllamaStatus();
-  setInterval(checkOllamaStatus, 30000);
 
   chatForm.addEventListener("submit", handleSubmit);
-  clearPatientBtn.addEventListener("click", clearPatient);
   langToggle.addEventListener("click", toggleLanguage);
   themeToggle.addEventListener("click", toggleTheme);
   contrastToggle.addEventListener("click", toggleContrast);
   micBtn.addEventListener("click", toggleMic);
-  patientInfoBtn.addEventListener("click", togglePatientInfo);
+  personaInfoBtn.addEventListener("click", function () {
+    personaInfoTooltip.classList.toggle("visible");
+  });
   document.addEventListener("click", function (e) {
-    if (!patientInfoBtn.contains(e.target) && !patientInfoTooltip.contains(e.target)) {
-      patientInfoTooltip.classList.remove("visible");
+    if (!personaInfoBtn.contains(e.target) && !personaInfoTooltip.contains(e.target)) {
+      personaInfoTooltip.classList.remove("visible");
     }
   });
+  chatContainer.addEventListener("click", handleChatClick);
+  citeClose.addEventListener("click", closeCitation);
+  citeBackdrop.addEventListener("click", closeCitation);
+  document.addEventListener("keydown", handleSheetKeys);
 
-  loadPatientGallery();
+  loadGalleries();
 
   // ============================================================
   // Theme
@@ -77,9 +109,10 @@
 
   function applyTheme(theme) {
     document.documentElement.setAttribute("data-theme", theme);
-    var label =
-      theme === "dark" ? t("lightMode") : t("darkMode");
-    themeToggle.setAttribute("aria-label", label);
+    themeToggle.setAttribute(
+      "aria-label",
+      theme === "dark" ? t("lightMode") : t("darkMode")
+    );
   }
 
   function toggleTheme() {
@@ -121,30 +154,19 @@
   // ============================================================
 
   function toggleLanguage() {
-    var current = MedGraphI18n.getLang();
-    var next = current === "en" ? "de" : "en";
+    var next = MedGraphI18n.getLang() === "en" ? "de" : "en";
     MedGraphI18n.setLanguage(next);
 
-    // Update speech recognition language
     if (recognition) {
       recognition.lang = next === "de" ? "de-DE" : "en-US";
     }
+    applyTheme(document.documentElement.getAttribute("data-theme"));
 
-    // Update dynamic aria-labels that aren't covered by data-i18n
-    themeToggle.setAttribute(
-      "aria-label",
-      document.documentElement.getAttribute("data-theme") === "dark"
-        ? t("lightMode")
-        : t("darkMode")
-    );
-  }
-
-  // ============================================================
-  // Patient info tooltip
-  // ============================================================
-
-  function togglePatientInfo() {
-    patientInfoTooltip.classList.toggle("visible");
+    // Re-render the parts built in JS; the conversation keeps its language.
+    renderPersonaGallery();
+    renderProfileCard();
+    renderReadingGallery();
+    renderScale();
   }
 
   // ============================================================
@@ -165,8 +187,7 @@
     recognition = new SpeechRecognition();
     recognition.continuous = false;
     recognition.interimResults = false;
-    recognition.lang =
-      MedGraphI18n.getLang() === "de" ? "de-DE" : "en-US";
+    recognition.lang = MedGraphI18n.getLang() === "de" ? "de-DE" : "en-US";
 
     recognition.onresult = function (event) {
       var transcript = event.results[0][0].transcript;
@@ -174,11 +195,9 @@
       messageInput.focus();
       announce(transcript);
     };
-
     recognition.onerror = function () {
       setListeningState(false);
     };
-
     recognition.onend = function () {
       setListeningState(false);
     };
@@ -189,7 +208,6 @@
       announce(t("micUnsupported"));
       return;
     }
-
     if (isListening) {
       recognition.stop();
       setListeningState(false);
@@ -198,7 +216,6 @@
         recognition.start();
         setListeningState(true);
       } catch (e) {
-        // Already started or other error
         setListeningState(false);
       }
     }
@@ -218,7 +235,6 @@
   // ============================================================
 
   function announce(text) {
-    // Clear then set to force re-announcement
     srAnnouncements.textContent = "";
     requestAnimationFrame(function () {
       srAnnouncements.textContent = text;
@@ -226,191 +242,284 @@
   }
 
   // ============================================================
-  // Ollama status polling
+  // Personas and readings
   // ============================================================
 
-  async function checkOllamaStatus() {
+  async function loadGalleries() {
     try {
-      var resp = await fetch("/api/ollama-status");
-      var data = await resp.json();
-      updateModelIndicator(data.available, data.model);
-    } catch (e) {
-      updateModelIndicator(false, null);
-    }
-  }
-
-  function updateModelIndicator(available, modelName) {
-    if (!modelIndicator || !modelIndicatorLabel) return;
-    modelIndicator.classList.remove("local", "cloud");
-    if (available) {
-      modelIndicator.classList.add("local");
-      modelIndicatorLabel.textContent = t("modelLocal");
-    } else {
-      modelIndicator.classList.add("cloud");
-      modelIndicatorLabel.textContent = t("modelCloud");
-    }
-  }
-
-  // ============================================================
-  // UUID fallback
-  // ============================================================
-
-  function generateUUID() {
-    return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(
-      /[xy]/g,
-      function (c) {
-        var r = (Math.random() * 16) | 0;
-        var v = c === "x" ? r : (r & 0x3) | 0x8;
-        return v.toString(16);
-      }
-    );
-  }
-
-  // ============================================================
-  // Patient Gallery
-  // ============================================================
-
-  async function loadPatientGallery() {
-    try {
-      var resp = await fetch("/api/patients");
-      var patients = await resp.json();
-      renderGallery(patients);
+      var responses = await Promise.all([
+        fetch("/api/personas"),
+        fetch("/api/readings"),
+      ]);
+      personas = await responses[0].json();
+      readings = await responses[1].json();
+      renderPersonaGallery();
+      renderReadingGallery();
     } catch (err) {
-      console.error("Failed to load patients:", err);
-      patientGallery.innerHTML =
+      console.error("Failed to load profiles:", err);
+      personaGallery.innerHTML =
         '<span class="gallery-error" role="alert">' +
         escapeHTML(t("galleryError")) +
         "</span>";
     }
   }
 
-  function renderGallery(patients) {
-    patientGallery.innerHTML = "";
-    patients.forEach(function (p) {
+  function renderPersonaGallery() {
+    personaGallery.innerHTML = "";
+    personas.forEach(function (p) {
       var btn = document.createElement("button");
+      var selected = selectedPersona && selectedPersona.persona_id === p.persona_id;
       btn.className = "patient-btn";
-      btn.setAttribute("data-id", p.patient_id);
-      btn.setAttribute("aria-pressed", "false");
-      btn.setAttribute("aria-label", p.name + ", " + p.age + (p.sex === "F" ? "F" : "M"));
+      btn.type = "button";
+      btn.setAttribute("data-id", p.persona_id);
+      btn.setAttribute("aria-pressed", selected ? "true" : "false");
+      btn.disabled = isProcessing;
       btn.innerHTML =
-        "<strong>" +
-        escapeHTML(p.name) +
-        "</strong> " +
-        '<span class="patient-btn-meta">' +
-        p.age +
-        (p.sex === "F" ? "F" : "M") +
-        "</span>";
+        "<strong>" + escapeHTML(p.name) + "</strong> " +
+        '<span class="patient-btn-meta">' + escapeHTML(String(p.age)) + "</span>";
       btn.addEventListener("click", function () {
-        selectPatient(p);
+        selectPersona(p);
       });
-      patientGallery.appendChild(btn);
+      personaGallery.appendChild(btn);
     });
   }
 
-  function selectPatient(p) {
-    selectedPatientId = p.patient_id;
+  async function selectPersona(p) {
+    if (isProcessing) return;
+    if (selectedPersona && selectedPersona.persona_id === p.persona_id) return;
 
-    // Update aria-pressed on all patient buttons
-    document.querySelectorAll(".patient-btn").forEach(function (btn) {
-      var isSelected = btn.getAttribute("data-id") === p.patient_id;
-      btn.setAttribute("aria-pressed", isSelected ? "true" : "false");
-    });
-
-    // Show patient card
-    patientCard.style.display = "block";
-    patientName.textContent = p.name;
-    patientDemo.textContent = p.age + (p.sex === "F" ? "F" : "M");
-    patientHeadline.textContent = p.headline;
-
-    // Render condition tags
-    patientTags.innerHTML = "";
-    (p.condition_tags || []).slice(0, 6).forEach(function (tag) {
-      var el = document.createElement("span");
-      el.className = "condition-tag";
-      el.setAttribute("role", "listitem");
-      el.textContent = tag;
-      patientTags.appendChild(el);
-    });
-    if (p.condition_tags && p.condition_tags.length > 6) {
-      var more = document.createElement("span");
-      more.className = "condition-tag condition-tag-more";
-      more.setAttribute("role", "listitem");
-      more.textContent = "+" + (p.condition_tags.length - 6) + " more";
-      patientTags.appendChild(more);
+    try {
+      var resp = await fetch("/api/personas/" + encodeURIComponent(p.persona_id));
+      if (!resp.ok) throw new Error("Server responded with " + resp.status);
+      selectedProfile = await resp.json();
+    } catch (err) {
+      console.error("Failed to load profile:", err);
+      announce(t("galleryError"));
+      return;
     }
+    selectedPersona = p;
 
-    // Reset session for new patient
-    sessionId = crypto.randomUUID ? crypto.randomUUID() : generateUUID();
+    renderPersonaGallery();
+    renderProfileCard();
+    resultCard.hidden = false;
+    setInputEnabled(true);
+    announce(p.name + ": " + t("personaSelected"));
 
-    announce(p.name + " " + t("selectPatient"));
+    // A different woman gets a fresh conversation. If a reading is already
+    // chosen, the same value is explained again for her.
+    resetConversation();
+    if (selectedReading) {
+      runTurn("new_reading", "");
+    }
   }
 
-  function clearPatient() {
-    selectedPatientId = null;
-    patientCard.style.display = "none";
-    document.querySelectorAll(".patient-btn").forEach(function (btn) {
-      btn.setAttribute("aria-pressed", "false");
+  function profileSummaryLine(profile) {
+    var parts = [
+      String(profile.age),
+      ancestryLabel(profile.ancestry),
+      t(profile.menopausal_status),
+    ];
+    if (profile.pregnancy !== "not_pregnant") parts.push(t(profile.pregnancy));
+    return parts.join(" · ");
+  }
+
+  function renderProfileCard() {
+    if (!selectedProfile) {
+      profileCard.hidden = true;
+      return;
+    }
+    var p = selectedProfile;
+    profileCard.hidden = false;
+    profileName.textContent = p.name;
+    profileHeadline.textContent = profileSummaryLine(p);
+
+    var cycle = null;
+    if (p.cycle_regular !== null && p.cycle_regular !== undefined) {
+      cycle = p.cycle_regular ? t("valRegular") : t("valIrregular");
+      if (p.cycle_day) cycle += ", " + t("valDay") + " " + p.cycle_day;
+    }
+    var rows = [
+      [t("profAge"), String(p.age)],
+      [t("profAncestry"), ancestryLabel(p.ancestry)],
+      [t("profCountry"), p.country_of_residence],
+      [t("profMenopause"), t(p.menopausal_status)],
+      [t("profPregnancy"), t(p.pregnancy)],
+      [t("profCycle"), cycle],
+      [t("profContraception"), p.hormonal_contraception || t("valNone")],
+      [t("profHrt"), p.hrt || t("valNone")],
+      [t("profAntibiotics"), p.recent_antibiotics ? t("valYes") : t("valNo")],
+      [t("profSymptoms"), (p.symptoms || []).join(", ") || t("valNone")],
+      [t("profHistory"), (p.history || []).join(", ") || t("valNone")],
+    ];
+    profileDetails.innerHTML = rows
+      .filter(function (row) {
+        return row[1] !== null;
+      })
+      .map(function (row) {
+        return (
+          '<div class="profile-row"><dt>' + escapeHTML(row[0]) + "</dt><dd>" +
+          escapeHTML(row[1]) + "</dd></div>"
+        );
+      })
+      .join("");
+  }
+
+  function ancestryLabel(key) {
+    if (selectedPersona && selectedProfile && selectedProfile.ancestry === key) {
+      return selectedPersona.ancestry;
+    }
+    return key;
+  }
+
+  function renderReadingGallery() {
+    readingGallery.innerHTML = "";
+    readings.forEach(function (r) {
+      var btn = document.createElement("button");
+      var selected = selectedReading && selectedReading.id === r.id;
+      btn.className = "patient-btn reading-btn";
+      btn.type = "button";
+      btn.setAttribute("data-id", r.id);
+      btn.setAttribute("aria-pressed", selected ? "true" : "false");
+      btn.disabled = isProcessing;
+      var html = "<strong>pH " + escapeHTML(r.ph.toFixed(1)) + "</strong>";
+      if (r.confidence < LOW_CONFIDENCE) {
+        html += ' <span class="patient-btn-meta">' + escapeHTML(t("readingUnclear")) + "</span>";
+      }
+      btn.innerHTML = html;
+      btn.addEventListener("click", function () {
+        selectReading(r);
+      });
+      readingGallery.appendChild(btn);
     });
-    sessionId = crypto.randomUUID ? crypto.randomUUID() : generateUUID();
-    announce(t("clearPatient"));
+  }
+
+  function selectReading(r) {
+    if (isProcessing || !selectedPersona) return;
+    selectedReading = r;
+    renderReadingGallery();
+    renderScale();
+    announce(t("readingSelected") + ": pH " + r.ph.toFixed(1));
+
+    // A new reading starts a fresh conversation with its interpretation.
+    resetConversation();
+    runTurn("new_reading", "");
+  }
+
+  function renderScale() {
+    if (!selectedReading) {
+      phScale.hidden = true;
+      return;
+    }
+    var r = selectedReading;
+    var fraction = (r.ph - SCALE_MIN) / (SCALE_MAX - SCALE_MIN);
+    fraction = Math.max(0, Math.min(1, fraction));
+    phScale.hidden = false;
+    phMarker.style.left = (fraction * 100).toFixed(1) + "%";
+    phMarker.textContent = r.ph.toFixed(1);
+
+    var percent = Math.round(r.confidence * 100);
+    var meta =
+      t("readConfidence") + " " + percent + "% · " + t("takenAt") + " " + formatTime(r.taken_at);
+    if (r.confidence < LOW_CONFIDENCE) {
+      phMeta.innerHTML =
+        '<span class="ph-scale-warning">' + escapeHTML(t("readingUncertain")) + "</span> · " +
+        escapeHTML(meta);
+    } else {
+      phMeta.textContent = meta;
+    }
+  }
+
+  function formatTime(iso) {
+    var date = new Date(iso);
+    if (isNaN(date.getTime())) return "";
+    return date.toLocaleTimeString(MedGraphI18n.getLang(), {
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+  }
+
+  function resetConversation() {
+    sessionId = newSessionId();
+    closeCitation();
+    Array.prototype.slice.call(chatContainer.children).forEach(function (child) {
+      if (!child.classList.contains("welcome-message")) {
+        chatContainer.removeChild(child);
+      }
+    });
+    var welcome = chatContainer.querySelector(".welcome-message");
+    if (welcome) {
+      welcome.removeAttribute("aria-hidden");
+      welcome.style.display = "";
+    }
   }
 
   // ============================================================
-  // Submit handler
+  // Turns
   // ============================================================
 
-  async function handleSubmit(e) {
+  function handleSubmit(e) {
     e.preventDefault();
-
     var message = messageInput.value.trim();
-    if (!message || isProcessing) return;
+    if (!message) return;
+    messageInput.value = "";
+    runTurn("question", message);
+  }
 
+  async function runTurn(kind, message) {
+    if (isProcessing || !selectedPersona) return;
     isProcessing = true;
     setInputEnabled(false);
 
-    // Remove welcome message on first send
     var welcome = chatContainer.querySelector(".welcome-message");
     if (welcome) {
       welcome.setAttribute("aria-hidden", "true");
       welcome.style.display = "none";
     }
 
-    appendUserMessage(message);
-    messageInput.value = "";
+    if (kind === "new_reading") {
+      appendUserMessage(t("newReading") + ": pH " + selectedReading.ph.toFixed(1));
+    } else {
+      appendUserMessage(message);
+    }
 
-    var pipelineEl = createPipelineStatus();
-    chatContainer.appendChild(pipelineEl);
+    var lookupEl = createLookupCard();
+    chatContainer.appendChild(lookupEl);
     scrollToBottom();
 
+    var body = {
+      message: message,
+      session_id: sessionId,
+      language: MedGraphI18n.getLang(),
+      persona_id: selectedPersona.persona_id,
+      turn_kind: kind,
+    };
+    if (selectedReading) {
+      body.reading = {
+        ph: selectedReading.ph,
+        confidence: selectedReading.confidence,
+        taken_at: selectedReading.taken_at,
+      };
+    }
+
     try {
-      await streamChat(message, pipelineEl);
+      await streamChat(body, lookupEl);
     } catch (err) {
-      var errorEl = appendAssistantMessage(t("errorGeneric"), false);
-      if (errorEl) {
-        errorEl.setAttribute("role", "alert");
-      }
+      var errorEl = appendAssistantMessage(t("errorGeneric"), false, []);
+      errorEl.setAttribute("role", "alert");
+      finishLookupCard(lookupEl);
       console.error("Chat stream error:", err);
     }
 
     isProcessing = false;
     setInputEnabled(true);
-    messageInput.focus();
+    if (kind === "question") messageInput.focus();
   }
 
   // ============================================================
   // SSE streaming
   // ============================================================
 
-  async function streamChat(message, pipelineEl) {
-    var body = {
-      message: message,
-      session_id: sessionId,
-      language: MedGraphI18n.getLang(),
-    };
-    if (selectedPatientId) {
-      body.patient_id = selectedPatientId;
-    }
-
+  async function streamChat(body, lookupEl) {
     var response = await fetch("/api/chat", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -430,19 +539,14 @@
       if (result.done) break;
 
       buffer += decoder.decode(result.value, { stream: true });
-
       var events = parseSSEBuffer(buffer);
       buffer = events.remainder;
 
       for (var i = 0; i < events.parsed.length; i++) {
-        handleSSEEvent(events.parsed[i], pipelineEl);
+        handleSSEEvent(events.parsed[i], lookupEl);
       }
     }
   }
-
-  // ============================================================
-  // Parse SSE
-  // ============================================================
 
   function parseSSEBuffer(buffer) {
     var parsed = [];
@@ -476,63 +580,44 @@
     return { parsed: parsed, remainder: remainder || "" };
   }
 
-  // ============================================================
-  // Handle SSE events
-  // ============================================================
-
-  function handleSSEEvent(event, pipelineEl) {
+  function handleSSEEvent(event, lookupEl) {
     switch (event.type) {
       case "routing":
-        updatePipelineRouting(pipelineEl, event.data);
-        if (event.data.model_source) {
-          updateModelIndicator(event.data.model_source === "local", null);
+        if (event.data.agents) {
+          setLookupSteps(lookupEl, event.data.agents);
         }
         scrollToBottom();
         break;
 
       case "specialist":
-        updatePipelineSpecialist(pipelineEl, event.data);
+        updateLookupStep(lookupEl, event.data);
         scrollToBottom();
         break;
 
       case "synthesizing":
-        updatePipelineSynthesizing(pipelineEl);
+        setStepState(lookupEl, "writer", "processing");
+        announce(t("srcWriter"));
         scrollToBottom();
         break;
 
       case "response":
-        var synthBadge = pipelineEl.querySelector(
-          '[data-agent="synthesizer"]'
-        );
-        if (synthBadge) {
-          synthBadge.className = "agent-badge done";
-          synthBadge.innerHTML =
-            '<span class="agent-badge-icon" aria-hidden="true">&#10003;</span> ' +
-            t("synthesizing");
-          synthBadge.setAttribute(
-            "aria-label",
-            t("synthesizing") + " — done"
-          );
-        }
-
+        setStepState(lookupEl, "writer", "done");
+        finishLookupCard(lookupEl);
         if (event.data.session_id) {
           sessionId = event.data.session_id;
         }
-
         appendAssistantMessage(
           event.data.content,
-          event.data.safety_escalation
+          event.data.safety_escalation,
+          event.data.citations || []
         );
-        scrollToBottom();
         break;
 
       case "error":
-        var errorMsg =
-          t("errorGeneric") +
-          (event.data.message ? " " + event.data.message : "");
-        var errEl = appendAssistantMessage(errorMsg, false);
-        if (errEl) errEl.setAttribute("role", "alert");
-        scrollToBottom();
+        var errEl = appendAssistantMessage(t("errorGeneric"), false, []);
+        errEl.setAttribute("role", "alert");
+        finishLookupCard(lookupEl);
+        console.error("Server error:", event.data && event.data.message);
         break;
 
       case "done":
@@ -544,7 +629,142 @@
   }
 
   // ============================================================
-  // DOM builders
+  // Lookup card: what was looked up, as it happens
+  // ============================================================
+
+  function createLookupCard() {
+    lookupCounter += 1;
+    var listId = "lookupSteps" + lookupCounter;
+    var el = document.createElement("div");
+    el.className = "pipeline-status";
+    el._trace = {};
+
+    el.innerHTML =
+      '<div class="pipeline-card">' +
+        '<button type="button" class="pipeline-toggle" aria-expanded="true" aria-controls="' + listId + '">' +
+          '<span class="pipeline-title">' +
+            '<span class="spinner" aria-hidden="true"></span> ' +
+            '<span class="pipeline-title-text">' + escapeHTML(t("lookingUp")) + "</span>" +
+          "</span>" +
+          '<span class="chevron" aria-hidden="true"></span>' +
+        "</button>" +
+        '<ul class="lookup-steps" id="' + listId + '"></ul>' +
+      "</div>";
+
+    var toggle = el.querySelector(".pipeline-toggle");
+    toggle.addEventListener("click", function () {
+      var open = toggle.getAttribute("aria-expanded") === "true";
+      setLookupOpen(el, !open);
+    });
+    return el;
+  }
+
+  function setLookupOpen(el, open) {
+    el.querySelector(".pipeline-toggle").setAttribute("aria-expanded", open ? "true" : "false");
+    el.querySelector(".lookup-steps").hidden = !open;
+  }
+
+  function stepHTML(agent) {
+    return (
+      '<li class="lookup-step pending" data-agent="' + escapeHTML(agent) + '">' +
+        '<span class="step-icon" aria-hidden="true"></span>' +
+        '<span class="step-body">' +
+          '<span class="step-name">' + escapeHTML(sourceName(agent)) + "</span>" +
+          '<span class="step-detail"></span>' +
+        "</span>" +
+        '<span class="sr-only step-status"></span>' +
+      "</li>"
+    );
+  }
+
+  function setLookupSteps(el, agents) {
+    var list = el.querySelector(".lookup-steps");
+    list.innerHTML = agents.concat(["writer"]).map(stepHTML).join("");
+    announce(t("lookingUp") + ": " + agents.map(sourceName).join(", "));
+  }
+
+  function setStepState(el, agent, state) {
+    var step = el.querySelector('.lookup-step[data-agent="' + agent + '"]');
+    if (!step) return null;
+    step.className = "lookup-step " + state;
+    var icon = step.querySelector(".step-icon");
+    if (state === "processing") {
+      icon.innerHTML = '<span class="spinner"></span>';
+      step.querySelector(".step-status").textContent = t("stepProcessing");
+    } else if (state === "done") {
+      icon.innerHTML = "&#10003;";
+      step.querySelector(".step-status").textContent = t("stepDone");
+    }
+    return step;
+  }
+
+  function updateLookupStep(el, data) {
+    var step = setStepState(el, data.agent, data.status === "done" ? "done" : "processing");
+    if (!step || data.status !== "done" || !data.detail) return;
+    el._trace[data.agent] = data.detail;
+    step.querySelector(".step-detail").innerHTML = stepDetailHTML(data.agent, data.detail);
+  }
+
+  function stepDetailHTML(agent, detail) {
+    var counts = detail.counts || {};
+    if (detail.error) {
+      return escapeHTML(t("detailError"));
+    }
+    if (agent === "reference_ranges") {
+      return escapeHTML(t("detailRanges", { found: counts.found || 0, query: detail.query || "" }));
+    }
+    if (agent === "study_library") {
+      var queries = detail.queries || (detail.query ? [detail.query] : []);
+      var lines = [];
+      if (queries.length) {
+        var searched = t("detailSearched") + ": “" + queries[0] + "”";
+        if (queries.length > 1) {
+          searched += " " + t("detailMore", { n: queries.length - 1 });
+        }
+        lines.push('<span class="step-line">' + escapeHTML(searched) + "</span>");
+      }
+      var found = t("detailStudies", { used: counts.used || 0, found: counts.found || 0 });
+      var line = escapeHTML(found);
+      if (counts.matched) {
+        line +=
+          ' · <span class="step-matched">' +
+          escapeHTML(t("detailMatched", { matched: counts.matched })) +
+          "</span>";
+      }
+      lines.push('<span class="step-line">' + line + "</span>");
+      return lines.join("");
+    }
+    return "";
+  }
+
+  function finishLookupCard(el) {
+    var title = el.querySelector(".pipeline-title");
+    if (!title || el._finished) return;
+    el._finished = true;
+
+    var trace = el._trace || {};
+    var sources = Object.keys(trace).length;
+    var parts = [t("summarySources", { n: sources })];
+    var library = (trace.study_library || {}).counts;
+    if (library) {
+      parts.push(t("summaryStudies", { used: library.used || 0 }));
+      if (library.matched) {
+        parts.push(t("detailMatched", { matched: library.matched }));
+      }
+    }
+    title.innerHTML =
+      '<span class="pipeline-check" aria-hidden="true">&#10003;</span> ' +
+      '<span class="pipeline-title-text">' + escapeHTML(parts.join(" · ")) + "</span>";
+    el.querySelector(".pipeline-toggle").setAttribute("aria-label", t("lookedUp") + ": " + parts.join(", "));
+    setLookupOpen(el, false);
+  }
+
+  function sourceName(agent) {
+    return SOURCE_KEYS[agent] ? t(SOURCE_KEYS[agent]) : capitalize(agent.replace(/_/g, " "));
+  }
+
+  // ============================================================
+  // Messages
   // ============================================================
 
   function appendUserMessage(text) {
@@ -552,179 +772,202 @@
     el.className = "message message-user";
     el.setAttribute("aria-label", t("messageFrom") + " " + t("you"));
     el.innerHTML =
-      '<div class="message-label" aria-hidden="true">' +
-      escapeHTML(t("you")) +
-      "</div>" +
-      '<div class="message-bubble">' +
-      escapeHTML(text) +
-      "</div>";
+      '<div class="message-label" aria-hidden="true">' + escapeHTML(t("you")) + "</div>" +
+      '<div class="message-bubble">' + escapeHTML(text) + "</div>";
     chatContainer.appendChild(el);
     scrollToBottom();
   }
 
-  function appendAssistantMessage(text, safetyEscalation) {
+  function appendAssistantMessage(text, safetyEscalation, citations) {
     var el = document.createElement("article");
     el.className = "message message-assistant";
     el.setAttribute("aria-label", t("responseFrom"));
 
-    var html =
-      '<div class="message-label" aria-hidden="true">' +
-      escapeHTML(t("assistant")) +
-      "</div>" +
-      '<div class="message-bubble">' +
-      formatResponse(text) +
-      "</div>";
+    var byNumber = {};
+    (citations || []).forEach(function (c) {
+      byNumber[c.number] = c;
+    });
+    el._citations = byNumber;
 
+    var html =
+      '<div class="message-label" aria-hidden="true">' + escapeHTML(t("assistant")) + "</div>";
     if (safetyEscalation) {
       html +=
         '<div class="safety-disclaimer" role="alert">' +
         escapeHTML(t("safetyDisclaimer")) +
         "</div>";
     }
+    html +=
+      '<div class="message-bubble">' +
+      linkCitations(formatResponse(text), byNumber) +
+      "</div>";
+    if (citations && citations.length) {
+      html += sourcesHTML(citations);
+    }
 
     el.innerHTML = html;
     chatContainer.appendChild(el);
-    scrollToBottom();
+    // Show the start of the answer, not its end.
+    requestAnimationFrame(function () {
+      el.scrollIntoView({ block: "start", behavior: "smooth" });
+    });
     return el;
   }
 
-  function createPipelineStatus() {
-    var el = document.createElement("div");
-    el.className = "pipeline-status";
-    el.setAttribute("role", "status");
-    el.setAttribute("aria-label", t("agentPipeline"));
+  /** Turn "[2]" in rendered text into a button that opens the source. */
+  function linkCitations(html, byNumber) {
+    // Any space before the marker is dropped so the number hugs its claim.
+    return html.replace(/[ \u00a0]*\[(\d+)\]/g, function (whole, number) {
+      var c = byNumber[number];
+      if (!c) return whole;
+      // The word joiner keeps the number on the same line as the claim's last word.
+      return (
+        '&#8288;<button type="button" class="cite cite--' + escapeHTML(c.group) + '" data-cite="' + number + '"' +
+        ' aria-label="' + escapeHTML(t("openSource") + " " + number + ": " + c.authors + " " + c.year) + '">' +
+        number +
+        "</button>"
+      );
+    });
+  }
 
-    // Determine initial local/cloud class from model indicator state
-    var modelSourceClass = "";
-    if (modelIndicator) {
-      modelSourceClass = modelIndicator.classList.contains("local") ? "local" : "cloud";
+  function sourcesHTML(citations) {
+    var html =
+      '<details class="sources">' +
+      '<summary class="sources-summary">' +
+        escapeHTML(t("sources")) + " (" + citations.length + ")" +
+        '<span class="chevron" aria-hidden="true"></span>' +
+      "</summary>";
+    GROUP_ORDER.forEach(function (group) {
+      var items = citations.filter(function (c) {
+        return c.group === group;
+      });
+      if (!items.length) return;
+      html +=
+        '<div class="sources-group sources-group--' + group + '">' +
+        '<h3 class="sources-group-title">' + escapeHTML(t(GROUP_KEYS[group])) + "</h3><ul>";
+      items.forEach(function (c) {
+        html +=
+          '<li><button type="button" class="source-row" data-cite="' + c.number + '">' +
+            '<span class="cite cite--' + escapeHTML(c.group) + '" aria-hidden="true">' + c.number + "</span>" +
+            '<span class="source-row-text">' +
+              '<span class="source-row-title">' + escapeHTML(c.authors + " " + c.year) + "</span>" +
+              '<span class="source-row-meta">' + escapeHTML(studyMeta(c)) + "</span>" +
+            "</span>" +
+          "</button></li>";
+      });
+      html += "</ul></div>";
+    });
+    return html + "</details>";
+  }
+
+  function studyMeta(c) {
+    var size = c.sample_size
+      ? c.sample_size.toLocaleString(MedGraphI18n.getLang()) + " " + t("participants")
+      : t("sizeNotStated");
+    return c.design + " · " + size;
+  }
+
+  // ============================================================
+  // Citation card
+  // ============================================================
+
+  function handleChatClick(e) {
+    var trigger = e.target.closest("[data-cite]");
+    if (!trigger) return;
+    var message = trigger.closest(".message-assistant");
+    var citation = message && message._citations && message._citations[trigger.getAttribute("data-cite")];
+    if (citation) {
+      openCitation(citation, trigger);
+    }
+  }
+
+  function openCitation(c, trigger) {
+    citeTrigger = trigger;
+    citeSheet.className = "cite-sheet cite-sheet--" + c.group;
+    citeGroup.textContent = c.number + " · " + t(GROUP_KEYS[c.group] || "sources");
+    citeTitle.textContent = c.title;
+
+    var html =
+      '<p class="cite-byline">' + escapeHTML(c.authors + ", " + c.year) + "</p>" +
+      '<p class="cite-meta">' + escapeHTML(studyMeta(c)) + "</p>";
+
+    if (c.matched_attributes && c.matched_attributes.length) {
+      html +=
+        '<div class="cite-match"><span class="cite-match-label">' + escapeHTML(t("matchesYou")) + "</span>" +
+        c.matched_attributes
+          .map(function (a) {
+            return '<span class="cite-chip">' + escapeHTML(a) + "</span>";
+          })
+          .join("") +
+        "</div>";
     }
 
-    el.innerHTML =
-      '<div class="pipeline-card">' +
-        '<div class="pipeline-title" aria-hidden="true">' +
-          escapeHTML(t("agentPipeline")) +
-        "</div>" +
-        '<div class="pipeline-row" id="pipelineRouterRow">' +
-          '<span class="agent-badge processing ' + modelSourceClass + '" data-agent="router" role="status" aria-label="' + escapeHTML(t("routerThinking")) + ' — processing">' +
-            '<span class="spinner" aria-hidden="true"></span> ' +
-            escapeHTML(t("routerThinking")) +
-            '<span class="badge-timer">0s</span>' +
-          "</span>" +
-        "</div>" +
-        '<div class="pipeline-row" id="pipelineSpecialistRow" style="display:none"></div>' +
-        '<div class="pipeline-row" id="pipelineSynthRow" style="display:none"></div>' +
-        '<div class="pipeline-reasoning" id="pipelineReasoning"></div>' +
-      "</div>";
+    var facts = [];
+    if (c.cohort_summary) facts.push([t("whoWasStudied"), c.cohort_summary]);
+    if (c.countries && c.countries.length) facts.push([t("studiedIn"), c.countries.join(", ")]);
+    if (facts.length) {
+      html +=
+        '<dl class="cite-facts">' +
+        facts
+          .map(function (f) {
+            return "<div><dt>" + escapeHTML(f[0]) + "</dt><dd>" + escapeHTML(f[1]) + "</dd></div>";
+          })
+          .join("") +
+        "</dl>";
+    }
 
-    // Start elapsed timer
-    var timerStart = Date.now();
-    var timerInterval = setInterval(function () {
-      var badge = el.querySelector('[data-agent="router"] .badge-timer');
-      if (badge) {
-        var elapsed = Math.floor((Date.now() - timerStart) / 1000);
-        badge.textContent = elapsed + "s";
-      }
-    }, 1000);
-    el._pipelineTimerInterval = timerInterval;
+    html += '<h3 class="cite-section">' + escapeHTML(t("whatItSays")) + "</h3>";
+    (c.passages || []).forEach(function (passage) {
+      html += '<blockquote class="cite-quote">' + escapeHTML(passage) + "</blockquote>";
+    });
 
-    return el;
+    if (/^https:\/\//.test(c.url || "")) {
+      html +=
+        '<a class="cite-link" href="' + escapeHTML(c.url) + '" target="_blank" rel="noopener noreferrer">' +
+        escapeHTML(t("readStudy")) +
+        ' <span aria-hidden="true">&#8599;</span><span class="sr-only"> (' + escapeHTML(t("opensNewTab")) + ")</span></a>";
+    }
+
+    citeContent.innerHTML = html;
+    citeBackdrop.hidden = false;
+    citeSheet.hidden = false;
+    document.getElementById("citeBody").scrollTop = 0;
+    citeClose.focus();
   }
 
-  function updatePipelineRouting(pipelineEl, data) {
-    // Initial "routing in progress" — already handled by createPipelineStatus
-    if (data.status === "processing" && !data.agents) {
+  function closeCitation() {
+    if (citeSheet.hidden) return;
+    citeSheet.hidden = true;
+    citeBackdrop.hidden = true;
+    if (citeTrigger && document.body.contains(citeTrigger)) {
+      citeTrigger.focus();
+    }
+    citeTrigger = null;
+  }
+
+  function handleSheetKeys(e) {
+    if (citeSheet.hidden) return;
+    if (e.key === "Escape") {
+      e.preventDefault();
+      closeCitation();
       return;
     }
-
-    // Router completed — stop timer, mark done, show reasoning + specialists
-    if (data.agents) {
-      // Stop the elapsed timer
-      if (pipelineEl._pipelineTimerInterval) {
-        clearInterval(pipelineEl._pipelineTimerInterval);
-        pipelineEl._pipelineTimerInterval = null;
-      }
-
-      // Mark router badge as done with local/cloud color
-      var routerBadge = pipelineEl.querySelector('[data-agent="router"]');
-      if (routerBadge) {
-        var timerEl = routerBadge.querySelector(".badge-timer");
-        var frozenTime = timerEl ? timerEl.textContent : "0s";
-        var sourceClass = (data.model_source === "local") ? "local" : "cloud";
-        routerBadge.className = "agent-badge done " + sourceClass;
-        routerBadge.innerHTML =
-          '<span class="agent-badge-icon" aria-hidden="true">&#10003;</span> ' +
-          escapeHTML(t("routing")) +
-          '<span class="badge-timer">' + escapeHTML(frozenTime) + '</span>';
-      }
-
-      // Show reasoning callout with typewriter reveal
-      var reasoningEl = pipelineEl.querySelector("#pipelineReasoning");
-      if (reasoningEl && data.reasoning) {
-        reasoningEl.classList.add("visible");
-        typewriterReveal(reasoningEl, data.reasoning, 18);
-      }
-
-      // Populate specialist row
-      var specialistRow = pipelineEl.querySelector("#pipelineSpecialistRow");
-      if (specialistRow && data.agents.length > 0) {
-        specialistRow.innerHTML = "";
-        data.agents.forEach(function (agent) {
-          var badge = document.createElement("span");
-          badge.className = "agent-badge processing";
-          badge.setAttribute("data-agent", agent);
-          badge.setAttribute("role", "status");
-          badge.setAttribute("aria-label", formatAgentName(agent) + " — processing");
-          badge.innerHTML =
-            '<span class="spinner" aria-hidden="true"></span> ' +
-            escapeHTML(formatAgentName(agent));
-          specialistRow.appendChild(badge);
-        });
-        specialistRow.style.display = "";
-      }
-
-      announce(
-        t("routing") + ": " + data.agents.map(formatAgentName).join(", ")
-      );
+    if (e.key !== "Tab") return;
+    // Keep keyboard focus inside the open card.
+    var focusable = citeSheet.querySelectorAll("button, a[href]");
+    if (!focusable.length) return;
+    var first = focusable[0];
+    var last = focusable[focusable.length - 1];
+    if (e.shiftKey && document.activeElement === first) {
+      e.preventDefault();
+      last.focus();
+    } else if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault();
+      first.focus();
+    } else if (!citeSheet.contains(document.activeElement)) {
+      e.preventDefault();
+      first.focus();
     }
-  }
-
-  function updatePipelineSpecialist(pipelineEl, data) {
-    if (data.status === "done") {
-      var badge = pipelineEl.querySelector(
-        '.agent-badge[data-agent="' + data.agent + '"]'
-      );
-      if (badge) {
-        badge.className = "agent-badge done";
-        badge.innerHTML =
-          '<span class="agent-badge-icon" aria-hidden="true">&#10003;</span> ' +
-          escapeHTML(formatAgentName(data.agent));
-        badge.setAttribute(
-          "aria-label",
-          formatAgentName(data.agent) + " — done"
-        );
-      }
-    }
-  }
-
-  function updatePipelineSynthesizing(pipelineEl) {
-    var synthRow = pipelineEl.querySelector("#pipelineSynthRow");
-    if (!synthRow) return;
-
-    if (synthRow.querySelector('[data-agent="synthesizer"]')) return;
-
-    var badge = document.createElement("span");
-    badge.className = "agent-badge processing";
-    badge.setAttribute("data-agent", "synthesizer");
-    badge.setAttribute("role", "status");
-    badge.setAttribute("aria-label", t("synthesizing") + " — processing");
-    badge.innerHTML =
-      '<span class="spinner" aria-hidden="true"></span> ' +
-      escapeHTML(t("synthesizing"));
-    synthRow.appendChild(badge);
-    synthRow.style.display = "";
-
-    announce(t("synthesizing"));
   }
 
   // ============================================================
@@ -732,59 +975,48 @@
   // ============================================================
 
   function setInputEnabled(enabled) {
-    messageInput.disabled = !enabled;
-    sendBtn.disabled = !enabled;
-    micBtn.disabled = !enabled && !recognition;
+    var usable = enabled && !!selectedPersona;
+    messageInput.disabled = !usable;
+    sendBtn.disabled = !usable;
+    micBtn.disabled = !usable || !recognition;
+    document.querySelectorAll(".patient-btn").forEach(function (btn) {
+      btn.disabled = !enabled;
+    });
   }
 
   function scrollToBottom() {
     requestAnimationFrame(function () {
-      chatContainer.scrollTop = chatContainer.scrollHeight;
-    });
-  }
-
-  function typewriterReveal(el, text, msPerChar) {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      el.textContent = text;
-      return;
-    }
-    el.textContent = "";
-    var i = 0;
-    var interval = setInterval(function () {
-      var chunk = text.slice(i, i + 3);
-      el.textContent += chunk;
-      i += 3;
-      if (i >= text.length) {
-        clearInterval(interval);
-        el.textContent = text;
+      // On a phone the whole page scrolls; on a wide screen only the conversation does.
+      if (getComputedStyle(chatContainer).overflowY === "visible") {
+        window.scrollTo(0, document.documentElement.scrollHeight);
+      } else {
+        chatContainer.scrollTop = chatContainer.scrollHeight;
       }
-      scrollToBottom();
-    }, msPerChar);
+    });
   }
 
   function escapeHTML(str) {
     var div = document.createElement("div");
     div.textContent = str;
-    return div.innerHTML;
+    return div.innerHTML.replace(/"/g, "&quot;");
   }
 
   function formatResponse(text) {
     if (!text) return "";
-    return marked.parse(text);
-  }
-
-  function formatAgentName(agent) {
-    var keys = {
-      symptom: "agentSymptom",
-      medication: "agentMedication",
-      lifestyle: "agentLifestyle",
-      evidence: "agentEvidence",
-      drug_check: "agentDrugCheck",
-    };
-    return keys[agent] ? t(keys[agent]) : capitalize(agent);
+    // The answer is model output: neutralise raw HTML before rendering Markdown.
+    return marked.parse(text.replace(/&/g, "&amp;").replace(/</g, "&lt;"));
   }
 
   function capitalize(str) {
     return str.charAt(0).toUpperCase() + str.slice(1);
+  }
+
+  function newSessionId() {
+    if (window.crypto && crypto.randomUUID) return crypto.randomUUID();
+    return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (c) {
+      var r = (Math.random() * 16) | 0;
+      var v = c === "x" ? r : (r & 0x3) | 0x8;
+      return v.toString(16);
+    });
   }
 })();

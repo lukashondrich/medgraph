@@ -77,6 +77,34 @@ class MedGraphState(TypedDict):
     # Which model tier the router used: "local" or "cloud"
     router_model_source: str
 
+    # ── pH Companion fields ──────────────────────────────────────────
+    # On this flow ``patient`` holds the serialized UserProfile and
+    # ``patient_summary`` the profile + reading context block.
+
+    # Response language code, e.g. "en" or "de"
+    language: str
+
+    # Serialized TestReading (or {} when no reading is selected)
+    reading: dict
+
+    # "new_reading" (automatic first interpretation) or "question"
+    turn_kind: str
+
+    # Search queries for the study library this turn
+    queries: list[str]
+
+    # Evidence gathered this turn: {source_item_id: serialized SourceItem}
+    sources: Annotated[dict[str, dict], _merge_dicts]
+
+    # What each source looked up: [{source, query, counts}]
+    retrieval_trace: Annotated[list[dict], operator.add]
+
+    # Set by the study library: {no_matched_evidence, unmatched_attributes}
+    evidence_gap: dict
+
+    # Safety rules that fired this turn
+    safety_reasons: Annotated[list[str], operator.add]
+
 
 # Backward compatibility alias
 HealthcareState = MedGraphState

@@ -1,0 +1,54 @@
+study_id: pmid-37573043
+pmid: '37573043'
+doi: 10.1016/j.ijmmb.2023.100393
+url: https://pubmed.ncbi.nlm.nih.gov/37573043/
+title: Mapping the vaginal microbiota variations in women from a community clinic in Mumbai, India
+authors: Tandon et al.
+year: 2023
+journal: Indian J Med Microbiol
+design: cross_sectional
+sample_size: 52
+cohort:
+  description: Sexually active, non-pregnant women from a Mumbai community clinic
+  ancestry:
+  - indian
+  countries:
+  - India
+  age_min: 18
+  age_max: 45
+  menopausal_status: []
+  pregnancy:
+  - not_pregnant
+topics:
+- vaginal microbiome
+- bacterial vaginosis
+- Candida
+- 16S rRNA sequencing
+- cytokines
+key_finding: Lactobacillus iners was most prevalent, and the largest microbiome shifts occurred with asymptomatic
+  bacterial vaginosis and childbirth within the last 12 months.
+abstract: 'Purpose: The vaginal microbiome contributes significantly to women''s reproductive health and
+  fluctuates due to various physiological and pathological factors. The study''s objective is to map the
+  vaginal microbiome of non-pregnant women and evaluate variations based on various potential factors
+  influencing vaginal milieu. Methods: Fifty-two sexually active, non-pregnant women between 18 and 45
+  years were recruited from a community clinic and clinical history was recorded. Vaginal swabs were collected
+  to assess the vaginal microbiome by sequencing the V3-V4 region of the 16S rRNA using the Illumina HiSeq
+  platform, followed by data analysis with QIIME 2. Vaginal milieu was assessed by Nugent score and profiling
+  cytokines in the cervico-vaginal lavage. Results: Lactobacillus iners (34.3%) were the most abundant
+  species in all women. Significant changes in abundance of genera (Lactobacillus, Prevotella and Anaerococcus),
+  expression of pro-inflammatory cytokine IFN-γ and changes in alpha and beta diversity was observed in
+  women having asymptomatic bacterial vaginosis (BV). Differences in beta diversity were seen between
+  healthy women and women exhibiting presence of Candida spp. Variations in the abundance of genera (Lactobacillus,
+  Bifidobacterium, Porphyromonas) were observed in women who had delivery less than twelve months back,
+  probably as more of these women (50%, 53.7%) had higher abnormal Nugent score. Conclusion: Lactobacillus
+  iners was the most prevalent vaginal species in women from a Mumbai community clinic. Maximum variations
+  in the vaginal microbiome characterized by a perturbation of the Lactobacillus predominant vaginal microbiota
+  are seen in those women who have asymptomatic BV and childbirth within last twelve months.'
+licence: null
+text_source: abstract
+check:
+  status: checked
+  checked_by: LLM second pass (gpt-5.2)
+  checked_on: '2026-11-13'
+  notes: 'affiliation: Department of Clinical Research, ICMR-National Institute for Research in Reproductive
+    and Child Health, Mumbai, India. Electronic address: gdeepti167@gmail.com.'

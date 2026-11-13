@@ -1,0 +1,5 @@
+[
+  {"id": "slightly-elevated", "label": "Slightly elevated", "ph": 4.8, "confidence": 0.92, "taken_at": "2026-11-13T08:14:00"},
+  {"id": "typical", "label": "Typical", "ph": 4.1, "confidence": 0.95, "taken_at": "2026-11-13T08:14:00"},
+  {"id": "uncertain", "label": "Uncertain reading", "ph": 5.3, "confidence": 0.55, "taken_at": "2026-11-13T08:14:00"}
+]

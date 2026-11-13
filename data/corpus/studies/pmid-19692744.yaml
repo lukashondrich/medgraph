@@ -1,0 +1,51 @@
+study_id: pmid-19692744
+pmid: '19692744'
+doi: null
+url: https://pubmed.ncbi.nlm.nih.gov/19692744/
+title: Spectrum of Lactobacillus species present in healthy vagina of Indian women
+authors: Garg et al.
+year: 2009
+journal: Indian J Med Res
+design: cross_sectional
+sample_size: 80
+cohort:
+  description: Women with eco-healthy vagina in Delhi, India
+  ancestry:
+  - indian
+  countries:
+  - India
+  age_min: null
+  age_max: null
+  menopausal_status: []
+  pregnancy: []
+topics:
+- vaginal microbiome
+- Lactobacillus species
+- probiotics
+- bacterial vaginosis
+- PCR and 16S rDNA sequencing
+key_finding: In 80 healthy-vagina women in Delhi, predominant Lactobacillus species were L. reuteri (32.5%),
+  L. fermentum (25%), and L. salivarius (16.25%), suggesting species differ from other countries.
+abstract: 'Background & objective: Lactobacilli are depleted in vagina of women suffering from recurring
+  episodes of bacterial vaginosis with vaginal pH >or=5. With the objective of making available probiotic
+  lactobacilli for replenishment in such women, a study was undertaken to isolate and characterize the
+  Lactobacilli present in women with eco-healthy vagina in Delhi. No information is so far available on
+  the species of Lactobacilli resident in vagina of women in India. Methods: Vaginal swabs were taken
+  from 80 women with informed consent after ethical approval and grown in MRS broth. Gram-positive, catalase-negative
+  bacilli generating about 200 bp amplicon by PCR with Lactobacillus genus specific primers were further
+  characterized by employing species specific primers followed by sequencing of 16S rDNA. Isolates of
+  the same species were differentiated by random amplified polymorphic DNA (RAPD) profiles. Results: The
+  predominant species isolated were L. reuteri present in 26 (32.5%) women, L. fermentum in 20 (25%),
+  and L. salivarius in 13 (16.25%) women. Sequencing of 16S rDNA of 20 isolates showed that except for
+  two isolates of L. plantarum, sequences of the remaining agreed well with PCR identification. None of
+  the isolates had similar RAPD profile. Interpretation & conclusion: Our findings showed lactobacilli
+  species present in healthy vagina of women in India differ from those reported from other countries.
+  This information would be useful to development of probiotic tablets seeking to replenish the missing
+  lactobacilli for reproductive health of women in India.'
+licence: null
+text_source: abstract
+check:
+  status: checked
+  checked_by: LLM second pass (gpt-5.2)
+  checked_on: '2026-11-13'
+  notes: 'affiliation: Talwar Research Foundation, New Delhi, India.'

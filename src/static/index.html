@@ -2,29 +2,25 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>medgraph — Patient-Aware Health Navigator</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>pH Companion — your test result, explained</title>
   <link rel="stylesheet" href="/static/style.css" />
 </head>
 <body>
   <!-- Skip to main content -->
-  <a href="#chatContainer" class="skip-link" data-i18n="skipToChat">Skip to chat</a>
+  <a href="#chatContainer" class="skip-link" data-i18n="skipToChat">Skip to conversation</a>
 
   <div class="app">
     <!-- Header -->
     <header class="header">
       <div class="header-content">
         <h1>
-          <span data-i18n="appTitle">medgraph</span>
-          <span class="header-accent" data-i18n="appTitleAccent">Health Navigator</span>
+          <span data-i18n="appTitle">pH</span>
+          <span class="header-accent" data-i18n="appTitleAccent">Companion</span>
         </h1>
-        <p class="header-subtitle" data-i18n="appSubtitle">Patient-aware multiagent healthcare guidance</p>
+        <p class="header-subtitle" data-i18n="appSubtitle">Your test result, explained with studies that fit you</p>
       </div>
-      <nav class="header-controls" aria-label="Settings">
-        <span id="modelIndicator" class="model-indicator" role="status" aria-live="polite">
-          <span class="model-indicator-dot"></span>
-          <span class="model-indicator-label" id="modelIndicatorLabel" data-i18n="modelChecking">Checking...</span>
-        </span>
+      <nav class="header-controls" aria-label="Settings" data-i18n-aria="settings">
         <button id="langToggle" class="toolbar-btn" data-i18n="langToggle" data-i18n-aria="langToggleLabel" aria-label="Auf Deutsch wechseln">DE</button>
         <button id="themeToggle" class="toolbar-btn toolbar-btn--icon" aria-label="Dark mode" data-i18n-aria="darkMode">
           <svg class="toolbar-icon toolbar-icon--sun" aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
@@ -36,39 +32,53 @@
       </nav>
     </header>
 
-    <!-- Patient selection -->
-    <section class="patient-bar" id="patientBar" aria-labelledby="patientBarLabel">
-      <h2 class="patient-bar-label" id="patientBarLabel">
-        <span data-i18n="selectPatient">Select a patient:</span>
-        <button class="info-btn" id="patientInfoBtn" aria-label="About patient data" data-i18n-aria="patientInfoLabel">
+    <!-- Persona selection -->
+    <section class="patient-bar" id="personaBar" aria-labelledby="personaBarLabel">
+      <h2 class="patient-bar-label" id="personaBarLabel">
+        <span data-i18n="selectPersona">Choose a profile</span>
+        <button class="info-btn" id="personaInfoBtn" aria-label="About these profiles" data-i18n-aria="personaInfoLabel">
           <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
         </button>
-        <span class="info-tooltip" id="patientInfoTooltip" role="tooltip" data-i18n="patientInfoText">Synthetic patients generated with Synthea (FHIR R4). No real patient data is used.</span>
+        <span class="info-tooltip" id="personaInfoTooltip" role="tooltip" data-i18n="personaInfoText">Demo profiles. No real personal data is used.</span>
       </h2>
-      <div class="patient-gallery" id="patientGallery" role="group" aria-labelledby="patientBarLabel">
+      <div class="patient-gallery" id="personaGallery" role="group" aria-labelledby="personaBarLabel">
         <!-- Populated by JS -->
       </div>
     </section>
 
-    <!-- Patient summary card (hidden until patient selected) -->
-    <section class="patient-card" id="patientCard" style="display:none" aria-labelledby="patientName" aria-live="polite">
-      <div class="patient-card-header">
-        <span class="patient-card-name" id="patientName"></span>
-        <span class="patient-card-demo" id="patientDemo"></span>
-        <button class="patient-card-clear" id="clearPatient" aria-label="Clear selected patient" data-i18n-aria="clearPatient">
-          <span aria-hidden="true">&times;</span>
-        </button>
+    <!-- Profile card (hidden until a persona is selected) -->
+    <details class="patient-card profile-card" id="profileCard" hidden>
+      <summary class="profile-summary">
+        <span class="patient-card-name" id="profileName"></span>
+        <span class="profile-headline" id="profileHeadline"></span>
+        <span class="chevron" aria-hidden="true"></span>
+      </summary>
+      <dl class="profile-details" id="profileDetails"></dl>
+    </details>
+
+    <!-- Test result (hidden until a persona is selected) -->
+    <section class="result-card" id="resultCard" hidden aria-labelledby="resultLabel">
+      <h2 class="patient-bar-label" id="resultLabel" data-i18n="yourTest">Your test result</h2>
+      <div class="patient-gallery" id="readingGallery" role="group" aria-labelledby="resultLabel">
+        <!-- Populated by JS -->
       </div>
-      <div class="patient-card-headline" id="patientHeadline"></div>
-      <div class="patient-card-tags" id="patientTags" role="list" aria-label="Patient conditions"></div>
+      <div class="ph-scale" id="phScale" hidden>
+        <div class="ph-scale-track" aria-hidden="true">
+          <span class="ph-scale-marker" id="phMarker"></span>
+        </div>
+        <div class="ph-scale-labels" aria-hidden="true">
+          <span>3.5</span><span>4.5</span><span>5.5</span><span>6.5</span><span>7.5</span>
+        </div>
+        <p class="ph-scale-meta" id="phMeta"></p>
+      </div>
     </section>
 
-    <!-- Chat thread -->
-    <main class="chat-container" id="chatContainer" aria-live="polite" data-i18n-aria="chatMessages" aria-label="Chat messages">
+    <!-- Conversation -->
+    <main class="chat-container" id="chatContainer" aria-live="polite" data-i18n-aria="chatMessages" aria-label="Conversation">
       <div class="welcome-message" role="status">
-        <p data-i18n="welcomeTitle">Welcome! Select a patient above, then ask a health question.</p>
-        <p data-i18n-html="welcomeCapabilities">I can help with <strong>symptoms</strong>, <strong>medications</strong>, <strong>lifestyle</strong>, <strong>clinical evidence</strong>, and <strong>drug interactions</strong>.</p>
-        <p class="welcome-disclaimer" role="note" data-i18n="welcomeDisclaimer">I am an AI assistant and cannot diagnose or prescribe. Always consult a healthcare provider for medical concerns.</p>
+        <p data-i18n="welcomeTitle">Choose a profile, then a test result. I will explain what the reading means for that woman.</p>
+        <p data-i18n-html="welcomeCapabilities">Every statement links to the <strong>study it comes from</strong>, including <strong>studies in women like her</strong>.</p>
+        <p class="welcome-disclaimer" role="note" data-i18n="welcomeDisclaimer">I am an AI assistant and cannot diagnose or prescribe. A home pH test cannot confirm or rule out an infection.</p>
       </div>
     </main>
 
@@ -78,23 +88,42 @@
     <!-- Input area -->
     <footer class="input-area">
       <form id="chatForm" class="input-form" role="search">
-        <label for="messageInput" class="sr-only" data-i18n="inputLabel">Health question</label>
+        <label for="messageInput" class="sr-only" data-i18n="inputLabel">Question about your result</label>
         <input
           type="text"
           id="messageInput"
           class="message-input"
-          placeholder="Ask a health question&#x2026;"
+          placeholder="Ask about your result&#x2026;"
           data-i18n-placeholder="inputPlaceholder"
           autocomplete="off"
-          autofocus
+          disabled
         />
         <button type="button" id="micBtn" class="mic-btn" aria-label="Start voice input" data-i18n-aria="micStart">
           <svg class="mic-icon" aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
           <span class="mic-listening-label sr-only" data-i18n="listening">Listening&#x2026;</span>
         </button>
-        <button type="submit" id="sendBtn" class="send-btn" aria-label="Send health question" data-i18n="send">Send</button>
+        <button type="submit" id="sendBtn" class="send-btn" data-i18n-aria="sendLabel" aria-label="Send question" disabled>
+          <span class="send-btn-text" data-i18n="send">Send</span>
+          <svg class="send-btn-icon" aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+        </button>
       </form>
     </footer>
+  </div>
+
+  <!-- Citation card: bottom sheet on a phone, centred card on a wide screen -->
+  <div class="cite-backdrop" id="citeBackdrop" hidden></div>
+  <div class="cite-sheet" id="citeSheet" role="dialog" aria-modal="true" aria-labelledby="citeTitle" hidden>
+    <div class="cite-sheet-grip" aria-hidden="true"></div>
+    <div class="cite-sheet-header">
+      <span class="cite-sheet-group" id="citeGroup"></span>
+      <button class="cite-sheet-close" id="citeClose" aria-label="Close source" data-i18n-aria="closeSource">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="cite-sheet-body" id="citeBody">
+      <h2 class="cite-sheet-title" id="citeTitle"></h2>
+      <div id="citeContent"></div>
+    </div>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>

@@ -1,0 +1,53 @@
+study_id: pmid-18447759
+pmid: '18447759'
+doi: 10.1089/jwh.2007.0446
+url: https://pubmed.ncbi.nlm.nih.gov/18447759/
+title: The accuracy of women performing vaginal pH self-testing
+authors: Kulp et al.
+year: 2008
+journal: J Womens Health (Larchmt)
+design: cross_sectional
+sample_size: 161
+cohort:
+  description: Women enrolled to compare self vs physician vaginal pH testing
+  ancestry: []
+  countries:
+  - United States
+  age_min: null
+  age_max: null
+  menopausal_status: []
+  pregnancy: []
+topics:
+- vaginal pH
+- self-testing
+- diagnostic accuracy
+- physician comparison
+- over-the-counter antifungals
+key_finding: Women’s self-measured vaginal pH readings closely matched physicians’ readings, with 85%
+  agreement (kappa 0.6).
+abstract: 'Objective: To determine if women could measure their vaginal pH as accurately as could physicians.
+  Methods: Each participant measured her vaginal pH using a swab, completed a survey, and then was seen
+  by her physician, who also performed a vaginal pH test. The physician did not have access to the patient''s
+  pH reading; only the study coordinator recorded patient results. Accuracy of patient measurements compared
+  with physician results was analyzed by the kappa statistic. Results: A total of 161 women were enrolled
+  in the study. The average difference between the patients'' pH readings and the physicians'' readings
+  was <0.5. Overall, 85% of the patients'' readings were in agreement with the physicians'' readings,
+  and the kappa statistic was 0.6. Conclusions: Study participants could accurately measure vaginal pH
+  through self-testing. Vaginal pH self-testing may be a convenient tool to help women determine whether
+  they should use an over-the-counter (OTC) antifungal medication or go to a physician for diagnostic
+  workup.'
+licence: null
+text_source: abstract
+check:
+  status: checked
+  checked_by: LLM second pass (gpt-5.2); disputes resolved by Claude (AI assistant), not by a clinical
+    expert
+  checked_on: '2026-11-13'
+  notes: 'affiliation: UMDNJ-Robert Wood Johnson Medical School, New Brunswick, New Jersey 08901, USA.
+
+    design: should be ''cohort'' (The abstract describes enrolling participants and comparing their self-test
+    pH readings to physician readings (a prospective comparative/diagnostic agreement study), not an unspecified
+    ''other'' design.)
+
+    resolution: design set to cross_sectional: paired self vs physician reading at one visit; no follow-up,
+    so not a cohort.'

@@ -1,0 +1,59 @@
+study_id: pmid-35609319
+pmid: '35609319'
+doi: 10.1177/09564624221091743
+url: https://pubmed.ncbi.nlm.nih.gov/35609319/
+title: Correlates of bacterial vaginosis among women from North India
+authors: Challa et al.
+year: 2022
+journal: Int J STD AIDS
+design: cross_sectional
+sample_size: 283
+cohort:
+  description: Non-pregnant women aged 18-45 years in Delhi
+  ancestry:
+  - indian
+  countries:
+  - India
+  age_min: 18
+  age_max: 45
+  menopausal_status: []
+  pregnancy:
+  - not_pregnant
+topics:
+- bacterial vaginosis
+- risk factors
+- sexual behavior
+- condom use
+- infertility
+key_finding: Among 283 non-pregnant women in Delhi, Nugent-BV was associated with infertility and recent
+  unprotected sex, while regular condom use was associated with testing negative.
+abstract: 'Background: Bacterial vaginosis (BV) is the most prevalent cause of abnormal vaginal discharge
+  among pre-menopausal women and associated with adversities of sexual and reproductive health. The present
+  study aimed to identify potential epidemiological and behavioural risk factors and clinical predictors
+  of BV among women in Delhi, India. Methods: A cross-sectional study was conducted to assess 283 non-pregnant
+  women aged 18-45 years for BV using Nugent''s scoring criteria. Information on demographics, sexual
+  behaviours, hygiene practices and clinical symptoms was obtained and evaluated for their association
+  with Nugent-BV status. Results: A positive diagnosis for Nugent-BV was made in 69 (24.4%) participants,
+  55 (19.4%) were intermediate and 159 (65.2%) were negative for Nugent-BV. Infertility (p = .02) and
+  recent unprotected sexual exposure (p = .02) were strongly associated with Nugent-BV. On the other hand,
+  women who reported regular use of condoms during intercourse were more likely to test negative (p =
+  .03). None of the patient complaints, however, had any significant correlation with Nugent-BV diagnosis.
+  Conclusion: Women in their reproductive years share the highest burden of adversities associated with
+  bacterial vaginosis. History of infertility, recent unprotected sexual exposure and frequent use of
+  condoms were correlates having significant associations with Nugent-BV.'
+licence: null
+text_source: abstract
+check:
+  status: checked
+  checked_by: LLM second pass (gpt-5.2); disputes resolved by Claude (AI assistant), not by a clinical
+    expert
+  checked_on: '2026-11-13'
+  notes: 'affiliation: Department of Dermatology and Venereology, 28730All India Institute of Medical
+    Sciences, New Delhi, India.
+
+    cohort.menopausal_status: should be [] (The abstract mentions ''pre-menopausal women'' in background,
+    but the study population is described as women aged 18–45 years; menopausal status is not explicitly
+    stated for participants.)
+
+    resolution: menopausal status cleared as the checker asked: stated only in the background, participants
+    described by age 18-45.'

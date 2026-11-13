@@ -1,0 +1,56 @@
+study_id: pmid-32027611
+pmid: '32027611'
+doi: 10.3855/jidc.10154
+url: https://pubmed.ncbi.nlm.nih.gov/32027611/
+title: Cross sectional analysis of vaginal Lactobacillus in asymptomatic women of reproductive age in
+  Mumbai, India
+authors: Pramanick et al.
+year: 2018
+journal: J Infect Dev Ctries
+design: cross_sectional
+sample_size: 203
+cohort:
+  description: Asymptomatic premenopausal women of reproductive age in Mumbai
+  ancestry:
+  - indian
+  countries:
+  - India
+  age_min: null
+  age_max: null
+  menopausal_status:
+  - premenopausal
+  pregnancy: []
+topics:
+- vaginal microbiome
+- Lactobacillus species
+- reproductive-age women
+- probiotics
+- hydrogen peroxide production
+key_finding: Among women with normal vaginal microflora, Lactobacillus was recovered in 98.2% and was
+  most often dominated by L. iners, with most isolates producing acid and 94.2% producing H2O2.
+abstract: 'Introduction: Lactobacillus dominated vaginal microenvironment is associated with lower risk
+  of genital infections. Numerous studies have reported geographic and ethnic variations in vaginal microbiome
+  structure between healthy individuals from different race and ethnicity. India has a great diversity,
+  so it is intriguing to find out if such divergences exist in vaginal lactobacilli. The present study
+  aimed to investigate predominant Lactobacillus species in vaginas of healthy Indian women and screen
+  isolates for lactic acid and H2O2 production. Methodology: 203 premenopausal women asymptomatic for
+  any vaginal complaints were recruited. The lactobacilli isolates on MRS agar were identified by Multiplex-PCR
+  and 16sRNA gene sequencing. RAPD was used to differentiate strains of same species. H2O2 and lactic
+  acid was evaluated on TMB-HRP MRS agar and BCP-MRS agar respectively. Results: Lactobacilli were recovered
+  from 107/109 (98.2%) women with normal microflora. L. iners 64.7% (68), L. crispatus 26.7% (28), L.
+  reuteri 21.9% (23), L. jensenii 16.2% (17) and L. gasseri 15.2% (16) were the most frequently occurring
+  vaginal lactobacilli in normal women. The vaginal microflora was dominated by either by a single (80%,
+  n = 84) or a combination (20%, n = 21) of Lactobacillus species. Though most frequently identified,
+  L. iners, coexisted only with other Lactobacillus species. All isolates were acid producers but H2O2
+  was produced by 94.2% isolates. Conclusions: Our study reports prevalent vaginal lactobacilli which
+  could be explored as probiotics. Presence of heterogeneous Lactobacillus population highlights the cumulative
+  effects of different lactobacilli maintaining vaginal health. Contrasting observations about L. iners
+  reiterates its puzzling role in vaginal immunity, advocating further research.'
+licence: cc by
+text_source: abstract
+check:
+  status: checked
+  checked_by: LLM second pass (gpt-5.2)
+  checked_on: '2026-11-13'
+  notes: 'affiliation: ICMR - National Institute for Research in Reproductive Health, Parel, Mumbai, India.
+    rinku.pramanick@gmail.com.'

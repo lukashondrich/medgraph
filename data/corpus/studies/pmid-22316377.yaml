@@ -1,0 +1,54 @@
+study_id: pmid-22316377
+pmid: '22316377'
+doi: 10.1186/1471-2334-12-33
+url: https://pubmed.ncbi.nlm.nih.gov/22316377/
+title: A large, population-based study of age-related associations between vaginal pH and human papillomavirus
+  infection
+authors: Clarke et al.
+year: 2012
+journal: BMC Infect Dis
+design: cohort
+sample_size: 9165
+cohort:
+  description: Women in Guanacaste, Costa Rica, aged 18–97
+  ancestry: []
+  countries:
+  - Costa Rica
+  age_min: 18
+  age_max: 97
+  menopausal_status: []
+  pregnancy: []
+topics:
+- vaginal pH
+- HPV infection
+- cervical cytology
+- LSIL
+- Chlamydia trachomatis
+key_finding: Higher vaginal pH was associated with HPV detection (especially under 35 years), increased
+  risk of multiple HPV types and LSIL, and with C. trachomatis DNA detection in women under 25.
+abstract: 'Background: Vaginal pH is related to genital tract inflammation and changes in the bacterial
+  flora, both suggested cofactors for persistence of human papillomavirus (HPV) infection. To evaluate
+  the relationship between vaginal pH and HPV, we analyzed data from our large population-based study
+  in Guanacaste, Costa Rica. We examined vaginal pH and the risk of HPV infection, cytological abnormalities,
+  and C. trachomatis infection. Methods: Our study included 9,165 women aged 18-97 at enrollment with
+  a total of 28,915 visits (mean length of follow-up = 3.4 years). Generalized estimating equations were
+  used to evaluate the relationship between vaginal pH and HPV infection (both overall and single versus
+  multiple types) and low-grade squamous intraepithelial lesions (LSIL), the cytomorphic manifestation
+  of HPV infection. The relationship between enrollment vaginal pH and C. trachomatis infection was assessed
+  by logistic regression. Results were stratified by age at visit. Results: Detection of HPV was positively
+  associated with vaginal pH, mainly in women < 35 years (p-trend = 0.009 and 0.007 for women aged < 25
+  and 25-34 years, respectively). Elevated vaginal pH was associated with 30% greater risk of infection
+  with multiple HPV types and with LSIL, predominantly in women younger than 35 and 65+ years of age.
+  Detection of C. trachomatis DNA was associated with increased vaginal pH in women < 25 years (OR 2.2
+  95% CI 1.0-5.0). Conclusions: Our findings suggest a possible association of the cervical microenvironment
+  as a modifier of HPV natural history in the development of cervical precancer and cancer. Future research
+  should include studies of vaginal pH in a more complex assessment of hormonal changes and the cervicovaginal
+  microbiome as they relate to the natural history of cervical neoplasia.'
+licence: cc by
+text_source: abstract
+check:
+  status: checked
+  checked_by: LLM second pass (gpt-5.2)
+  checked_on: '2026-11-13'
+  notes: 'affiliation: Division of Cancer Epidemiology and Genetics, DHHS, National Cancer Institute,
+    National Institutes of Health, Bethesda, MD, USA. clarkma2@mail.nih.gov'

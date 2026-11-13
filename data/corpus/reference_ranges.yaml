@@ -1,0 +1,49 @@
+# Reference statements about expected vaginal pH.
+# Every row points to a study in the corpus and quotes it verbatim; a test
+# checks that each quote really appears in that study's stored text.
+# applies_to: an empty list means "any".
+
+- id: premenopausal-typical
+  label: Before menopause, not pregnant
+  applies_to:
+    menopausal_status: [premenopausal, perimenopausal]
+    pregnancy: [not_pregnant]
+  statement: A vaginal pH of about 4.5 fits premenopausal hormone levels with no bacterial infection.
+  study_id: pmid-9215184
+  quote: A vaginal pH of 4.5 is consistent with a premenopausal serum estradiol level and the absence of bacterial pathogens.
+
+- id: premenopausal-elevated
+  label: Before menopause, not pregnant
+  applies_to:
+    menopausal_status: [premenopausal, perimenopausal]
+    pregnancy: [not_pregnant]
+  statement: Readings from 5.0 to 6.5 point to either a bacterial cause or lower oestrogen.
+  study_id: pmid-9215184
+  quote: An elevated vaginal pH in the 5.0 to 6.5 range suggests a diagnosis of either bacterial pathogens or decreased serum estradiol.
+
+- id: lactobacillus-dominated
+  label: Women whose vaginal bacteria are dominated by lactobacilli
+  applies_to:
+    menopausal_status: [premenopausal]
+    pregnancy: []
+  statement: Measured carefully, healthy lactobacillus-dominated fluid averaged pH 3.5, ranging from 2.8 to 4.2.
+  study_id: pmid-24223212
+  quote: The average pH of the CVF samples was 3.5 ± 0.3 (mean ± SD), range 2.8-4.2
+  
+- id: by-ethnic-group
+  label: Women without symptoms, by ethnic group (North America)
+  applies_to:
+    menopausal_status: [premenopausal]
+    pregnancy: []
+  statement: Average pH in women without symptoms differed by ethnic group, from 4.2 to 5.0. The study's "Asian" group is not described further.
+  study_id: pmid-20534435
+  quote: the vaginal pH of women in different ethnic groups also differed and was higher in Hispanic (pH 5.0 ± 0.59) and black (pH 4.7 ± 1.04) women as compared with Asian (pH 4.4 ± 0.59) and white (pH 4.2 ± 0.3) women.
+
+- id: postmenopausal-typical
+  label: After menopause, without hormone therapy
+  applies_to:
+    menopausal_status: [postmenopausal]
+    pregnancy: [not_pregnant]
+  statement: Without a bacterial cause, a pH of 6.0 to 7.5 is typical after menopause.
+  study_id: pmid-9215184
+  quote: In the absence of bacterial pathogens, a vaginal pH of 6.0 to 7.5 is strongly suggestive of menopause.

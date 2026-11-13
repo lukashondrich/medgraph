@@ -1,0 +1,53 @@
+study_id: pmid-34829343
+pmid: '34829343'
+doi: 10.3390/diagnostics11111996
+url: https://pubmed.ncbi.nlm.nih.gov/34829343/
+title: Vaginal pH Value for Clinical Diagnosis and Treatment of Common Vaginitis
+authors: Lin et al.
+year: 2021
+journal: Diagnostics (Basel)
+design: review
+sample_size: null
+cohort:
+  description: ''
+  ancestry: []
+  countries: []
+  age_min: null
+  age_max: null
+  menopausal_status: []
+  pregnancy: []
+topics:
+- vaginal pH
+- vaginitis diagnosis
+- bacterial vaginosis
+- trichomoniasis
+- vulvovaginal candidiasis
+- treatments
+key_finding: The review summarizes how vaginal pH relates to the vaginal ecosystem and supports diagnosis
+  and treatment of common vaginitis, including self-test pH products.
+abstract: In modern society, 75% of all women worldwide have had vaginitis at least once in their lives.
+  The vagina has a dynamic microbial ecosystem with varying vaginal pH levels. An imbalance in that ecosystem
+  can alter the vaginal pH and tip the scale to the point of causing issues, such as vaginitis, that require
+  medical attention. Although vaginitis is not an incurable disease, it causes discomfort and pain that
+  disrupt women's daily lives. The most common causes of vaginitis include bacterial vaginosis, trichomoniasis,
+  and vulvovaginal candidiasis. In this review, we discuss the causes, diagnostic methods, and symptoms
+  of different types of vaginitis, the relationship of vaginitis to the prevalence of other diseases,
+  issues associated with recurrent vaginitis and the immune system, and a variety of effective available
+  treatments. In our article, we summarize the relationship of pH with the vaginal ecosystem, discuss
+  the associated factors of vaginal pH, and finally introduce the different available vaginal pH self-test
+  products.
+licence: cc by
+text_source: abstract
+check:
+  status: checked
+  checked_by: LLM second pass (gpt-5.2); disputes resolved by Claude (AI assistant), not by a clinical
+    expert
+  checked_on: '2026-11-13'
+  notes: 'affiliation: Institute of Biomedical Engineering, National Tsing Hua University, Hsinchu 30013,
+    Taiwan.
+
+    cohort.description: should be None (This is a narrative review and the abstract does not describe
+    an analyzed participant cohort (e.g., ''women with or at risk''); it discusses vaginitis and vaginal
+    pH generally.)
+
+    resolution: cohort description cleared: narrative review without a participant cohort.'

@@ -28,8 +28,10 @@ from src.agents.evidence import EvidenceAgent
 from src.agents.lifestyle import LifestyleAgent
 from src.agents.medication import MedicationAgent
 from src.agents.router import RouterAgent
+from src.agents.sources import ReferenceRangeSource, StudyLibrarySource
 from src.agents.symptom import SymptomAgent
 from src.agents.synthesizer import SynthesizerAgent
+from src.agents.writer import WriterAgent
 from src.models.state import MedGraphState
 
 # ---------------------------------------------------------------------------
@@ -121,4 +123,42 @@ def build_graph() -> CompiledStateGraph:
     builder.add_edge("synthesizer", END)
 
     # Compile and return ---------------------------------------------------------
+    return builder.compile()
+
+
+# ---------------------------------------------------------------------------
+# pH Companion graph: gather evidence first, then write
+# ---------------------------------------------------------------------------
+
+# Source nodes consulted on every pH Companion turn, in display order.
+PH_SOURCE_NODES: list[str] = ["reference_ranges", "study_library"]
+
+
+def build_ph_graph(
+    reference_ranges=None,
+    study_library=None,
+    writer=None,
+) -> CompiledStateGraph:
+    """Build the pH Companion graph.
+
+    Flow:
+        START -> reference_ranges ─┐
+        START -> study_library   ─┴-> writer -> END
+
+    All sources run in parallel and finish before the writer starts, so the
+    writer composes its answer from gathered evidence only. The writer also
+    runs the citation check. Node instances can be injected for tests.
+    """
+    builder = StateGraph(MedGraphState)
+
+    builder.add_node("reference_ranges", reference_ranges or ReferenceRangeSource())
+    builder.add_node("study_library", study_library or StudyLibrarySource())
+    builder.add_node("writer", writer or WriterAgent())
+
+    for node in PH_SOURCE_NODES:
+        builder.add_edge(START, node)
+    # A list source makes the writer wait for every source node.
+    builder.add_edge(PH_SOURCE_NODES, "writer")
+    builder.add_edge("writer", END)
+
     return builder.compile()

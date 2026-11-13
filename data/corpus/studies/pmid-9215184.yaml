@@ -1,0 +1,55 @@
+study_id: pmid-9215184
+pmid: '9215184'
+doi: 10.1016/s0002-9378(97)70345-4
+url: https://pubmed.ncbi.nlm.nih.gov/9215184/
+title: Vaginal pH as a marker for bacterial pathogens and menopausal status
+authors: Caillouette et al.
+year: 1997
+journal: Am J Obstet Gynecol
+design: cross_sectional
+sample_size: 253
+cohort:
+  description: Nonpregnant women having routine speculum exams in private practice
+  ancestry: []
+  countries:
+  - United States
+  age_min: null
+  age_max: null
+  menopausal_status:
+  - premenopausal
+  - postmenopausal
+  pregnancy:
+  - not_pregnant
+topics:
+- vaginal pH
+- bacterial pathogens
+- menopause
+- estradiol
+- follicle-stimulating hormone
+key_finding: Vaginal pH was elevated with bacterial pathogens in premenopausal women and correlated inversely
+  with estradiol and directly with FSH in menopausal women, supporting pH as a screening marker for infection
+  versus menopause.
+abstract: 'Objective: Our purpose was to confirm the elevation of vaginal pH expected in patients with
+  bacterial pathogens in premenopausal women and to examine the relationship of serum follicle-stimulating
+  hormone and estradiol levels to vaginal pH in menopausal patients without and with hormone replacement
+  therapy. Study design: Vaginal pH was determined by phenaphthazine (Nitrazine) pH paper in 253 patients
+  seen in a solo private practice for routine speculum examination. None of the patients were pregnant.
+  Measurements were made of serum levels of follicle-stimulating hormone and estradiol for 172 patients
+  and vaginal cultures were taken from 82 patients. Vaginal pH was correlated with vaginal cultures and
+  serum follicle-stimulating hormone and estradiol levels by use of statistical analysis. Results: Vaginal
+  pH was elevated in all premenopausal patients with documented bacterial pathogens. Serum estradiol levels
+  showed an inverse and serum follicle-stimulating hormone levels a direct statistical correlation with
+  vaginal pH in menopausal patients. Conclusions: Measurement of vaginal pH is useful, effective, and
+  inexpensive for screening purposes. A vaginal pH of 4.5 is consistent with a premenopausal serum estradiol
+  level and the absence of bacterial pathogens. An elevated vaginal pH in the 5.0 to 6.5 range suggests
+  a diagnosis of either bacterial pathogens or decreased serum estradiol. In patients with an elevated
+  pH, vaginal culture should establish the diagnosis. In the absence of bacterial pathogens, a vaginal
+  pH of 6.0 to 7.5 is strongly suggestive of menopause. Titration of estradiol level by vaginal pH during
+  estrogen replacement therapy may help menopausal women avoid side effects or cessation of therapy.'
+licence: null
+text_source: abstract
+check:
+  status: checked
+  checked_by: LLM second pass (gpt-5.2)
+  checked_on: '2026-11-13'
+  notes: 'affiliation: Loma Linda University, Pasadena, CA, USA.'
