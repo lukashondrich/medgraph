@@ -83,7 +83,7 @@ Step 6 is the moment the demo exists for.
 - **R5.3** Metadata is extracted with LLM help and then checked by a second, independent LLM pass against the abstract. Records where the two disagree are corrected or dropped. There is no clinical expert review for the demo, and the project says so openly; expert review is a named next step for a real product.
 - **R5.6** Evidence comes from several distinct sources (study library, guidelines, reference ranges, and others defined in the design doc), each consulted as a separate, visible step.
 - **R5.4** The corpus deliberately includes small studies in under-represented populations alongside large reference studies and guidelines.
-- **R5.5** Only content we are allowed to use is stored (abstracts and open-access text). To be confirmed in the design doc.
+- **R5.5** The corpus stores abstracts and study details, quotes short passages with attribution, and links to the paper. No licence review is done for the demo (decided 2026-11-13); the licence reported by the search service is kept on each record so a review is possible later.
 
 ### R6 — Demographically matched evidence (the core requirement)
 

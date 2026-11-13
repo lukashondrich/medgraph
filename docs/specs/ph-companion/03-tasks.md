@@ -28,7 +28,7 @@ Tasks marked **(you)** need your judgement or review; the rest I can do.
 | 0.1 | Search for candidate papers per persona and topic (pH, bacterial vaginosis, microbiome, menopause, pregnancy) | A candidate list exists with identifier, design, sample size and cohort for each paper |
 | 0.2 | Check coverage per persona | Each persona has at least two candidate matched studies, or the gap is written down |
 | 0.3 | **(you)** Revisit the personas with the coverage in hand. A persona with little literature is kept and its gap is shown | Personas are final |
-| 0.4 | Check which guideline texts may be stored and quoted | A short list of usable guidelines with their licence |
+| 0.4 | Pick the guideline texts to include (no licence review, decided 2026-11-13) | A short list of guidelines with links |
 
 M0 produces a list, not code. If a cohort turns out thin, this is where we find out, and that is a valid result for the demo.
 

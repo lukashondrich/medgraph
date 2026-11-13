@@ -82,10 +82,11 @@ Why reference ranges and safety rules are tables and not retrieval: these are th
 
 **Cohort match.** Computed from the study record against the profile:
 
-- Ancestry: exact match scores highest; a broader group (Indian → South Asian) scores lower and is labelled as broader.
+- Ancestry: exact match scores highest; a broader group (Indian → South Asian) scores lower and is labelled as broader. The hierarchy stops there: a cohort described only as "Asian" does not count as a match for an Indian profile.
+- Ancestry matches wherever the study was run. A study of women of Indian ancestry in India, Europe or North America all qualify for an Indian profile.
 - Menopausal status, pregnancy status: match or no match.
 - Age: profile age inside the cohort's range.
-- Country of residence: minor weight.
+- Country of residence: minor weight, never required. The citation card shows where the study was run, so a match on ancestry but not on country is visible to the reader.
 
 A study enters the matched lane only if it matches on ancestry, or on postmenopausal status for a postmenopausal profile, or on pregnancy for a pregnant profile. Matching only on "premenopausal adult" does not count, since that describes most studies.
 
@@ -111,8 +112,8 @@ candidate list (manual + search)
 ```
 
 - Target: 30–50 papers covering vaginal pH, bacterial vaginosis, vaginal microbiome, menopause-related changes, pregnancy. Coverage is planned per persona so each has at least two matched studies and at least one deliberate gap.
-- Stored text: abstracts, and full text only for open-access papers whose licence allows it. The licence is recorded per study.
-- Guideline excerpts follow the same process; licence is checked per publisher before inclusion.
+- Stored text: abstracts, plus full text where a paper is open access. No licence review for the demo; the licence reported by Europe PMC is copied onto the record.
+- Guideline excerpts follow the same process.
 
 ## 5. Data model
 
@@ -301,5 +302,5 @@ New endpoints replace the patient ones: list personas, get persona, list preset 
 | Too few real studies exist for a persona's cohort | Found out in the corpus check. The persona stays; the gap is shown in the demo as a finding |
 | A wrong sample size or cohort label is shown | Two independent LLM passes must agree; the passage is always shown next to the citation so the reader can check. Not expert-reviewed, and stated as such |
 | Response time in a live demo | Fixed route on the first turn; sources are fast lookups; one writer call. Token streaming of the answer is a possible later improvement |
-| Licence limits on paper text | Abstracts by default; licence recorded per study |
+| Licence of stored text | Accepted for a demo: abstracts, short attributed quotes and links. Would need a review before a real product |
 | Ethnicity handled clumsily | Used for evidence selection only; wording rules in the writer prompt; an evaluation case checks for it |
