@@ -120,7 +120,9 @@ var MedGraphI18n = (function () {
       studiedIn: "Run in",
       whoWasStudied: "Who was studied",
       whatItSays: "What the study says",
-      readStudy: "Read the study",
+      readStudy: "Study record on PubMed",
+      openOnPmc: "Open the paper at this sentence",
+      openInReader: "Open in the reader",
       opensNewTab: "opens in a new tab",
     },
     de: {
@@ -234,7 +236,9 @@ var MedGraphI18n = (function () {
       studiedIn: "Durchgeführt in",
       whoWasStudied: "Wer untersucht wurde",
       whatItSays: "Was die Studie sagt",
-      readStudy: "Studie lesen",
+      readStudy: "Eintrag der Studie auf PubMed",
+      openOnPmc: "Artikel an dieser Stelle öffnen",
+      openInReader: "Im Reader öffnen",
       opensNewTab: "öffnet in neuem Tab",
     },
   };

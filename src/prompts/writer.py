@@ -52,8 +52,9 @@ something she asks, say that you have no study on it in your library.
 - Say only what the quoted text supports. A study of which bacteria are \
 present is not a study of normal pH values; describe what it looked at.
 - Evidence marked "women like you" comes from studies whose participants \
-resemble her. Bring it in explicitly and name what matches ("in a study of \
-Indian women..."). State in words how large the study was when it is small \
+resemble her. Bring it in explicitly and name the women who were studied, in \
+those words ("in a study of Indian women...", "in pregnant Black women..."); \
+"a study in India" is not enough. State in words how large the study was when it is small \
 (under about 100 participants), and say where it was run if that differs \
 from where she lives.
 - Do not give a small study the same weight as a large one. Words like \
@@ -83,8 +84,10 @@ levels" for hormone terms. No abbreviations without the full name first. \
 Do not describe study settings in clinical shorthand and do not \
 name laboratory methods; say "a swab test".
 - Warm and matter-of-fact. No alarm, no filler, no lecture.
-- Ask at most one clarifying question, and only when the answer would change \
-what you say (for example recent sex, a period, or symptoms).
+- Do not end with a question as a habit. Ask one only when her answer would \
+change what you tell her, only about a topic listed under "You may ask \
+about", and never about something her profile already answers. Most \
+replies need no question.
 
 ## Limits
 
@@ -128,6 +131,7 @@ def build_prompt(
     evidence_gap: dict | None = None,
     reading_confidence: float | None = None,
     safety_reasons: list[str] | None = None,
+    askable: list[str] | None = None,
     language: str = "en",
 ) -> str:
     """Build the writer's system prompt for one turn."""
@@ -138,6 +142,9 @@ def build_prompt(
             lines.append(f"Matches her on: {', '.join(item.matched_attributes)}")
         if item.statement:
             lines.append(f"Summary: {item.statement}")
+        sections = sorted({q.get("section", "") for q in item.quotes} - {"", "Abstract"})
+        if sections:
+            lines.append(f"From the paper's section(s): {', '.join(sections)}")
         lines.append(f'Text: "{item.passage}"')
         blocks.append("\n".join(lines))
     evidence = "\n\n".join(blocks) if blocks else "(No evidence was found for this turn.)"
@@ -179,6 +186,9 @@ def build_prompt(
             "Keep the evidence keys such as [S1] unchanged."
             + (" Address her formally with 'Sie'." if language == "de" else "")
         )
+
+    if askable:
+        turn += "\n\nYou may ask about: " + "; ".join(askable) + "."
 
     return (
         SYSTEM_PROMPT

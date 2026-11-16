@@ -113,6 +113,8 @@ class StudyRecord(BaseModel):
 
     study_id: str = Field(description="Stable id, e.g. 'pmid-18803273'")
     pmid: Optional[str] = None
+    pmcid: Optional[str] = Field(default=None, description="PubMed Central id, when the full text is there")
+    open_access: bool = Field(default=False, description="Full text may be downloaded from Europe PMC")
     doi: Optional[str] = None
     url: str
     title: str
@@ -156,6 +158,8 @@ class Passage(BaseModel):
     passage_id: str
     study_id: str
     text: str
+    section: str = Field(default="Abstract", description="Section heading the text sits under")
+    source: str = Field(default="abstract", description="'abstract' or 'fulltext'")
 
 
 # ── File handling ─────────────────────────────────────────────────────────
@@ -195,17 +199,91 @@ def load_records(
 # ── Passages ──────────────────────────────────────────────────────────────
 
 _SENTENCE_END = re.compile(r"(?<=[.!?])\s+(?=[A-Z0-9(\[])")
+_ABBREVIATION = re.compile(r"(?:\b(?:Fig|Figs|Tab|Eq|No|vs|ca|approx|resp|e\.g|i\.e|al|Dr|St)\.)$")
+
+
+def sentence_spans(text: str) -> list[tuple[int, int]]:
+    """(start, end) of each sentence in ``text``.
+
+    Spans index into the original text, so a passage built from them is an
+    exact substring of it, whatever kind of whitespace the paper uses
+    between sentences. No split after "Fig.", "e.g.", "et al." and the like.
+    """
+    spans, start = [], 0
+    for match in _SENTENCE_END.finditer(text):
+        if _ABBREVIATION.search(text[start:match.start()]):
+            continue
+        spans.append((start, match.start()))
+        start = match.end()
+    spans.append((start, len(text)))
+    return [(a, b) for a, b in spans if text[a:b].strip()]
+
+
+def _windows(text: str, size: int) -> list[str]:
+    """Consecutive groups of ``size`` sentences, each an exact substring of ``text``."""
+    spans = sentence_spans(text)
+    return [text[spans[i][0]:spans[min(i + size, len(spans)) - 1][1]] for i in range(0, len(spans), size)]
 
 
 def split_passages(record: StudyRecord, sentences_per_passage: int = 2) -> list[Passage]:
     """Split a record's abstract into short verbatim passages."""
-    sentences = [s.strip() for s in _SENTENCE_END.split(record.abstract) if s.strip()]
     passages = []
-    for n, start in enumerate(range(0, len(sentences), sentences_per_passage), 1):
-        text = " ".join(sentences[start:start + sentences_per_passage])
+    for n, text in enumerate(_windows(record.abstract, sentences_per_passage), 1):
         passages.append(Passage(
             passage_id=f"{record.study_id}#p{n}",
             study_id=record.study_id,
             text=text,
         ))
+    return passages
+
+
+MIN_PASSAGE_WORDS = 8
+
+# A sentence that cites other work ("[8]", "(Smith et al., 2010)") reports
+# someone else's finding. Quoting it would credit this paper with it.
+_CITES_OTHERS = re.compile(
+    r"\[\s*\d+(?:\s*[,;–-]\s*\d+)*\s*\]|\bet al\b|\(\s*\d{1,3}(?:\s*[,–-]\s*\d{1,3})*\s*\)(?=[\s.,;])|\(\s*[A-Z][A-Za-z-]+,? (?:and [A-Z][A-Za-z-]+,? )?(?:19|20)\d{2}"
+)
+
+
+def fulltext_passages(record: StudyRecord, fulltext, sentences_per_passage: int = 2) -> list[Passage]:
+    """Passages from the citable sections of a paper's full text.
+
+    Each passage stays inside one paragraph, so it is one continuous piece
+    of text on the article page. Ids encode section, paragraph and position:
+    ``pmid-1#f3.2.1``.
+    """
+    from .fulltext import CITABLE_KINDS
+
+    citable = CITABLE_KINDS
+    if not any(section.kind in CITABLE_KINDS - {"conclusion"} for section in fulltext.sections):
+        # Reviews and short reports use topical headings; their body is the content.
+        citable = CITABLE_KINDS | {"other"}
+
+    passages = []
+    for s_index, section in enumerate(fulltext.sections, 1):
+        if section.kind not in citable:
+            continue
+        for p_index, paragraph in enumerate(section.paragraphs, 1):
+            for n, text in enumerate(_windows(paragraph, sentences_per_passage), 1):
+                if len(text.split()) < MIN_PASSAGE_WORDS or _CITES_OTHERS.search(text):
+                    continue
+                passages.append(Passage(
+                    passage_id=f"{record.study_id}#f{s_index}.{p_index}.{n}",
+                    study_id=record.study_id,
+                    text=text,
+                    section=section.title,
+                    source="fulltext",
+                ))
+    return passages
+
+
+def all_passages(record: StudyRecord) -> list[Passage]:
+    """Abstract passages plus, when the full text is stored, its citable passages."""
+    from .fulltext import load_fulltext
+
+    passages = split_passages(record)
+    fulltext = load_fulltext(record.study_id)
+    if fulltext is not None:
+        passages += fulltext_passages(record, fulltext)
     return passages

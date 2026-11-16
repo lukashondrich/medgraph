@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import logging
 
+from src.data.profile import UserProfile, askable_topics
 from src.models.state import MedGraphState
 from src.prompts.writer import SYSTEM_PROMPT, assign_markers, build_prompt
 
@@ -26,6 +27,11 @@ _UNCITED_NOTE = (
     "without any evidence key. Rewrite the reply so each of them cites the evidence "
     "it rests on, or drop statements you cannot support:\n"
 )
+
+
+def _askable(state: MedGraphState) -> list[str]:
+    profile = state.get("patient") or {}
+    return askable_topics(UserProfile.model_validate(profile)) if profile else []
 
 
 class WriterAgent(HealthcareAgent):
@@ -51,6 +57,7 @@ class WriterAgent(HealthcareAgent):
             evidence_gap=state.get("evidence_gap"),
             reading_confidence=reading.get("confidence"),
             safety_reasons=state.get("safety_reasons"),
+            askable=_askable(state),
             language=state.get("language", "en"),
         )
 

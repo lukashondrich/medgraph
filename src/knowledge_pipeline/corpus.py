@@ -40,8 +40,8 @@ from .study_schemas import (
     StudyRecord,
     load_record,
     load_records,
+    all_passages,
     save_record,
-    split_passages,
 )
 
 logger = logging.getLogger(__name__)
@@ -321,7 +321,7 @@ def collect_passages(studies_dir: Path = STUDIES_DIR) -> list[tuple[StudyRecord,
     return [
         (record, passage)
         for record in load_records(studies_dir, checked_only=True).values()
-        for passage in split_passages(record)
+        for passage in all_passages(record)
     ]
 
 
@@ -347,6 +347,7 @@ def build_index(
                 "passage_id": passage.passage_id,
                 "study_id": record.study_id,
                 "title": record.title,
+                "section": passage.section,
             },
         )
         for record, passage in collect_passages(studies_dir)
@@ -366,6 +367,45 @@ def build_index(
 
 
 # ── CLI ───────────────────────────────────────────────────────────────────
+
+
+def _cmd_enrich() -> None:
+    """Record which papers are in PubMed Central and download open-access full texts."""
+    from .fulltext import FULLTEXT_DIR, fetch_fulltext, save_fulltext
+
+    records = load_records(checked_only=False)
+    pmids = [r.pmid for r in records.values() if r.pmid]
+    found: dict[str, dict] = {}
+    for i in range(0, len(pmids), 30):
+        query = "SRC:MED AND EXT_ID:(" + " OR ".join(pmids[i:i + 30]) + ")"
+        response = httpx.get(
+            EUROPE_PMC_SEARCH,
+            params={"query": query, "format": "json", "resultType": "lite", "pageSize": 100},
+            headers={"User-Agent": "corpus-builder/0.1"},
+            timeout=40,
+        )
+        response.raise_for_status()
+        for hit in response.json()["resultList"]["result"]:
+            found[hit.get("pmid", "")] = hit
+
+    in_pmc = fetched = 0
+    for record in records.values():
+        hit = found.get(record.pmid or "", {})
+        record.pmcid = hit.get("pmcid") or None
+        record.open_access = bool(record.pmcid) and hit.get("isOpenAccess") == "Y"
+        save_record(record)
+        in_pmc += bool(record.pmcid)
+        if record.open_access and not (FULLTEXT_DIR / f"{record.study_id}.json").exists():
+            fulltext = fetch_fulltext(record.study_id, record.pmcid)
+            if fulltext is None:
+                print(f"no full text returned for {record.study_id} ({record.pmcid})")
+                continue
+            save_fulltext(fulltext)
+            fetched += 1
+            kinds = ", ".join(f"{s.kind}:{len(s.paragraphs)}" for s in fulltext.sections)
+            print(f"full text {record.study_id} ({record.pmcid}): {kinds[:110]}")
+    stored = len(list(FULLTEXT_DIR.glob("*.json"))) if FULLTEXT_DIR.exists() else 0
+    print(f"{len(records)} records | {in_pmc} in PubMed Central | {stored} full texts stored ({fetched} new)")
 
 
 async def _cmd_draft(pmids: list[str], force: bool) -> None:
@@ -407,7 +447,12 @@ def main() -> None:
     p_check = sub.add_parser("check", help="second-pass check of unchecked records")
     p_check.add_argument("--recheck", action="store_true", help="also re-run checked records")
     sub.add_parser("build", help="index checked records into the study store")
+    sub.add_parser("enrich", help="look up PubMed Central ids and download open-access full texts")
     args = parser.parse_args()
+
+    if args.command == "enrich":
+        _cmd_enrich()
+        return
 
     if args.command == "build":
         count = build_index()

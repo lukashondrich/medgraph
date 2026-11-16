@@ -7,7 +7,9 @@ expectations about wording are checked by a model acting as judge.
 from __future__ import annotations
 
 from src.data.personas import load_persona
+from src.knowledge_pipeline.fulltext import load_fulltext
 from src.knowledge_pipeline.study_schemas import load_records
+from src.sources.deeplinks import document_text, normalize
 
 from .conftest import cited_numbers, judge, run_turn
 
@@ -79,9 +81,13 @@ async def test_a5_every_citation_resolves_and_claims_are_cited():
         gathered = {s["study_id"] for s in state["sources"].values()}
         for c in state["citations"]:
             assert c["study_id"] in records and c["study_id"] in gathered
-            for quote in c["passages"]:
-                for part in quote.split(" … "):
-                    assert part in records[c["study_id"]].abstract, "quoted passage is not verbatim"
+            held = document_text(records[c["study_id"]], load_fulltext(c["study_id"]))
+            assert c["quotes"], "citation has no quotes"
+            for quote in c["quotes"]:
+                assert normalize(quote["text"]) in held, "quoted passage is not verbatim"
+                assert quote["reader_url"].startswith(f"/paper/{c['study_id']}?hl=")
+                if quote["pmc_url"]:
+                    assert records[c["study_id"]].pmcid in quote["pmc_url"]
         ok, why = await judge(
             state["final_response"],
             "Ignoring mentions of her own reading and ignoring the final next-step paragraph: every "

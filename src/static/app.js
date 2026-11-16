@@ -1006,8 +1006,27 @@
     }
 
     html += '<h3 class="cite-section">' + escapeHTML(t("whatItSays")) + "</h3>";
-    (c.passages || []).forEach(function (passage) {
-      html += '<blockquote class="cite-quote">' + escapeHTML(passage) + "</blockquote>";
+    var quotes = (c.quotes && c.quotes.length)
+      ? c.quotes
+      : (c.passages || []).map(function (text) {
+          return { text: text };
+        });
+    quotes.forEach(function (q) {
+      html += '<figure class="cite-quote-block">';
+      if (q.section && q.section !== "Abstract") {
+        html += '<figcaption class="cite-quote-section">' + escapeHTML(q.section) + "</figcaption>";
+      }
+      html += '<blockquote class="cite-quote">' + escapeHTML(q.text) + "</blockquote>";
+      html += '<div class="cite-quote-links">';
+      // Plain links, followed by a real click: browsers ignore
+      // scroll-to-text links that are opened by script.
+      if (/^https:\/\/pmc\.ncbi\.nlm\.nih\.gov\//.test(q.pmc_url || "")) {
+        html += openLink(q.pmc_url, t("openOnPmc"), "cite-open cite-open--primary");
+      }
+      if (/^\/paper\//.test(q.reader_url || "")) {
+        html += openLink(q.reader_url, t("openInReader"), q.pmc_url ? "cite-open" : "cite-open cite-open--primary");
+      }
+      html += "</div></figure>";
     });
 
     if (/^https:\/\//.test(c.url || "")) {
@@ -1022,6 +1041,14 @@
     citeSheet.hidden = false;
     document.getElementById("citeBody").scrollTop = 0;
     citeClose.focus();
+  }
+
+  function openLink(url, label, className) {
+    return (
+      '<a class="' + className + '" href="' + escapeHTML(url) + '" target="_blank" rel="noopener noreferrer">' +
+      escapeHTML(label) +
+      ' <span aria-hidden="true">&#8599;</span><span class="sr-only"> (' + escapeHTML(t("opensNewTab")) + ")</span></a>"
+    );
   }
 
   function closeCitation() {

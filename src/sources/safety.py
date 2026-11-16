@@ -17,6 +17,8 @@ from src.data.profile import TestReading, UserProfile
 from src.knowledge_pipeline.study_schemas import CORPUS_DIR, StudyDesign, StudyRecord
 from src.models.evidence import SourceItem
 
+from .deeplinks import quote_links
+
 SAFETY_RULES_PATH = CORPUS_DIR / "safety_rules.yaml"
 
 
@@ -105,6 +107,7 @@ def evaluate_safety(
                 cohort_summary=record.cohort.description,
                 countries=record.cohort.countries,
                 passage=rule.quote,
+                quotes=[quote_links(record, rule.quote)],
                 statement=rule.message,
                 url=record.url,
                 relevance=1.0,

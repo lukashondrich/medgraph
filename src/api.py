@@ -5,6 +5,7 @@ Provides:
 - GET /api/personas — persona gallery
 - GET /api/personas/{persona_id} — full persona profile
 - GET /api/readings — preset strip readings
+- GET /paper/{study_id}?hl=... — reader page with one passage highlighted
 - GET /api/health — health check
 - GET / — serves static frontend
 """
@@ -97,6 +98,31 @@ async def get_persona(persona_id: str):
     if profile is None:
         raise HTTPException(status_code=404, detail="Persona not found")
     return profile.to_dict()
+
+
+@app.get("/paper/{study_id}", response_class=HTMLResponse)
+async def paper_reader(study_id: str, hl: str = ""):
+    """Reader page: the text held for a paper, opened at the cited passage."""
+    from src.knowledge_pipeline.fulltext import load_fulltext
+    from src.knowledge_pipeline.study_schemas import load_records
+    from src.reader import render_paper
+
+    record = load_records().get(study_id)
+    if record is None:
+        raise HTTPException(status_code=404, detail="Paper not found")
+    return HTMLResponse(render_paper(record, load_fulltext(study_id), hl))
+
+
+@app.get("/check", response_class=HTMLResponse)
+async def link_check():
+    """Page for checking the PubMed Central sentence links by hand."""
+    from src.knowledge_pipeline.study_schemas import load_records
+    from src.reader import render_check_page
+    from src.sources.deeplinks import sample_links
+
+    records = sorted(load_records().values(), key=lambda r: (r.year, r.authors))
+    papers = [(r, sample_links(r)) for r in records if r.pmcid]
+    return HTMLResponse(render_check_page([(r, links) for r, links in papers if links]))
 
 
 @app.get("/api/readings")

@@ -25,6 +25,7 @@ from src.data.profile import UserProfile
 from src.knowledge_pipeline.study_schemas import StudyDesign, StudyRecord, load_records
 from src.models.evidence import SourceItem
 
+from .deeplinks import quote_links
 from .matching import CohortMatch, distinguishing_attributes, match_cohort
 
 logger = logging.getLogger(__name__)
@@ -63,6 +64,7 @@ class ScoredPassage(BaseModel):
     study_id: str
     text: str
     relevance: float
+    section: str = "Abstract"
 
 
 class LaneResult(BaseModel):
@@ -96,7 +98,7 @@ def _to_item(
     chosen = [passages[0]] + [
         p for p in passages[1:PASSAGES_PER_STUDY] if p.relevance >= MIN_RELEVANCE
     ]
-    chosen.sort(key=lambda p: p.passage_id)  # keep the abstract's own order
+    chosen.sort(key=lambda p: p.passage_id)  # keep the paper's own order
     return SourceItem(
         id=f"study:{record.study_id}",
         source="study_library",
@@ -111,6 +113,7 @@ def _to_item(
         countries=record.cohort.countries,
         matched_attributes=match.matched_attributes if match else [],
         passage=" … ".join(p.text for p in chosen),
+        quotes=[quote_links(record, p.text, p.section) for p in chosen],
         url=record.url,
         relevance=passages[0].relevance,
     )
@@ -250,6 +253,7 @@ class StudyLibrary:
                         study_id=meta.get("study_id", ""),
                         text=doc.content or "",
                         relevance=float(doc.score or 0.0),
+                        section=meta.get("section", "Abstract"),
                     )
                     known = best.get(passage.passage_id)
                     if known is None or passage.relevance > known.relevance:

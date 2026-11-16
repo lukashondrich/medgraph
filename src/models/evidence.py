@@ -30,6 +30,10 @@ class SourceItem(BaseModel):
     countries: list[str] = Field(default_factory=list)
     matched_attributes: list[str] = Field(default_factory=list)
     passage: str = Field(description="Verbatim text from the study")
+    quotes: list[dict] = Field(
+        default_factory=list,
+        description="The passage as separate quotes: {text, section, pmc_url, reader_url}",
+    )
     statement: str = Field(
         default="", description="Curated plain-language statement (reference ranges only)"
     )
@@ -64,6 +68,10 @@ class Citation(BaseModel):
     passages: list[str] = Field(
         default_factory=list, description="Verbatim texts the cited claims rest on"
     )
+    quotes: list[dict] = Field(
+        default_factory=list,
+        description="Each quoted text with where to open it: {text, section, pmc_url, reader_url}",
+    )
     url: str
 
     @classmethod
@@ -75,6 +83,8 @@ class Citation(BaseModel):
         """Fold another piece of evidence from the same study into this citation."""
         if item.passage not in self.passages:
             self.passages.append(item.passage)
+        known = {q.get("text") for q in self.quotes}
+        self.quotes.extend(q for q in item.quotes if q.get("text") not in known)
         if _GROUP_PRIORITY[item.group] < _GROUP_PRIORITY[self.group]:
             self.group = item.group
         for attribute in item.matched_attributes:

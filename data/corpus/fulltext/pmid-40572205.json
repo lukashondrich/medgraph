@@ -1,0 +1,215 @@
+{
+ "study_id": "pmid-40572205",
+ "pmcid": "PMC12195170",
+ "sections": [
+  {
+   "title": "1. Introduction",
+   "kind": "introduction",
+   "paragraphs": [
+    "The human body is colonized by a diverse array of symbiotic, commensal, and pathogenic microbes, collectively referred to as the microbiota, which includes bacteria, archaea, and fungi. When these microorganisms inhabit specific environments, they are described as the microbiota, whereas the term microbiome encompasses not only the microorganisms but also their genomes and the ecological interactions with their host and surrounding habitat [1].",
+    "The human microbiome, defined as the complete collection of microorganisms residing on and within the human body, plays a pivotal role in host physiology, immune system development, digestion, and detoxification processes [1]. The metagenome of the bacterial community alone contains at least 100 times more genes than the human genome, highlighting its critical role in maintaining homeostasis or contributing to the pathogenesis of various diseases [2]. While most of the research on the human microbiome over the past two decades has focused on colonic bacteria, uncovering significant associations with systemic physiological and pathological processes, other body sites, such as the skin, oral cavity, urinary tract, and reproductive tract, also harbor distinct microbial communities. These microbiota differ significantly from the gut microbiota, and even tissues previously considered sterile, such as the bladder, prostate, uterus, fallopian tubes, and ovaries, have been found to contain low-abundance microbial populations [2,3].",
+    "Unlike most body sites where high microbial diversity is often associated with health, the vaginal microbiota of women of reproductive age is characterized by relatively low diversity, typically dominated by a single Lactobacillus species. This has long been considered a hallmark of vaginal health, though its composition varies throughout a woman’s life stages, including childhood, puberty, pregnancy, and postmenopausal stages [4].",
+    "During the postmenopausal stage, declining estrogen leads to reduced glycogen, thinning of the vaginal epithelium, and increased vaginal pH. These changes disrupt the Lactobacillus-dominated microbiota, allowing diverse anaerobic bacteria such as Gardnerella, Prevotella, and Bacteroides to proliferate. These microbes secrete enzymes that degrade the protective mucus layer, triggering inflammation and a rise in vaginal symptoms. When these symptoms—discharge, odor, elevated pH, and clue cells—co-occur, they meet the clinical criteria for bacterial vaginosis (BV) based on Amsel’s criteria [5]. This menopausal microbiome shift increases susceptibility to recurrent infections and urogenital discomfort, highlighting the importance of understanding and managing these changes for women’s health [6].",
+    "Ravel et al. (2011) [7] introduced the concept of community state types (CSTs) based on 16S rDNA sequencing and analysis, classifying vaginal microbiota into five CSTs: CST-I (dominated by Lactobacillus crispatus), CST-II (Lactobacillus gasseri), CST-III (Lactobacillus iners), CST-IV (low Lactobacillus abundance with a mixture of anaerobes such as Gardnerella, Atopobium, and Prevotella), and CST-V (Lactobacillus jensenii). Among these, CST-IV is often associated with higher vaginal pH (pH > 4.5), biofilm formation, and bacterial vaginosis, whereas CST-I, II, and V, characterized by lower pH (<4.4), are considered protective. CST-III exhibits intermediate properties due to insufficient lactic acid production by Lactobacillus iners, making it highly dependent on host nutrients and susceptible to environmental changes, potentially leading to either protective or harmful effects on the host [7,8,9,10].",
+    "The aim of this study is to explore a clinically applicable approach to vaginal microbiome classification by incorporating both established community state types (CSTs) and identification of specific pathogenic taxa. Acknowledging the limitations of CST-based interpretation, we seek to enhance clinical relevance through pathogen-level insights. This study also examines associations between microbiota composition and host factors—including vaginal pH, menopausal status, metabolic indicators, and medication use—based on data from an underrepresented Asian population, with the goal of supporting future personalized strategies in women’s health."
+   ]
+  },
+  {
+   "title": "2.1. Inclusion and Exclusion Criteria",
+   "kind": "methods",
+   "paragraphs": [
+    "The inclusion criteria for this study were female participants with a history of sexual activity and aged 30 years or older. Exclusion criteria included being pregnant or having undergone total hysterectomy. Written informed consent was obtained from all participants before enrollment. Menopause is diagnosed clinically following 12 consecutive months of amenorrhoea, provided that the patient is not using hormonal contraception [11].",
+    "This study was approved by the Institutional Review Board of Cheng Hsin General Hospital (CHGH-IRB, Approval No. (803)109A-42, NCT 06897800) and conducted in accordance with the Declaration of Helsinki.",
+    "The research protocol was reviewed and approved, and informed consent was obtained from all participants. This study was conducted in the outpatient department of Family Medicine at Cheng Hsin General Hospital, Taipei, Taiwan. The recruitment period lasted from 8 September 2022, to 18 August 2023."
+   ]
+  },
+  {
+   "title": "2.2.1. Physiological Measurements, Questionnaire Collection, and Biochemical Tests",
+   "kind": "methods",
+   "paragraphs": [
+    "Upon providing consent, participants underwent physiological measurements, including height, weight, waist circumference, body fat percentage, and blood pressure. Background information was collected using a structured questionnaire covering past medical history, current medication use, smoking and alcohol consumption frequency, and menstrual status. Vaginal antibiotic users were defined as participants who had received vaginal antibiotic suppository treatments within the past three months, and oral antibiotic users were defined as participants who had completed a course of oral antibiotics lasting more than five days within the past month. Participants underwent urinalysis and blood biochemical tests after fasting for at least eight hours. Blood tests included complete blood count (CBC), fasting blood glucose, glycated hemoglobin (HbA1c), and vitamin D levels.",
+    "Whole blood samples were obtained via venipuncture and collected into EDTA-treated vacutainers. For hematological assessment, complete blood count (CBC) was analyzed using an automated hematology analyzer. Fasting blood glucose (FBG) and HbA1c were measured using a standard enzymatic method and high-performance liquid chromatography (HPLC), respectively. Total circulating 25(OH)D levels were measured using a radioimmunoassay."
+   ]
+  },
+  {
+   "title": "2.2.2. Vaginal Secretion Sample Collection and Analysis",
+   "kind": "methods",
+   "paragraphs": [
+    "With informed consent, vaginal secretion samples were collected. Sampling was performed during the non-menstrual phase to ensure consistency in microbial analysis, and participants were instructed to abstain from sexual intercourse, vaginal douching, bathing, or the use of vaginal medications for at least 24 h before the test. Sampling was performed by a qualified medical doctor in a private and enclosed space using disposable vaginal speculums, pH test strips, and specific microbial collection tubes.",
+    "Vaginal pH was measured using pH test strips (pH-Fix 4.5–10.0, Macherey-Nagel, Düren, Germany), which contain fixed indicators for accurate pH determination. A sterile swab was used to collect vaginal fluid from the lateral vaginal wall, and the sample was then transferred onto the test strip. The pH value was determined by comparing the color change on the strip to the manufacturer’s standardized color chart. The measurement was performed under consistent lighting conditions to ensure accuracy.",
+    "Vaginal samples were collected using a genital tract sampling kit (Cat. No. B-MCK-BT-V01, Biotools, Madrid, Spain). The kit contains a DNA preservation solution, which stabilizes microbial DNA during transport and storage. Following sample collection, swabs were immediately placed into the provided preservation solution and stored at ambient temperature or refrigerated at 4 °C until further processing. Samples were transported under controlled conditions to maintain sample integrity. All samples were processed within 5 days of collection to minimize potential DNA degradation. The study employed third-generation sequencing technology to comprehensively sequence the complete 16S ribosomal RNA genes. This method utilizes all variable regions for high-resolution microbial species analysis."
+   ]
+  },
+  {
+   "title": "2.3. Common Vaginal Pathogens Identification",
+   "kind": "methods",
+   "paragraphs": [
+    "A review of six studies published in the past six years identified 33 common vaginal pathogens [2,3,12,13,14,15]. Pathogens and their association with vaginal pH, menstrual status, and glycemic control medications are analyzed."
+   ]
+  },
+  {
+   "title": "2.4. Full-Length 16S rRNA Gene Sequencing and Library Preparation",
+   "kind": "methods",
+   "paragraphs": [
+    "The full-length 16S ribosomal RNA gene sequencing process involved several key steps. Genomic DNA was extracted using the QIAamp PowerFecal Pro DNA Kit (Cat. No. 51804, QIAGEN GmbH, Hilden, Germany). Vaginal swab samples were collected and preserved using DNA/RNA Shield™ Collection Tubes with Swab (1 mL fill, Cat. No. R1107, Lot No. 217591, Zymo Research Corp., Irvine, CA, USA).",
+    "The 16S rRNA gene was amplified using barcoded universal primers (27F + 1492R) through Polymerase Chain Reaction (PCR), according to protocols provided by Pacific Biosciences of California, Inc. (PacBio, Menlo Park, CA, USA). The amplified DNA underwent quality control and optional pooling, followed by SMRTbell library preparation using the Sequel II Binding Kit 3.1 (Cat. No. 101-685-400, PacBio). Libraries were purified with AMPure PB Beads (PacBio), subjected to DNA damage repair, and ligated with sequencing adapters.",
+    "Sequencing was performed on the Sequel IIe System (PacBio, Menlo Park, CA, USA) to generate high-accuracy, full-length 16S rRNA gene sequences."
+   ]
+  },
+  {
+   "title": "2.5.1. Sequence Processing",
+   "kind": "methods",
+   "paragraphs": [
+    "Raw sequences (polymerase reads) were quality controlled. Subreads overlapping more than three times were used to generate Consensus Reads (CCS), improving sequence accuracy to HiFi reads (Read Quality > 30) with a 99.9% accuracy rate."
+   ]
+  },
+  {
+   "title": "2.5.2. Microbiome Analysis",
+   "kind": "methods",
+   "paragraphs": [
+    "HiFi reads were processed with DADA2 for ASV generation, including quality control, dereplication, chimera removal, and sequence aggregation. ASVs were annotated against reference databases (e.g., NCBI, GreenGenes, SILVA, eHOMD, UNITE) to generate species information and an ASVs Table. Further analyses based on the ASVs Table included alpha diversity analysis, species composition analysis, correlation analysis, phylogenetic analysis, and statistical testing analysis."
+   ]
+  },
+  {
+   "title": "2.6. Statistics Analysis",
+   "kind": "methods",
+   "paragraphs": [
+    "The data analysis began with Community State Type (CST) classification, which was performed based on the microbial composition of each participant. Following CST classification, stratified analysis was conducted according to menopausal status to identify potential associations. Descriptive statistics were employed to summarize the data, including counts, percentages, medians, and interquartile ranges. For variable comparisons, continuous variables were analyzed using Kruskal–Wallis and Mann–Whitney U tests, while categorical variables were examined using Chi-squared or Fisher’s exact tests, with Bonferroni correction applied for post hoc comparisons. Diversity analysis included both alpha and beta diversity assessments. Alpha diversity was quantified using indices such as observed richness and Shannon diversity index, with boxplots used to visualize medians, dispersion, extremes, and outliers across groups. Statistical significance in alpha diversity comparisons was determined using the Wilcoxon Test."
+   ]
+  },
+  {
+   "title": "3.1. Distribution Among Community State Types (CST)",
+   "kind": "results",
+   "paragraphs": [
+    "We analyzed key variables, including age, body mass index (BMI), smoking status, diabetes mellitus (DM), and community state types (CSTs), to compare postmenopausal and premenopausal groups (Table 1).",
+    "The mean age of participants was 51 years (SD = 8), with postmenopausal individuals significantly older (58 years, SD = 6) than premenopausal ones (43 years, SD = 7). The overall BMI averaged 25 (SD = 4), with no significant differences between groups. Smoking status showed no significant variation (p = 0.298). However, diabetes prevalence was notably higher in postmenopausal participants (60%) compared to premenopausal individuals (10%).",
+    "CST distribution varied significantly between the two groups. Protective types of CST I + II were observed in 20% of participants, with a slightly higher prevalence in postmenopausal (25%) than in premenopausal (15%) individuals. CST III, associated with neutral bacteria, was predominantly found in premenopausal individuals (45%) but was uncommon in the postmenopausal group (5%). In contrast, CST IV, characterized by harmful bacterial communities, was more prevalent among postmenopausal participants (70%) than in premenopausal individuals (40%). Chi-square analysis revealed a significant association between CST distribution and menopausal status (χ2 = 8.536, p = 0.014) (Table 1).",
+    "To further explore the clinical implications of CST differences, we compared vaginal symptoms and the presence of aerobic vaginitis across menopausal groups. As Table S1 summarizes the comparison of vaginal symptoms over three months between postmenopausal and premenopausal women, categorized by CST types and pathogen status. Meanwhile, no statistically significant associations were observed between CSTs and symptom presence (p > 0.05).",
+    "Furthermore, Table S2 details the comparison of aerobic vaginitis (AV) presence across CSTs. Although the overall association was not statistically significant (p = 0.319), CST IV was more frequently observed among individuals with AV, particularly in the postmenopausal group. These findings suggest a potential link between vaginal dysbiosis and clinical conditions such as AV, especially in postmenopausal women.",
+    "Microbial classification identified seven samples belonging to CST I, characterized by Lactobacillus crispatus, and one sample classified as CST II, dominated by Lactobacillus gasseri. Ten samples were assigned to CST III, dominated by Lactobacillus iners, while 22 samples were categorized as CST IV due to a depletion or low abundance of Lactobacillus species (Table 2). We also examined the relationship between CSTs and the presence of pathogenic bacteria (Table S3). Symptomatic participants with CST IV were more likely to harbor pathogens such as Group B Streptococcus and Staphylococcus aureus. Conversely, CST IV was also observed among asymptomatic individuals without detectable pathogens (Table S4), indicating that a dysbiotic microbiome may exist even in the absence of overt infection.",
+    "Figure 1A illustrates the distribution of Lactobacillus species across premenopausal and postmenopausal groups. In five samples, both Lactobacillus crispatus and Lactobacillus iners were present simultaneously; these were classified as CST I, III, or IV depending on their relative abundance (Table 2). Samples lacking dominance by L. crispatus, L. gasseri, or L. iners, where their combined relative abundance was less than 10%, were designated as CST IV.",
+    "Collectively, these findings highlight a significant shift in vaginal microbiota composition with menopausal status, particularly the increased prevalence of CST IV in postmenopausal women, which may be associated with a greater risk of vaginal dysbiosis and clinical symptoms such as aerobic vaginitis."
+   ]
+  },
+  {
+   "title": "3.2.1. Vaginal pH",
+   "kind": "results",
+   "paragraphs": [
+    "Vaginal pH levels exhibited a statistically significant difference among CST groups, as determined by a Kruskal–Wallis non-parametric one-way ANOVA (p = 0.026). Subsequent post hoc analysis using the Bonferroni correction revealed that the vaginal pH in CST IV was significantly higher than that in CST III. CST IV exhibited the highest median vaginal pH (6.00), significantly higher than CST III (4.50), and CST I + II (5.00) as determined by post hoc analysis (Table 3)."
+   ]
+  },
+  {
+   "title": "3.2.2. Menopausal Status",
+   "kind": "results",
+   "paragraphs": [
+    "The proportion of postmenopausal participants varied significantly among CST groups (p = 0.014). CST IV had the highest prevalence of postmenopausal participants (70%), followed by CST I + II (50%), and CST III (10%) (Table 3)."
+   ]
+  },
+  {
+   "title": "3.2.3. Use of Oral Antibiotics",
+   "kind": "results",
+   "paragraphs": [
+    "Oral antibiotic use was significantly associated with CST classification (p = 0.048). Participants who used antibiotics had lower proportions of both protective (CST I + II) and harmful bacteria (CST IV), while exhibiting a markedly higher proportion of neutral bacteria (CST III) (75%). Other variables, including BMI, glucose levels, HbA1c, body fat percentages, vitamin D level, and the use of SGLT2 inhibitors, did not exhibit statistically significant differences across CST groups (all p > 0.05) (Table 3).",
+    "Overall, the findings indicate significant associations between vaginal pH, menopausal status, antibiotic use, and CST classification. CST IV was associated with higher vaginal pH, a higher prevalence of postmenopausal individuals, and a lower proportion of protective bacteria in those using oral antibiotics."
+   ]
+  },
+  {
+   "title": "3.3. Postmenopausal Group and Premenopausal Group",
+   "kind": "results",
+   "paragraphs": [
+    "Table 4 presents the univariate analysis of factors influencing CST classification within the postmenopausal group. The results indicate that postmenopausal women using SGLT2 inhibitors had a higher proportion of protective bacteria (CST I + II) compared to harmful bacteria (CST IV) (57.14% vs. 42.68%). In contrast, among postmenopausal women not using SGLT2 inhibitors, the proportion of protective bacteria was markedly lower (8.33%), while harmful bacteria predominated (91.67%). The postmenopausal group exhibited significantly higher bacterial richness and diversity, as measured by observed richness indices (Wilcoxon, p = 0.0092) and Shannon diversity index (Wilcoxon, p = 0.019), both of which reached statistical significance (Figure 2A,B).",
+    "In contrast, Table 5 summarizes the univariate analysis of CST classification within the premenopausal group, where no significant associations were observed."
+   ]
+  },
+  {
+   "title": "3.4. Pathogens and Their Association with Vaginal pH, Menstrual Status, and Glycemic Control Medications",
+   "kind": "results",
+   "paragraphs": [
+    "A total of 26 pathogens were identified among 40 participants (Table 6). The analysis focused on the presence and abundance of these pathogens in relation to vaginal pH, menopausal status, and the use of SGLT2 inhibitors for glycemic control.",
+    "Regarding vaginal pH levels, five pathogens Bacteroides, Fusobacterium, Porphyromonas, Prevotella, and Streptococcus exhibited a significant positive correlation between their presence and abundance with vaginal pH. In the postmenopausal group, Ureaplasma showed a significant negative correlation with vaginal pH presence. In the premenopausal group, three pathogens (Actinomyces, Fusobacterium, and Streptococcus) were positively associated with vaginal pH.",
+    "When comparing menstrual status, three pathogens Dialister, Porphyromonas, and Peptoniphilus demonstrated significantly higher presence or abundance in the postmenopausal group compared to the premenopausal group. However, no significant associations were identified between specific pathogens and the use of SGLT2 inhibitors, indicating that glycemic control via this medication did not influence pathogen profiles in the study population."
+   ]
+  },
+  {
+   "title": "4. Discussion",
+   "kind": "discussion",
+   "paragraphs": [
+    "Our study first revealed that among Asian women, CST III was the most prevalent vaginal microbiome type during the reproductive stage, whereas CST IV predominated in the menopausal stage. A 2011 report comparing CST distribution across different ethnic groups among reproductive-age women [7] found that CST III was more common in Asians, CST I predominated among Caucasians, and CST IV was more prevalent in Black populations. Furthermore, a 2014 study focusing on a predominantly Caucasian population (80%) reported an increase in CST III prevalence during the peri-menopause stage [16]. These findings underscore the significant role of menopausal status in shaping vaginal microbial profiles. Our study extends these findings by providing specific data on postmenopausal Asian women, demonstrating a notable rise in CST IV prevalence to 70% in this group compared to 40% among reproductive-age women, a statistically significant difference.",
+    "The findings of this study revealed that vaginal pH, menopausal status, and oral antibiotic use significantly influence the distribution of vaginal bacterial Community State Types (CSTs). These findings underscore the intricate interplay between host physiological factors and external interventions in determining CST dynamics and highlight the need for targeted approaches in managing vaginal health across different life stages."
+   ]
+  },
+  {
+   "title": "4.1. Vaginal pH Level",
+   "kind": "discussion",
+   "paragraphs": [
+    "The human vaginal microbiota is dominated by Lactobacillus, which maintains a protective acidic environment, with pH lowest in the vagina and increasing toward the uterus [17]. The human vagina is uniquely dominated by Lactobacillus (>70%) and maintains a lower pH (~4.5) than other mammals, where Lactobacillus levels are typically <1% and vaginal pH ranges from 5.4 to 7.8 [18].",
+    "In this study, we found that the average vaginal pH among participants ranged from 4.5 to 6.0. Although higher than some reported values in the literature, this is consistent with other findings, with the highest pH values observed in CST-IV groups [8]. A 2022 study reported that CST-IV microbiota are characterized by a pH above 4.5, which promotes the formation of polymicrobial biofilms and increases susceptibility to bacterial vaginosis. In contrast, CST-I and CST-II types, with pH values below 4.4, provide protective effects for the vaginal environment. CST-III, dominated by Lactobacillus iners, represents an intermediate profile. However, Lactobacillus iners, with its insufficient lactate production and reliance on host nutrients, is highly sensitive to environmental changes and may neither protect the host nor potentially contribute to host harm."
+   ]
+  },
+  {
+   "title": "4.2. Menopausal Status",
+   "kind": "discussion",
+   "paragraphs": [
+    "A distinct bacterial community state (CST IV), characterized by a low relative abundance of Lactobacillus, has been associated with vulvovaginal atrophy (VVA) [16]. A 2014 study, predominantly involving a Caucasian population (over 75%), similarly reported a higher prevalence of CST IV among postmenopausal women and those with vaginal atrophy. Post menopause induces several changes in the vaginal environment, including reductions in estrogen and glycogen levels, thinning of the vaginal epithelium to a pre-pubertal-like state, a shift in vaginal microbiota from Lactobacilli dominance to increased microbial diversity (CST IV), elevated vaginal pH, diminished secretions, dryness, and dyspareunia. Our study contributes novel data on Asian women, corroborating the pivotal role of menopause in altering vaginal microbiota. Notably, we observed an exceptionally high prevalence of CST IV, reaching 70%, in this population. This highlights the consistent influence of menopause on vaginal microbiota composition across diverse ethnic groups."
+   ]
+  },
+  {
+   "title": "4.3. Antibiotics",
+   "kind": "discussion",
+   "paragraphs": [
+    "A 2015 study found that antibiotics rapidly cleared anaerobes within 3 days; Lactobacillus jensenii regrew fastest, Lactobacillus iners increased gradually, while Lactobacillus crispatus remained stable [19]. Although our cross-sectional study did not involve comparisons before and after treatment, our findings align with this report. Within our antibiotic-treated group, Lactobacillus iners (CST III) constituted up to 75% of the microbiota, as CST IV accounted for 25%. In contrast, the proportion of pathogenic bacteria in the group not receiving oral antibiotic treatment was 58.3%. This observation supports the hypothesis that antibiotics treatment results in a transient microbial vacuum, which is subsequently filled by the growth of Lactobacillus iners."
+   ]
+  },
+  {
+   "title": "4.4. Diabetes Mellitus",
+   "kind": "discussion",
+   "paragraphs": [
+    "In our study, no significant association was observed between Type 2 diabetes status, HbA1c levels, and the CST classification of vaginal microbiota in both postmenopausal and premenopausal women. To date, limited research has explored the relationship between glucose metabolism and vaginal microbiota, with most studies focusing on gestational diabetes mellitus (GDM) in reproductive-age women [20].",
+    "Studies on type 2 diabetes and vaginal microbiota remain limited, often using smear or culture methods. Recent data show reduced Lactobacillus iners and higher prevalence of Candida, Leptothrix, and Gardnerella in diabetic women [21,22].",
+    "It is worth noting that SGLT2 inhibitors (sodium–glucose cotransporter 2 inhibitors), a class of glucose-lowering medications, work by promoting glucose excretion through the kidneys and urine. This mechanism is often associated with side effects such as discomfort in the genitourinary tract due to increased sugar concentrations in these regions. A 2023 study using data from China’s FDA Adverse Event Reporting System (FAERS) highlighted a significant association between SGLT2 inhibitors and urinary/genital mucosal infections [21]. Additionally, a report from Japan found that SGLT2 treatment increased the culture-colony counts of pathogenic bacteria [22]. However, this study did not provide information on changes in lactobacilli populations.",
+    "In our study, postmenopausal women using SGLT2 inhibitors exhibited a significantly higher prevalence of beneficial vaginal microbiota classified as CST I + II compared to non-users. While the current evidence does not fully explain this association, one plausible hypothesis is that elevated sugar levels in the vaginal environment may serve as an energy source for beneficial lactobacilli growth. This potential link between sugar and lactobacilli also aligns with findings in dental caries research. Studies have shown that the colonization of lactobacilli in three human sites—carious lesions, the stomach, and the vagina—requires key conditions, including a retentive anaerobic environment, low pH, and an ample supply of carbohydrates [23]."
+   ]
+  },
+  {
+   "title": "4.5. Vitamin D",
+   "kind": "discussion",
+   "paragraphs": [
+    "In recent years, vitamin D has been extensively studied across various medical fields. However, research specifically focusing on the relationship between vitamin D and vaginal health has primarily concentrated on its association with HPV infection and menopausal vaginal atrophy [24,25,26]. More recently, meta-analyses have highlighted a potential link between vitamin D deficiency and bacterial vaginosis (BV) [27,28]. Despite these associations, there is currently no conclusive evidence supporting the efficacy of vitamin D supplementation in the treatment of BV. A randomized controlled trial (RCT) conducted by Holm in 2017 investigated the adjunctive use of oral metronidazole combined with nine doses of 50,000 IU of cholecalciferol over 24 weeks, yet no significant improvement was observed compared to the control group [29].",
+    "Although the clinical efficacy of vitamin D in vaginal infections remains unconfirmed, emerging research has begun to explore its potential role in shaping the vaginal microbiome, aiming to better understand the underlying physiological and pathological mechanisms. A 2019 study demonstrated a correlation between specific vaginal microbial taxa and serum 25(OH)D concentrations, revealing a negative correlation between Megasphaera abundance and serum 25(OH)D levels in African-American women (p = 0.0187). Conversely, in the European control group, serum 25(OH)D levels were positively correlated with the abundance of Lactobacillus crispatus [30].",
+    "In contrast to these findings, our study did not identify a significant association between vitamin D concentration and vaginal microbial community state types (CSTs). These results suggest that while vitamin D may play a role in vaginal microbiome composition, its influence may be modulated by host-specific factors such as ethnicity, genetic predisposition, and environmental influences. Further investigations, particularly well-designed longitudinal and interventional studies, are warranted to clarify the causal relationship between vitamin D levels and vaginal microbiome dynamics, as well as to explore potential therapeutic implications."
+   ]
+  },
+  {
+   "title": "4.6. Diversity in Vaginal Microbiota",
+   "kind": "discussion",
+   "paragraphs": [
+    "As summarized in previous research [31], our study similarly found that vaginal microbiota diversity increased in postmenopausal women, as confirmed through Shannon and Simpson index analyses. This was accompanied by higher microbial richness. Increased vaginal microbial diversity has also been observed in patients with bacterial vaginosis [32] and in those experiencing vaginal dryness [33], further supporting the link between altered vaginal conditions and shifts in microbial composition."
+   ]
+  },
+  {
+   "title": "4.7. Specific Pathogens",
+   "kind": "discussion",
+   "paragraphs": [
+    "Based on a synthesis of six recent studies (2019–2022) [2,3,12,13,14,15], 33 common vaginal pathogenic bacterial genera were identified. From these, 26 genera present in our study population were selected for further analysis, comparing their associations with vaginal pH, menstrual status, and diabetes medication use. Our findings revealed five genera Bacteroides, Fusobacterium, Porphyromonas, Prevotella, Streptococcus with a significant positive correlation with vaginal pH, indicating that higher vaginal alkalinity increases the likelihood of detecting these bacteria. Additionally, in premenopausal women, the associations between vaginal pH and Fusobacterium, Actinomyces, and Streptococcus was more pronounced. Regarding menstrual status, our analysis showed that three genera—Dialister, Porphyromonas, Peptoniphilus—were significantly more abundant in postmenopausal women. These findings align closely with a 2014 report, which identified Peptoniphilus, Prevotella, and Streptococcus as prevalent genera in postmenopausal women experiencing vaginal atrophy (VVA) symptoms, demonstrating a high degree of consistency between our results and previous studies.",
+    "These findings emphasize the complex interplay between vaginal pathogens and environmental factors such as vaginal pH, menstrual status, and pharmacological interventions. Vaginal pH appears to play a significant role in shaping the presence and abundance of specific pathogens, with notable differences observed between postmenopausal and premenopausal participants. In contrast, the use of SGLT2 inhibitors was not associated with significant changes in pathogen profiles, suggesting that glycemic control medications may have limited influence on vaginal microbiota in this study. This analysis contributes to a better understanding of how environmental and physiological factors influence the distribution of vaginal pathogens, providing insights into future research and potential clinical interventions.",
+    "This study is limited by its small sample size, which may affect the generalizability of the findings. Moreover, it examines only the bacterial component of the vaginal microbiome through 16S rRNA sequencing, without assessing fungal or protozoal communities, thereby narrowing the scope of microbial evaluation. Additionally, while follicle-stimulating hormone and estrogen level measurements are not essential for defining menopausal status, their inclusion could provide stronger evidence or offer additional perspectives. The lack of detailed documentation on antibiotic types, indications, and probiotic use also limits analysis of their impact on vaginal microbiota composition. The cross-sectional design further limits the ability to evaluate causal relationships or temporal dynamics, highlighting the need for future research to adopt a cohort study design for longitudinal analysis. Although this study utilized TGS 16S technology, enabling analysis down to the species level, the current sample size is more suited for statistical analysis at the genus level. With an increased sample size in future studies, analysis at the species level can be conducted to offer more detailed and refined insights."
+   ]
+  },
+  {
+   "title": "5. Conclusions",
+   "kind": "conclusion",
+   "paragraphs": [
+    "This study explored the dynamics of the vaginal microbiome across various physiological, metabolic, and clinical contexts, highlighting notable associations between vaginal pH levels, bacterial community state types (CSTs), and influencing factors.",
+    "Significant associations were observed between vaginal pH, menopausal status, and CST distribution. Harmful type bacteria CST IV, linked to higher pH and reduced Lactobacillus, was predominant in postmenopausal women versus premenopausal women, while neutral type CST III dominated in premenopausal women. Vaginal pH positively correlated with Bacteroides, Fusobacterium, Porphyromonas, Prevotella, and Streptococcus. Postmenopausal women had higher levels of Dialister, Porphyromonas, and Peptoniphilus. Oral antibiotics increased neutral type CST III but reduced protective type CST I + II and harmful type CST IV. SGLT2 inhibitors raised protective type CST I + II in postmenopausal women without altering pathogen profiles.",
+    "While these findings suggest potential patterns linking host factors and microbiome composition, the small sample size—particularly in subgroup analyses—warrants caution in interpretation. Future studies with larger cohorts are needed to validate these preliminary observations and better elucidate the clinical relevance of such associations. Overall, this study provides initial insight into the complex interplay between microbial composition and host physiology, contributing to our understanding of the vaginal microbiome’s potential role in health and disease."
+   ]
+  },
+  {
+   "title": "Institutional Review Board Statement",
+   "kind": "other",
+   "paragraphs": [
+    "Ethical approval was obtained from the Cheng Hsin General Hospital Institutional Review Board (CHGH-IRB), and informed written consent was completed by all participants (code: (803)109A-42, date: 8 June 2022)."
+   ]
+  }
+ ]
+}

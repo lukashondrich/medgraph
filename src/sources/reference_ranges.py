@@ -17,6 +17,8 @@ from src.data.profile import UserProfile
 from src.knowledge_pipeline.study_schemas import CORPUS_DIR, StudyRecord
 from src.models.evidence import SourceItem
 
+from .deeplinks import quote_links
+
 REFERENCE_RANGES_PATH = CORPUS_DIR / "reference_ranges.yaml"
 
 
@@ -78,6 +80,7 @@ def lookup_reference_ranges(
             cohort_summary=record.cohort.description,
             countries=record.cohort.countries,
             passage=row.quote,
+            quotes=[quote_links(record, row.quote)],
             statement=row.statement,
             url=record.url,
             relevance=1.0,

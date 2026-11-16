@@ -89,6 +89,24 @@ def ancestry_label(key: str) -> str:
     return _ANCESTRY_LABELS.get(key, key.replace("_", " ").title())
 
 
+def askable_topics(profile: UserProfile) -> list[str]:
+    """Things worth asking this woman about because they can shift a reading.
+
+    Only what her profile does not already answer and what can apply to her:
+    no question about a period for someone who is pregnant or past menopause.
+    """
+    topics = ["sex in the last day or two", "anything used in the vagina recently (wash, lubricant, cream)"]
+    cycling = (
+        profile.menopausal_status is not MenopausalStatus.POSTMENOPAUSAL
+        and not profile.pregnancy.is_pregnant
+    )
+    if cycling:
+        topics.append("bleeding or a period at the time of the test")
+    if not profile.symptoms:
+        topics.append("any symptoms such as unusual discharge, odour, itching or burning")
+    return topics
+
+
 def build_profile_summary(profile: UserProfile, reading: TestReading | None = None) -> str:
     """Format the profile (and reading) as a context block for prompts."""
     lines = [

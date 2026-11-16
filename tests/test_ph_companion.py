@@ -915,3 +915,205 @@ class TestApi:
             "message": "", "persona_id": "priya", "reading": {"ph": 40}, "turn_kind": "new_reading",
         })
         assert bad.status_code == 422
+
+
+# ── Full text, sentence links and the reader page ─────────────────────────
+
+from src.data.profile import askable_topics  # noqa: E402
+from src.knowledge_pipeline.fulltext import FullText, Section, load_fulltext, parse_jats  # noqa: E402
+from src.knowledge_pipeline.study_schemas import all_passages, fulltext_passages  # noqa: E402
+from src.reader import render_paper  # noqa: E402
+from src.sources.deeplinks import document_text, make_anchors, pmc_url, quote_links  # noqa: E402
+
+JATS = """<article><front/><body>
+<p>A loose opening paragraph without any section heading at all.</p>
+<sec><title>Introduction</title><p>Earlier work by others found many things [<xref>1</xref>].</p></sec>
+<sec><title>Materials and Methods</title><p>We sampled women. <table-wrap><table><tr><td>cell</td></tr></table></table-wrap></p></sec>
+<sec><title>Results</title><p>Overall findings were clear.</p>
+  <sec><title>Vaginal pH</title><p>The mean pH was <italic>4.2</italic> in the first group. It was 5.0 in the second group of women.</p></sec>
+</sec>
+<sec><title>Funding Statement</title><p>Paid for by a grant.</p></sec>
+<sec sec-type="ref-list"><title>References</title><sec><p>1. Someone.</p></sec></sec>
+</body></article>"""
+
+
+class TestFullText:
+    def test_sections_are_parsed_and_classified(self):
+        ft = parse_jats(JATS, "s", "PMC1")
+        assert [(s.title, s.kind) for s in ft.sections] == [
+            ("Text", "results"), ("Introduction", "introduction"),
+            ("Materials and Methods", "methods"), ("Results", "results"), ("Vaginal pH", "results"),
+        ]
+        assert ft.sections[-1].paragraphs == [
+            "The mean pH was 4.2 in the first group. It was 5.0 in the second group of women."
+        ]
+        assert ft.sections[2].paragraphs == ["We sampled women."]  # the table is left out
+
+    def test_only_findings_sections_become_passages(self):
+        record = make_record("s")
+        passages = fulltext_passages(record, parse_jats(JATS, "s", "PMC1"))
+        assert {p.section for p in passages} == {"Text", "Vaginal pH"}  # short "Results" paragraph dropped
+        assert all(p.source == "fulltext" and p.passage_id.startswith("s#f") for p in passages)
+        assert not any("Earlier work" in p.text or "sampled" in p.text for p in passages)
+
+    def test_sentences_that_cite_other_work_are_not_citable(self):
+        ft = FullText(study_id="s", pmcid="PMC1", sections=[Section(title="Discussion", kind="discussion", paragraphs=[
+            "A low vaginal pH is maintained by lactobacilli in healthy women of reproductive age [8]. Others agree.",
+            "Earlier reports found the same pattern in a much larger group (Smith et al., 2010). So did we.",
+            "In our study the mean pH was clearly higher in the second group of women. This held after adjustment.",
+        ])])
+        passages = fulltext_passages(make_record("s"), ft)
+        assert [p.text for p in passages] == [
+            "In our study the mean pH was clearly higher in the second group of women. This held after adjustment."
+        ]
+
+    def test_passages_are_exact_substrings_even_with_unusual_spaces(self):
+        paragraph = ("In fact, as Fig.\u00a01 shows, most measurements stabilized within minutes. "
+                     "The second sentence follows after it.\u2009A third and longer sentence ends the paragraph right here.")
+        ft = FullText(study_id="s", pmcid="PMC1", sections=[Section(title="Results", kind="results", paragraphs=[paragraph])])
+        passages = fulltext_passages(make_record("s"), ft)
+        assert len(passages) == 2 and all(p.text in paragraph for p in passages)
+        assert passages[0].text.startswith("In fact, as Fig.\u00a01 shows")  # no split after "Fig."
+
+    def test_reviews_without_results_sections_use_their_body(self):
+        ft = FullText(study_id="s", pmcid="PMC1", sections=[
+            Section(title="pH and the vaginal ecosystem", kind="other",
+                    paragraphs=["This review section says several useful things about vaginal pH values."]),
+        ])
+        assert len(fulltext_passages(make_record("s"), ft)) == 1
+
+    def test_shipped_full_texts_belong_to_open_access_records(self):
+        records = load_records()
+        with_text = [r for r in records.values() if load_fulltext(r.study_id)]
+        assert len(with_text) >= 20
+        assert all(r.pmcid and r.open_access for r in with_text)
+        r = with_text[0]
+        ids = [p.passage_id for p in all_passages(r)]
+        assert len(ids) == len(set(ids)) and any("#f" in i for i in ids) and any("#p" in i for i in ids)
+
+
+class TestSentenceLinks:
+    DOC = ("Title of the paper. Methods: We sampled forty women in two clinics. Results: The mean vaginal pH "
+           "was 4.2 ± 0.3 in the first group. The mean vaginal pH was 5.0 in the second group (n = 20). "
+           "Conclusion: Group differences were large.")
+
+    def test_anchors_are_unique_whole_words(self):
+        start, end = make_anchors("The mean vaginal pH was 5.0 in the second group (n = 20).", self.DOC)
+        assert self.DOC.count(start) == 1 and start.startswith("The mean vaginal pH was 5.0")
+        assert end[0].isalnum() and end[-1].isalnum() and end.endswith("20")
+
+    def test_abstract_heading_is_never_part_of_an_anchor(self):
+        start, end = make_anchors(
+            "Methods: We sampled forty women in two clinics. Results: The mean vaginal pH was 4.2 ± 0.3 in the first group.",
+            self.DOC,
+        )
+        assert start.startswith("We sampled forty women") and "Results" not in end and "Methods" not in start
+
+    def test_symbols_are_avoided_when_a_plain_anchor_exists(self):
+        start, end = make_anchors("Results: The mean vaginal pH was 4.2 ± 0.3 in the first group.", self.DOC)
+        assert end.isascii() and end.endswith("first group")
+
+    def test_text_that_is_not_in_the_document_gets_no_anchor(self):
+        assert make_anchors("This sentence does not occur anywhere in the paper.", self.DOC) is None
+        assert make_anchors("Too short.", self.DOC) is None
+
+    def test_pmc_link_only_for_papers_on_pmc(self):
+        text = "First sentence about pH. Second sentence about bacteria."
+        on_pmc = make_record("a", pmcid="PMC42")
+        url = pmc_url(on_pmc, text)
+        assert url.startswith("https://pmc.ncbi.nlm.nih.gov/articles/PMC42/#:~:text=First%20sentence")
+        assert "-" not in url.split("#:~:text=")[1]  # dashes are syntax and must be escaped
+        assert pmc_url(make_record("b"), text) is None
+
+    def test_every_quote_can_be_opened_somewhere(self):
+        record = make_record("c")
+        links = quote_links(record, "Second sentence about bacteria. Third one.")
+        assert links["pmc_url"] is None and links["reader_url"].startswith("/paper/c?hl=Second%20sentence")
+
+    def test_most_shipped_passages_on_pmc_get_a_link(self):
+        records = load_records()
+        total = linked = 0
+        for record in records.values():
+            if not record.pmcid:
+                continue
+            fulltext = load_fulltext(record.study_id)
+            document = document_text(record, fulltext)
+            for p in all_passages(record):
+                total += 1
+                linked += make_anchors(p.text, document) is not None
+        assert total > 800 and linked / total > 0.9
+
+    def test_lane_items_carry_quotes_with_links(self):
+        records = {"s": make_record("s", pmcid="PMC7", cohort={"ancestry": ["indian"]})}
+        candidate = ScoredPassage(passage_id="s#p1", study_id="s", relevance=0.8, section="Abstract",
+                                  text="First sentence about pH. Second sentence about bacteria.")
+        item = select_lanes([candidate], records, make_profile()).matched[0]
+        assert item.quotes[0]["text"] == candidate.text
+        assert item.quotes[0]["pmc_url"].startswith("https://pmc.ncbi.nlm.nih.gov/articles/PMC7/")
+        citation = check_citations("Claim [S1].", {"S1": item}).citations[0]
+        assert citation.quotes == item.quotes
+
+
+class TestReader:
+    def test_highlights_the_passage_in_the_abstract(self):
+        page = render_paper(make_record("s"), None, "Second sentence about bacteria.")
+        assert '<mark id="cited">Second sentence about bacteria.</mark>' in page
+        assert "the abstract of this paper" in page and "could not be located" not in page
+
+    def test_highlights_a_passage_in_the_full_text_once(self):
+        ft = parse_jats(JATS, "s", "PMC1")
+        page = render_paper(make_record("s", pmcid="PMC1"), ft, "It was 5.0 in the second group of women.")
+        assert page.count('<mark id="cited">') == 1
+        assert "<h2>Vaginal pH</h2>" in page and "<h2>Materials and Methods</h2>" in page
+        assert "https://pmc.ncbi.nlm.nih.gov/articles/PMC1/" in page
+
+    def test_unknown_passage_is_reported_and_text_is_escaped(self):
+        record = make_record("s", title="pH <script>alert(1)</script>")
+        page = render_paper(record, None, "Not in the text at all.")
+        assert "could not be located" in page and "<mark" not in page
+        assert "<script>alert(1)</script>" not in page
+
+    def test_reader_endpoint(self):
+        from src.api import app
+        client = TestClient(app)
+        record = next(iter(load_records().values()))
+        first = split_passages(record)[0].text
+        ok = client.get(f"/paper/{record.study_id}", params={"hl": first})
+        assert ok.status_code == 200 and '<mark id="cited">' in ok.text
+        assert client.get("/paper/pmid-0").status_code == 404
+
+
+class TestLinkCheckPage:
+    def test_lists_sample_links_for_every_paper_on_pmc(self):
+        from src.api import app
+        from src.sources.deeplinks import sample_links
+
+        page = TestClient(app).get("/check")
+        assert page.status_code == 200
+        on_pmc = [r for r in load_records().values() if r.pmcid]
+        assert all(r.pmcid in page.text for r in on_pmc)
+        assert page.text.count('class="check-row"') == sum(len(sample_links(r)) for r in on_pmc)
+
+    def test_samples_are_spread_through_the_paper(self):
+        from src.sources.deeplinks import sample_links
+
+        record = next(r for r in load_records().values() if load_fulltext(r.study_id))
+        links = sample_links(record)
+        assert len(links) == 3 and len({l["passage_id"] for l in links}) == 3
+        assert links[0]["section"] == "Abstract" and links[-1]["section"] != "Abstract"
+        assert all(l["pmc_url"].startswith("https://pmc.ncbi.nlm.nih.gov/") for l in links)
+
+
+class TestAskableTopics:
+    def test_no_period_question_for_pregnant_or_postmenopausal_women(self):
+        assert any("period" in t for t in askable_topics(load_persona("priya")))
+        assert not any("period" in t for t in askable_topics(load_persona("amara")))
+        assert not any("period" in t for t in askable_topics(load_persona("anna")))
+
+    def test_symptoms_are_not_asked_about_when_already_known(self):
+        priya = load_persona("priya").model_copy(update={"symptoms": ["itching"]})
+        assert not any("symptoms" in t for t in askable_topics(priya))
+
+    def test_topics_reach_the_writer_prompt(self):
+        prompt = build_prompt({}, askable=askable_topics(load_persona("amara")))
+        assert "You may ask about: sex in the last day or two" in prompt and "period" not in prompt.split("You may ask about")[1]
