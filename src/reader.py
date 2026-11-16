@@ -119,9 +119,11 @@ def render_check_page(papers: list[tuple[StudyRecord, list[dict]]]) -> str:
     rows = []
     for record, links in papers:
         kind = "full text" if any(l["section"] != "Abstract" for l in links) else "abstract only"
+        where = links[0]["where"]
+        ident = record.pmcid if where == "PubMed Central" else f"PubMed {record.pmid}"
         rows.append(
             f'<section class="check-paper"><h2>{html.escape(record.authors)} {record.year} '
-            f'<span class="check-kind">{html.escape(record.pmcid or "")} · {kind}</span></h2>'
+            f'<span class="check-kind">{html.escape(ident or "")} · {kind}</span></h2>'
             f'<p class="check-title">{html.escape(record.title)}</p>'
         )
         for link in links:
@@ -131,7 +133,7 @@ def render_check_page(papers: list[tuple[StudyRecord, list[dict]]]) -> str:
                 f'<p class="check-section">{html.escape(link["section"])}</p>'
                 f'<blockquote class="cite-quote">{html.escape(link["text"])}</blockquote>'
                 '<div class="check-actions">'
-                f'<a class="cite-open cite-open--primary" href="{html.escape(link["pmc_url"])}" target="_blank" rel="noopener noreferrer">Open on PubMed Central &#8599;</a>'
+                f'<a class="cite-open cite-open--primary" href="{html.escape(link["url"])}" target="_blank" rel="noopener noreferrer">Open on {html.escape(link["where"])} &#8599;</a>'
                 f'<a class="cite-open" href="{html.escape(link["reader_url"])}" target="_blank" rel="noopener noreferrer">Reader &#8599;</a>'
                 '<span class="check-verdict" role="group" aria-label="Result">'
                 '<button type="button" data-verdict="ok">Highlighted</button>'
@@ -158,10 +160,10 @@ def render_check_page(papers: list[tuple[StudyRecord, list[dict]]]) -> str:
   <main class="reader-page">
     <p class="reader-brand">pH <span class="header-accent">Companion</span> <span class="header-tag">Link check</span></p>
     <h1>Do the links open the paper at the cited sentence?</h1>
-    <p class="reader-note">{total} links across {len(papers)} papers on PubMed Central. Click
-      <strong>Open on PubMed Central</strong>: the article should open in a new tab, scroll to the quoted text
-      and highlight it. Then mark what happened. Results are kept in this browser.
-      If PubMed Central shows a "checking your browser" page, wait for it to pass and click the link again.</p>
+    <p class="reader-note">{total} links across {len(papers)} papers. Papers on PubMed Central open there;
+      the others open at their abstract on PubMed. Click the blue button: the page should open in a new tab,
+      scroll to the quoted text and highlight it. Then mark what happened. Results are kept in this browser.
+      If the site shows a "checking your browser" page, wait for it to pass and click the link again.</p>
     <p class="check-summary" id="summary" role="status"></p>
     <p><button type="button" class="cite-open" id="copy">Copy results</button>
        <button type="button" class="cite-open" id="reset">Clear results</button></p>

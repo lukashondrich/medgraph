@@ -1,6 +1,6 @@
 """Links that open a paper at the cited sentence.
 
-Two targets:
+Three targets:
 
 - **PubMed Central.** A "scroll to text" link carries the first and last
   words of the passage:
@@ -10,6 +10,9 @@ Two targets:
   real click, so anchors are chosen conservatively from the text we hold for
   the paper (the official full text when it is open access, otherwise the
   abstract).
+- **PubMed.** The same kind of link into the abstract on the paper's PubMed
+  page, for quotes that come from the abstract. This covers papers that are
+  not on PubMed Central.
 - **The reader page of this app** (``/paper/<study id>``), which shows the
   text we hold and highlights the passage itself. It works for every paper
   and is the fallback when no safe PubMed Central link can be built.
@@ -29,6 +32,7 @@ from src.knowledge_pipeline.fulltext import FullText, load_fulltext
 from src.knowledge_pipeline.study_schemas import StudyRecord
 
 PMC_ARTICLE_URL = "https://pmc.ncbi.nlm.nih.gov/articles/{pmcid}/"
+PUBMED_URL = "https://pubmed.ncbi.nlm.nih.gov/{pmid}/"
 MIN_START_WORDS = 4
 MIN_END_WORDS = 2
 MAX_ANCHOR_WORDS = 14
@@ -139,6 +143,20 @@ def pmc_url(record: StudyRecord, passage: str, fulltext: Optional[FullText] = No
     return PMC_ARTICLE_URL.format(pmcid=record.pmcid) + "#:~:text=" + _encode(start) + "," + _encode(end)
 
 
+def pubmed_url(record: StudyRecord, passage: str) -> Optional[str]:
+    """Link to the passage in the abstract shown on the paper's PubMed page.
+
+    Only for text that comes from the abstract: PubMed shows nothing else.
+    """
+    if not record.pmid:
+        return None
+    anchors = make_anchors(passage, normalize(record.title + " \n " + record.abstract))
+    if anchors is None:
+        return None
+    start, end = anchors
+    return PUBMED_URL.format(pmid=record.pmid) + "#:~:text=" + _encode(start) + "," + _encode(end)
+
+
 def reader_url(record: StudyRecord, passage: str) -> str:
     """Link to the passage in this app's reader page."""
     return f"/paper/{record.study_id}?hl=" + urllib.parse.quote(normalize(passage), safe="")
@@ -151,6 +169,7 @@ def quote_links(record: StudyRecord, passage: str, section: str = "Abstract") ->
         "text": passage,
         "section": section,
         "pmc_url": pmc_url(record, passage, fulltext),
+        "pubmed_url": pubmed_url(record, passage),
         "reader_url": reader_url(record, passage),
     }
 
@@ -158,21 +177,26 @@ def quote_links(record: StudyRecord, passage: str, section: str = "Abstract") ->
 def sample_links(record: StudyRecord, per_paper: int = 3) -> list[dict]:
     """A few passages per paper, spread from the top of the article to the end.
 
-    Used by the link check page: an abstract passage near the top, then
-    passages from the middle and the end of the full text when it is held.
+    Used by the link check page. For a paper on PubMed Central the links go
+    there (an abstract passage near the top, then passages from the middle
+    and the end of the full text when it is held). For any other paper they
+    go to its abstract on PubMed.
     """
     from src.knowledge_pipeline.study_schemas import all_passages
 
     fulltext = load_fulltext(record.study_id)
     linked = []
     for passage in all_passages(record):
-        url = pmc_url(record, passage.text, fulltext)
+        url, where = pmc_url(record, passage.text, fulltext), "PubMed Central"
+        if url is None:
+            url, where = pubmed_url(record, passage.text), "PubMed"
         if url:
             linked.append({
                 "passage_id": passage.passage_id,
                 "text": passage.text,
                 "section": passage.section,
-                "pmc_url": url,
+                "url": url,
+                "where": where,
                 "reader_url": reader_url(record, passage.text),
             })
     if len(linked) <= per_paper:

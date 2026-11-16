@@ -923,7 +923,7 @@ from src.data.profile import askable_topics  # noqa: E402
 from src.knowledge_pipeline.fulltext import FullText, Section, load_fulltext, parse_jats  # noqa: E402
 from src.knowledge_pipeline.study_schemas import all_passages, fulltext_passages  # noqa: E402
 from src.reader import render_paper  # noqa: E402
-from src.sources.deeplinks import document_text, make_anchors, pmc_url, quote_links  # noqa: E402
+from src.sources.deeplinks import document_text, make_anchors, pmc_url, pubmed_url, quote_links  # noqa: E402
 
 JATS = """<article><front/><body>
 <p>A loose opening paragraph without any section heading at all.</p>
@@ -1028,7 +1028,23 @@ class TestSentenceLinks:
     def test_every_quote_can_be_opened_somewhere(self):
         record = make_record("c")
         links = quote_links(record, "Second sentence about bacteria. Third one.")
-        assert links["pmc_url"] is None and links["reader_url"].startswith("/paper/c?hl=Second%20sentence")
+        assert links["pmc_url"] is None and links["pubmed_url"] is None  # no PubMed id either
+        assert links["reader_url"].startswith("/paper/c?hl=Second%20sentence")
+
+    def test_abstract_quotes_open_on_pubmed_when_the_paper_is_not_on_pmc(self):
+        record = make_record("d", pmid="12345")
+        links = quote_links(record, "First sentence about pH. Second sentence about bacteria.")
+        assert links["pmc_url"] is None
+        assert links["pubmed_url"].startswith("https://pubmed.ncbi.nlm.nih.gov/12345/#:~:text=First%20sentence")
+        assert quote_links(record, "A sentence from the full text only.")["pubmed_url"] is None
+
+    def test_every_shipped_abstract_passage_has_an_outside_link(self):
+        missing = [
+            p.passage_id
+            for r in load_records().values() for p in split_passages(r)
+            if not (pubmed_url(r, p.text) or pmc_url(r, p.text, load_fulltext(r.study_id)))
+        ]
+        assert len(missing) <= 5, missing
 
     def test_most_shipped_passages_on_pmc_get_a_link(self):
         records = load_records()
@@ -1090,9 +1106,10 @@ class TestLinkCheckPage:
 
         page = TestClient(app).get("/check")
         assert page.status_code == 200
-        on_pmc = [r for r in load_records().values() if r.pmcid]
-        assert all(r.pmcid in page.text for r in on_pmc)
-        assert page.text.count('class="check-row"') == sum(len(sample_links(r)) for r in on_pmc)
+        records = list(load_records().values())
+        assert all(r.pmcid in page.text for r in records if r.pmcid)
+        assert all(f"PubMed {r.pmid}" in page.text for r in records if not r.pmcid)
+        assert page.text.count('class="check-row"') == sum(len(sample_links(r)) for r in records)
 
     def test_samples_are_spread_through_the_paper(self):
         from src.sources.deeplinks import sample_links
@@ -1101,7 +1118,7 @@ class TestLinkCheckPage:
         links = sample_links(record)
         assert len(links) == 3 and len({l["passage_id"] for l in links}) == 3
         assert links[0]["section"] == "Abstract" and links[-1]["section"] != "Abstract"
-        assert all(l["pmc_url"].startswith("https://pmc.ncbi.nlm.nih.gov/") for l in links)
+        assert all(l["url"].startswith("https://pmc.ncbi.nlm.nih.gov/") and l["where"] == "PubMed Central" for l in links)
 
 
 class TestAskableTopics:

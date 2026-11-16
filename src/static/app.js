@@ -1023,8 +1023,13 @@
       if (/^https:\/\/pmc\.ncbi\.nlm\.nih\.gov\//.test(q.pmc_url || "")) {
         html += openLink(q.pmc_url, t("openOnPmc"), "cite-open cite-open--primary");
       }
+      var external = !!q.pmc_url;
+      if (!external && /^https:\/\/pubmed\.ncbi\.nlm\.nih\.gov\//.test(q.pubmed_url || "")) {
+        html += openLink(q.pubmed_url, t("openOnPubmed"), "cite-open cite-open--primary");
+        external = true;
+      }
       if (/^\/paper\//.test(q.reader_url || "")) {
-        html += openLink(q.reader_url, t("openInReader"), q.pmc_url ? "cite-open" : "cite-open cite-open--primary");
+        html += openLink(q.reader_url, t("openInReader"), external ? "cite-open" : "cite-open cite-open--primary");
       }
       html += "</div></figure>";
     });

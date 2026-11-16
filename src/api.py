@@ -120,8 +120,9 @@ async def link_check():
     from src.reader import render_check_page
     from src.sources.deeplinks import sample_links
 
-    records = sorted(load_records().values(), key=lambda r: (r.year, r.authors))
-    papers = [(r, sample_links(r)) for r in records if r.pmcid]
+    # Papers on PubMed Central first, then the ones that open on PubMed.
+    records = sorted(load_records().values(), key=lambda r: (not r.pmcid, r.year, r.authors))
+    papers = [(r, sample_links(r)) for r in records]
     return HTMLResponse(render_check_page([(r, links) for r, links in papers if links]))
 
 
