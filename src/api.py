@@ -63,10 +63,25 @@ async def _warm_up_search() -> None:
 
     def warm() -> None:
         try:
+            from src.data.personas import list_personas, list_readings, load_persona
+            from src.data.profile import TestReading
+            from src.sources.queries import reading_queries
+            from src.sources.reference_ranges import lookup_reference_ranges
             from src.sources.study_library import get_study_library
 
-            get_study_library().search(["vaginal pH"])
-            logger.info("Study search is warm")
+            # A dry run of everything a first turn does except the model calls,
+            # for every persona, so nothing is loaded for the first time while
+            # a visitor waits.
+            started = time.perf_counter()
+            library = get_study_library()
+            reading = TestReading.model_validate(list_readings()[0])
+            for card in list_personas():
+                profile = load_persona(card["persona_id"])
+                queries = reading_queries(profile, reading)
+                library.retrieve(queries, profile)
+                library.retrieve_guidelines(queries)
+                lookup_reference_ranges(profile, library.records)
+            logger.info("Study search is warm (%.1fs)", time.perf_counter() - started)
         except Exception:  # noqa: BLE001 - never block startup on this
             logger.exception("Warm-up of the study search failed")
 
