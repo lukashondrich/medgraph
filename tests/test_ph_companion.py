@@ -1121,6 +1121,35 @@ class TestLinkCheckPage:
         assert all(l["url"].startswith("https://pmc.ncbi.nlm.nih.gov/") and l["where"] == "PubMed Central" for l in links)
 
 
+class TestPdfViewer:
+    def test_pdf_link_only_when_a_pdf_is_stored(self, tmp_path, monkeypatch):
+        from src.sources import deeplinks
+
+        monkeypatch.setattr(deeplinks, "PDF_DIR", tmp_path)
+        record = make_record("with-pdf")
+        assert deeplinks.pdf_url(record, "Some passage.") is None
+        (tmp_path / "with-pdf.pdf").write_bytes(b"%PDF-1.4")
+        assert deeplinks.pdf_url(record, "Some  passage.") == "/pdf/with-pdf?hl=Some%20passage."
+        assert deeplinks.quote_links(record, "Second sentence about bacteria.")["pdf_url"].startswith("/pdf/with-pdf")
+
+    def test_viewer_and_file_endpoints(self, tmp_path, monkeypatch):
+        from src.api import app
+        from src.sources import deeplinks
+
+        monkeypatch.setattr(deeplinks, "PDF_DIR", tmp_path)
+        client = TestClient(app)
+        study_id = next(iter(load_records()))
+        assert client.get(f"/pdf/{study_id}").status_code == 404
+        assert client.get(f"/pdf-file/{study_id}").status_code == 404
+        (tmp_path / f"{study_id}.pdf").write_bytes(b"%PDF-1.4 test")
+        page = client.get(f"/pdf/{study_id}", params={"hl": 'A "quoted" </script> passage'})
+        assert page.status_code == 200 and "pdfviewer.js" in page.text
+        assert "</script> passage" not in page.text  # the passage cannot break out of the script
+        served = client.get(f"/pdf-file/{study_id}")
+        assert served.status_code == 200 and served.headers["content-type"] == "application/pdf"
+        assert client.get("/pdf-file/..%2F..%2Fsecret").status_code == 404
+
+
 class TestAskableTopics:
     def test_no_period_question_for_pregnant_or_postmenopausal_women(self):
         assert any("period" in t for t in askable_topics(load_persona("priya")))

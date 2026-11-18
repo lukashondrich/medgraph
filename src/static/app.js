@@ -1028,6 +1028,10 @@
         html += openLink(q.pubmed_url, t("openOnPubmed"), "cite-open cite-open--primary");
         external = true;
       }
+      if (/^\/pdf\//.test(q.pdf_url || "")) {
+        html += openLink(q.pdf_url, t("openInPdf"), external ? "cite-open" : "cite-open cite-open--primary");
+        external = true;
+      }
       if (/^\/paper\//.test(q.reader_url || "")) {
         html += openLink(q.reader_url, t("openInReader"), external ? "cite-open" : "cite-open cite-open--primary");
       }

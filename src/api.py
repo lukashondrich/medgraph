@@ -113,6 +113,38 @@ async def paper_reader(study_id: str, hl: str = ""):
     return HTMLResponse(render_paper(record, load_fulltext(study_id), hl))
 
 
+def _pdf_path(study_id: str) -> Optional[pathlib.Path]:
+    """The stored PDF of a paper in the library, or None."""
+    from src.knowledge_pipeline.study_schemas import load_records
+    from src.sources import deeplinks
+
+    if study_id not in load_records():  # also keeps odd characters out of the file name
+        return None
+    path = deeplinks.PDF_DIR / f"{study_id}.pdf"
+    return path if path.exists() else None
+
+
+@app.get("/pdf/{study_id}", response_class=HTMLResponse)
+async def pdf_viewer(study_id: str, hl: str = ""):
+    """PDF viewer: the paper's original pages with one passage highlighted."""
+    from src.knowledge_pipeline.study_schemas import load_records
+    from src.reader import render_pdf_viewer
+
+    if _pdf_path(study_id) is None:
+        raise HTTPException(status_code=404, detail="No PDF stored for this paper")
+    return HTMLResponse(render_pdf_viewer(load_records()[study_id], hl))
+
+
+@app.get("/pdf-file/{study_id}")
+async def pdf_file(study_id: str):
+    from fastapi.responses import FileResponse
+
+    path = _pdf_path(study_id)
+    if path is None:
+        raise HTTPException(status_code=404, detail="No PDF stored for this paper")
+    return FileResponse(path, media_type="application/pdf")
+
+
 @app.get("/check", response_class=HTMLResponse)
 async def link_check():
     """Page for checking the PubMed Central sentence links by hand."""

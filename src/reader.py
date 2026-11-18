@@ -215,3 +215,32 @@ def render_check_page(papers: list[tuple[StudyRecord, list[dict]]]) -> str:
   </script>
 </body>
 </html>"""
+
+
+def render_pdf_viewer(record: StudyRecord, highlight: str = "") -> str:
+    """Page that shows the stored PDF of a paper and highlights one passage on its pages."""
+    import json
+
+    config = json.dumps({"file": f"/pdf-file/{record.study_id}", "highlight": normalize(highlight)})
+    config = config.replace("</", "<\\/")  # never let text close the script element
+    return f"""<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{html.escape(record.authors)} {record.year} — pH Companion PDF viewer</title>
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body class="reader">
+  <main class="reader-page reader-page--pdf">
+    <p class="reader-brand">pH <span class="header-accent">Companion</span> <span class="header-tag">PDF</span></p>
+    <h1>{html.escape(record.title)}</h1>
+    <p class="reader-byline">{html.escape(record.authors)}, {record.year}{" · " + html.escape(record.journal) if record.journal else ""}</p>
+    <p class="reader-note" id="pdfStatus" role="status">Loading the paper…</p>
+    <div id="pdfPages" class="pdf-pages"></div>
+  </main>
+  <script>window.PDF_VIEWER = {config};</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <script src="/static/pdfviewer.js"></script>
+</body>
+</html>"""

@@ -29,10 +29,11 @@ import urllib.parse
 from typing import Optional
 
 from src.knowledge_pipeline.fulltext import FullText, load_fulltext
-from src.knowledge_pipeline.study_schemas import StudyRecord
+from src.knowledge_pipeline.study_schemas import CORPUS_DIR, StudyRecord
 
 PMC_ARTICLE_URL = "https://pmc.ncbi.nlm.nih.gov/articles/{pmcid}/"
 PUBMED_URL = "https://pubmed.ncbi.nlm.nih.gov/{pmid}/"
+PDF_DIR = CORPUS_DIR / "pdf"
 MIN_START_WORDS = 4
 MIN_END_WORDS = 2
 MAX_ANCHOR_WORDS = 14
@@ -157,6 +158,17 @@ def pubmed_url(record: StudyRecord, passage: str) -> Optional[str]:
     return PUBMED_URL.format(pmid=record.pmid) + "#:~:text=" + _encode(start) + "," + _encode(end)
 
 
+def pdf_url(record: StudyRecord, passage: str) -> Optional[str]:
+    """Link to the passage in this app's PDF viewer, when the paper's PDF is stored.
+
+    The viewer shows the original pages and finds the passage in the PDF's
+    own text, so no anchors are needed here.
+    """
+    if not (PDF_DIR / f"{record.study_id}.pdf").exists():
+        return None
+    return f"/pdf/{record.study_id}?hl=" + urllib.parse.quote(normalize(passage), safe="")
+
+
 def reader_url(record: StudyRecord, passage: str) -> str:
     """Link to the passage in this app's reader page."""
     return f"/paper/{record.study_id}?hl=" + urllib.parse.quote(normalize(passage), safe="")
@@ -170,6 +182,7 @@ def quote_links(record: StudyRecord, passage: str, section: str = "Abstract") ->
         "section": section,
         "pmc_url": pmc_url(record, passage, fulltext),
         "pubmed_url": pubmed_url(record, passage),
+        "pdf_url": pdf_url(record, passage),
         "reader_url": reader_url(record, passage),
     }
 

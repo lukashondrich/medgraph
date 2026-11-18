@@ -2258,3 +2258,51 @@ body.reader {
   color: var(--surface);
   font-weight: 700;
 }
+
+/* --- PDF viewer --- */
+
+.reader-page--pdf {
+  max-width: 58rem;
+}
+
+.pdf-pages {
+  margin-top: 1rem;
+}
+
+.pdf-page {
+  position: relative;
+  margin: 0 auto 1rem;
+  background: #ffffff;
+  box-shadow: var(--shadow-md);
+}
+
+.pdf-page canvas {
+  display: block;
+}
+
+.textLayer {
+  position: absolute;
+  inset: 0;
+  /* "clip", not "hidden": a hidden box can still be scrolled by script, and
+     scrolling the highlight into view would shift the text off its page. */
+  overflow: clip;
+  line-height: 1;
+  text-size-adjust: none;
+  forced-color-adjust: none;
+}
+
+.textLayer span,
+.textLayer br {
+  position: absolute;
+  white-space: pre;
+  color: transparent;
+  cursor: text;
+  transform-origin: 0% 0%;
+}
+
+.textLayer mark {
+  padding: 0;
+  border-radius: 2px;
+  background: rgba(255, 214, 10, 0.45);
+  color: transparent;
+}

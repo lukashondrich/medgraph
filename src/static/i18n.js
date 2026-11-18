@@ -124,6 +124,7 @@ var MedGraphI18n = (function () {
       openOnPmc: "Open the paper at this sentence",
       openOnPubmed: "Open the abstract at this sentence",
       openInReader: "Open in the reader",
+      openInPdf: "Open the PDF at this sentence",
       opensNewTab: "opens in a new tab",
     },
     de: {
@@ -241,6 +242,7 @@ var MedGraphI18n = (function () {
       openOnPmc: "Artikel an dieser Stelle öffnen",
       openOnPubmed: "Zusammenfassung an dieser Stelle öffnen",
       openInReader: "Im Reader öffnen",
+      openInPdf: "PDF an dieser Stelle öffnen",
       opensNewTab: "öffnet in neuem Tab",
     },
   };
