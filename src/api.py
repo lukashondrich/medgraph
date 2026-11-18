@@ -50,6 +50,29 @@ app.add_middleware(NoCacheStaticMiddleware)
 # Load config on module import so env vars are set for litellm
 _config = load_config()
 
+
+
+@app.on_event("startup")
+async def _warm_up_search() -> None:
+    """Load the embedding model and the study store before the first visitor.
+
+    Without this the first turn after a start or a deploy waits for the model
+    to load (about 20 seconds on a small server).
+    """
+    import threading
+
+    def warm() -> None:
+        try:
+            from src.sources.study_library import get_study_library
+
+            get_study_library().search(["vaginal pH"])
+            logger.info("Study search is warm")
+        except Exception:  # noqa: BLE001 - never block startup on this
+            logger.exception("Warm-up of the study search failed")
+
+    threading.Thread(target=warm, daemon=True).start()
+
+
 # In-memory session store: session_id -> list[dict]
 _sessions: Dict[str, List[Dict[str, str]]] = {}
 
