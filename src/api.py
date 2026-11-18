@@ -12,11 +12,20 @@ Provides:
 
 import json
 import logging
+import os
 import pathlib
 import re
 import time
 import uuid
 from typing import Any, Dict, List, Optional, Set
+
+# A small server reports all of its host's processors, but the app may only
+# use a share of one or two. Left alone, the embedding model starts a thread
+# per reported processor and they fight over that share, which makes a
+# search take seconds. Must be set before the numeric libraries load.
+os.environ.setdefault("OMP_NUM_THREADS", "2")
+os.environ.setdefault("MKL_NUM_THREADS", "2")
+os.environ.setdefault("TOKENIZERS_PARALLELISM", "false")
 
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.staticfiles import StaticFiles

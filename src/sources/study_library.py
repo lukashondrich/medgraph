@@ -250,6 +250,9 @@ class StudyLibrary:
 
         store = get_document_store(location=self.store_path, collection_name=STUDY_COLLECTION)
         self._retriever = QdrantEmbeddingRetriever(document_store=store, top_k=top_k)
+        import torch
+
+        torch.set_num_threads(2)  # see the note on thread counts in src/api.py
         self._model = SentenceTransformer(DEFAULT_EMBEDDING_MODEL)
 
     def _embed(self, text: str) -> list[float]:
