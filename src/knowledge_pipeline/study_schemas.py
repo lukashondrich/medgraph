@@ -256,7 +256,7 @@ def fulltext_passages(record: StudyRecord, fulltext, sentences_per_passage: int 
     from .fulltext import CITABLE_KINDS
 
     citable = CITABLE_KINDS
-    if not any(section.kind in CITABLE_KINDS - {"conclusion"} for section in fulltext.sections):
+    if not any(section.kind in CITABLE_KINDS - {"conclusion", "review"} for section in fulltext.sections):
         # Reviews and short reports use topical headings; their body is the content.
         citable = CITABLE_KINDS | {"other"}
 

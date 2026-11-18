@@ -24,7 +24,7 @@ EUROPE_PMC_FULLTEXT = "https://www.ebi.ac.uk/europepmc/webservices/rest/{pmcid}/
 # Sections whose sentences may be cited as what the study found. Background
 # and methods are shown in the reader but never offered to the writer: an
 # introduction mostly reports other people's findings.
-CITABLE_KINDS = {"results", "discussion", "conclusion"}
+CITABLE_KINDS = {"results", "discussion", "conclusion", "review"}
 
 _KIND_PATTERNS = [
     ("results", r"result|finding"),

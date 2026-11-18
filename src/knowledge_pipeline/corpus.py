@@ -415,7 +415,7 @@ def _alnum(text: str) -> str:
     return "".join(c for c in unicodedata.normalize("NFKD", text).lower() if c.isalnum())
 
 
-def _cmd_pdftext(only: list[str], compare: bool) -> None:
+def _cmd_pdftext(only: list[str], compare: bool, rules_only: bool = False) -> None:
     """Extract body text from stored PDFs for papers without official full text."""
     from src.sources.deeplinks import PDF_DIR
 
@@ -431,7 +431,10 @@ def _cmd_pdftext(only: list[str], compare: bool) -> None:
         official = load_fulltext(record.study_id)
         if official is not None and official.source != "pdf" and not compare:
             continue  # official full text is better; keep it
-        extracted = extract_fulltext(record.study_id, pdf)
+        extracted = extract_fulltext(
+            record.study_id, pdf, title=record.title, design=record.design_label,
+            model=None if rules_only else os.environ["MEDGRAPH_MODEL"],
+        )
         passages = fulltext_passages(record, extracted)
         kinds = Counter(s.kind for s in extracted.sections for _ in s.paragraphs)
         print(f"{record.study_id} {record.authors} {record.year}: {extracted.paragraph_count} paragraphs "
@@ -497,13 +500,18 @@ def main() -> None:
     p_pdf.add_argument("only", nargs="*", help="study ids (default: every stored PDF)")
     p_pdf.add_argument("--compare", action="store_true",
                        help="also extract papers that have official full text, and report how well the two agree")
+    p_pdf.add_argument("--rules-only", action="store_true",
+                       help="decide sections by rules, without asking a model")
     args = parser.parse_args()
 
     if args.command == "enrich":
         _cmd_enrich()
         return
     if args.command == "pdftext":
-        _cmd_pdftext(args.only, args.compare)
+        if not args.rules_only:
+            load_config()
+            logging.getLogger("LiteLLM").setLevel(logging.WARNING)
+        _cmd_pdftext(args.only, args.compare, args.rules_only)
         return
 
     if args.command == "build":

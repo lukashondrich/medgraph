@@ -4,34 +4,6 @@
  "source": "pdf",
  "sections": [
   {
-   "title": "Objective",
-   "kind": "other",
-   "paragraphs": [
-    "Is self-assessed vaginal pH measurement to detect abnormal vaginal bacterial microflora (AVF) an adequate pre-screening method for detection of genital sexually transmitted infections (STI’s)?"
-   ]
-  },
-  {
-   "title": "Material and methods",
-   "kind": "methods",
-   "paragraphs": [
-    "360 Ugandan women tested themselves with a gloved finger and a pH color strip. PCR for Bacterial vaginosis (BV)-associated bacteria were tested by PCR for Mycoplasma hominis, Ureaplasma urealyticum and/or Atopobium vaginae, while the STI’s were diagnosed by positive PCR for Chlamydia trachomatis, Neisseria gonorrhoeae, Mycoplasma genitalium and/or Trichomonas vaginalis."
-   ]
-  },
-  {
-   "title": "Results",
-   "kind": "results",
-   "paragraphs": [
-    "A strong correlation was found between self-assessed pH values and BV-associated bacteria (p<0.0001), but not with STI’s, not as single infections, nor in general."
-   ]
-  },
-  {
-   "title": "Conclusion",
-   "kind": "conclusion",
-   "paragraphs": [
-    "Self-measured vaginal pH correlated well with markers of high risk microflora types such as BV or aerobic vaginitis, but not with STI’s. Hence, in a screening program addressing AVF in low resource countries, extra specific tests are required to exclude STI’s."
-   ]
-  },
-  {
    "title": "Introduction",
    "kind": "introduction",
    "paragraphs": [
@@ -50,6 +22,13 @@
    "kind": "methods",
    "paragraphs": [
     "Chi² test, Chi² for trend or in case expected cells were < 5, Fisher test, were used to compare the findings of the different self-assessment pH groups. A p value was <0.05 was considered significant."
+   ]
+  },
+  {
+   "title": "Funding",
+   "kind": "methods",
+   "paragraphs": [
+    "The study was funded by Femicare, a non-profit organisation based in Tienen, Belgium, devoted to perform, promote and guide research for women."
    ]
   },
   {

@@ -227,8 +227,21 @@ def looks_like_prose(text: str) -> bool:
     return sum(1 for w in words if w[0].islower()) / len(words) > 0.45
 
 
-def build_sections(lines: list[Line]) -> list[Section]:
-    """Turn lines into titled sections of paragraphs, up to the reference list."""
+class Block:
+    """One item of a paper's outline: a candidate heading or a paragraph."""
+
+    def __init__(self, kind: str, text: str) -> None:
+        self.kind = kind  # "heading" or "text"
+        self.text = text
+
+
+def build_blocks(lines: list[Line]) -> list[Block]:
+    """Turn lines into an ordered outline of candidate headings and paragraphs.
+
+    Figure legends, table rows and other non-prose are left out here. Which
+    headings are real, and where each section starts, is decided afterwards
+    (by rules in ``heuristic_segments`` or by a model in ``llm_segments``).
+    """
     body = [l for l in lines if len(l.text) > 25]
     if not body:
         return []
@@ -240,28 +253,20 @@ def build_sections(lines: list[Line]) -> list[Section]:
     body_font = statistics.mode(l.font for l in body if l.size == body_size)
     typical_width = statistics.median(l.right - l.x for l in body if l.size == body_size)
 
-    sections: list[Section] = [Section(title="Front matter", kind="front")]
+    blocks: list[Block] = []
     paragraph: list[str] = []
     previous: Optional[Line] = None
-
-    reached_references = False
+    in_caption = False
 
     def flush() -> None:
-        nonlocal paragraph, reached_references
+        nonlocal paragraph
         text = " ".join(paragraph)
         text = re.sub(r"(\w)- (?=[a-z])", r"\1", text)  # undo hyphenation at line ends
         paragraph = []
-        if seen_findings and _REFERENCE_ENTRY.search(text):
-            reached_references = True  # a reference list without a heading we recognise
-            return
-        if not reached_references and looks_like_prose(text) and not _CAPTION.match(text):
-            sections[-1].paragraphs.append(text)
+        if looks_like_prose(text) and not _CAPTION.match(text):
+            blocks.append(Block("text", text))
 
-    in_caption = False
-    seen_findings = False
-    for position, line in enumerate(lines):
-        if reached_references:
-            break
+    for line in lines:
         gap = previous is None or line.page != previous.page or abs(previous.y - line.y) > body_size * 2.2
         if _CAPTION_START.match(line.text):
             # A figure legend or table title: skip it up to the next gap in the text.
@@ -277,15 +282,7 @@ def build_sections(lines: list[Line]) -> list[Section]:
             previous = None
         if is_heading(line, body_size, body_font):
             flush()
-            # "Reference" can also head a citation box on the first page.
-            if _STOP_HEADING.match(line.text) and (seen_findings or position > 0.4 * len(lines)):
-                break
-            title = re.sub(r"^\d+(?:\.\d+)*\.?\s+", "", line.text).rstrip(":")
-            kind = classify_section(title)
-            if kind == "other" and sections[-1].kind not in ("front", "other"):
-                kind = sections[-1].kind  # a subheading inside Results stays Results
-            sections.append(Section(title=title, kind="skip" if _SKIP_HEADING.search(title) else kind))
-            seen_findings = seen_findings or kind in ("results", "discussion", "conclusion")
+            blocks.append(Block("heading", line.text))
             previous = None
             continue
         if abs(line.size - body_size) > body_size * 0.12:
@@ -300,11 +297,201 @@ def build_sections(lines: list[Line]) -> list[Section]:
         paragraph.append(line.text)
         previous = line
     flush()
-    return [s for s in sections if s.paragraphs and s.kind != "skip"]
+    return blocks
 
 
-def extract_fulltext(study_id: str, pdf_path: Path) -> FullText:
-    """Read a PDF and return its body text as sections of paragraphs."""
+# Section kinds. "front", "abstract", "references" and "skip" are never stored.
+SEGMENT_KINDS = {
+    "front", "abstract", "introduction", "methods", "results", "discussion",
+    "conclusion", "review", "references", "skip",
+}
+_DROPPED_KINDS = {"front", "abstract", "references", "skip"}
+
+
+def _clean_title(text: str) -> str:
+    return re.sub(r"^\d+(?:\.\d+)*\.?\s+", "", text).rstrip(":").strip()
+
+
+def heuristic_segments(blocks: list[Block]) -> tuple[list[dict], set[int]]:
+    """Decide the sections by rule: known heading words, and inheritance below them."""
+    segments = [{"start": 0, "kind": "front", "title": "Front matter"}]
+    seen_findings = False
+    for index, block in enumerate(blocks):
+        if block.kind == "text":
+            # A reference list without a heading we recognise.
+            if (seen_findings or index > 0.4 * len(blocks)) and _REFERENCE_ENTRY.search(block.text):
+                segments.append({"start": index, "kind": "references", "title": "References"})
+                break
+            continue
+        title = _clean_title(block.text)
+        if _STOP_HEADING.match(block.text):
+            # "Reference" can also head a citation box on the first page.
+            if seen_findings or index > 0.4 * len(blocks):
+                segments.append({"start": index, "kind": "references", "title": title})
+                break
+            continue
+        kind = "skip" if _SKIP_HEADING.search(title) else classify_section(title)
+        if kind == "other":
+            previous = segments[-1]["kind"]
+            if previous in ("front", "skip"):
+                continue  # still front matter, or a stray line
+            kind = previous  # a subheading inside Results stays Results
+        seen_findings = seen_findings or kind in ("results", "discussion", "conclusion")
+        if kind != segments[-1]["kind"]:
+            segments.append({"start": index, "kind": kind, "title": title})
+    return segments, set()
+
+
+def sections_from_blocks(blocks: list[Block], segments: list[dict], not_headings: set[int]) -> list[Section]:
+    """Apply section boundaries to the outline.
+
+    Inside a segment every real heading starts a new titled section of the
+    segment's kind, so subsection titles are kept.
+    """
+    starts = {seg["start"]: seg for seg in segments}
+    sections: list[Section] = []
+    kind = "front"
+    for index, block in enumerate(blocks):
+        if index in starts:
+            kind = starts[index]["kind"]
+            if kind == "references":
+                break
+            if kind not in _DROPPED_KINDS:
+                sections.append(Section(title=_clean_title(starts[index]["title"]) or kind.title(), kind=kind))
+        if kind in _DROPPED_KINDS:
+            continue
+        if block.kind == "heading":
+            if index in not_headings:
+                continue
+            if index not in starts:
+                sections.append(Section(title=_clean_title(block.text), kind=kind))
+            continue
+        if not sections:
+            sections.append(Section(title=kind.title(), kind=kind))
+        sections[-1].paragraphs.append(block.text)
+    return [s for s in sections if s.paragraphs]
+
+
+def build_sections(lines: list[Line]) -> list[Section]:
+    """Sections decided by rule (no model call)."""
+    blocks = build_blocks(lines)
+    return sections_from_blocks(blocks, *heuristic_segments(blocks))
+
+
+# ── Section detection by a model ──────────────────────────────────────────
+
+_SEGMENT_PROMPT = """You are given the outline of a scientific paper as it was extracted from its PDF, in reading order.
+H items are lines that look like headings. P items are paragraphs (only their first words are shown).
+
+Paper: {title}
+Type: {design}
+
+Decide where each part of the paper starts. Return one JSON object:
+{{
+  "segments": [{{"start": <item number>, "kind": "<kind>", "title": "<short section title>"}}, ...],
+  "not_headings": [<numbers of H items that are not headings>]
+}}
+
+Kinds
+- front: title, authors, affiliations, journal and copyright lines, keywords
+- abstract: the abstract or summary, including its own "Methods", "Results", "Conclusion" parts
+- introduction: introduction or background
+- methods: how the study was done, including statistics
+- results: what this study found ("Results", "Findings", "Results and discussion", and their subsections)
+- discussion: interpretation of this study's findings, strengths and limitations
+- conclusion: conclusions of this study
+- review: the main body of a review article or guideline, under topical headings
+- references: the reference list
+- skip: acknowledgements, funding, conflicts of interest, author contributions, supplementary material, appendices
+
+Rules
+- The first segment starts at item 0. Give segments in order. A segment runs until the next one starts.
+- Start a new segment only where the kind changes. A subheading inside Results does not start a new segment.
+- A segment may start at a P item when a part begins without a heading (for example the reference list, or the
+  body text right after the abstract).
+- The abstract's own "Results" or "Conclusion" lines belong to the abstract, not to results.
+- For a review or guideline, use "review" for the body, not "results" or "discussion".
+- not_headings: H items that are author names, affiliations, journal names, table or figure labels, or other
+  lines that are not section headings.
+
+Outline
+{outline}
+"""
+
+
+def _outline(blocks: list[Block]) -> str:
+    rows = []
+    for index, block in enumerate(blocks):
+        if block.kind == "heading":
+            rows.append(f"{index} H: {block.text[:120]}")
+        else:
+            words = block.text.split()
+            rows.append(f"{index} P: {' '.join(words[:14])} … ({len(words)} words)")
+    return "\n".join(rows)
+
+
+def validate_segments(data: dict, n_blocks: int) -> tuple[list[dict], set[int]]:
+    """Check a model's answer; raises ValueError when it cannot be used."""
+    segments = []
+    last = -1
+    for seg in data.get("segments") or []:
+        start, kind = seg.get("start"), seg.get("kind")
+        if not isinstance(start, int) or not 0 <= start < n_blocks or start <= last:
+            raise ValueError(f"bad segment start {start!r}")
+        if kind not in SEGMENT_KINDS:
+            raise ValueError(f"unknown kind {kind!r}")
+        segments.append({"start": start, "kind": kind, "title": str(seg.get("title") or kind.title())})
+        last = start
+    if not segments or segments[0]["start"] != 0:
+        raise ValueError("segments must start at item 0")
+    not_headings = {i for i in data.get("not_headings") or [] if isinstance(i, int)}
+    return segments, not_headings
+
+
+async def llm_segments(blocks: list[Block], title: str, design: str, model: str) -> tuple[list[dict], set[int]]:
+    """Ask a model where the sections start. The text itself is never changed by it."""
+    import litellm
+
+    prompt = _SEGMENT_PROMPT.format(title=title, design=design, outline=_outline(blocks))
+    last_error: Exception | None = None
+    for _ in range(2):
+        try:
+            response = await asyncio.wait_for(
+                litellm.acompletion(
+                    model=model,
+                    messages=[{"role": "user", "content": prompt}],
+                    response_format={"type": "json_object"},
+                ),
+                timeout=120,
+            )
+            return validate_segments(json.loads(response.choices[0].message.content), len(blocks))
+        except Exception as exc:  # noqa: BLE001 - timeout, provider, JSON or validation error
+            last_error = exc
+    raise RuntimeError(f"section detection failed: {last_error!r}")
+
+
+def extract_fulltext(
+    study_id: str,
+    pdf_path: Path,
+    *,
+    title: str = "",
+    design: str = "",
+    model: Optional[str] = None,
+) -> FullText:
+    """Read a PDF and return its body text as sections of paragraphs.
+
+    With ``model`` the section boundaries are decided by that model, falling
+    back to the rules when its answer cannot be used. Without it, rules only.
+    """
     pages = dump_pdf(pdf_path)
-    lines = drop_page_furniture(to_lines(pages), pages)
-    return FullText(study_id=study_id, pmcid="", source="pdf", sections=build_sections(lines))
+    blocks = build_blocks(drop_page_furniture(to_lines(pages), pages))
+    segments, not_headings = heuristic_segments(blocks)
+    if model and blocks:
+        try:
+            segments, not_headings = asyncio.run(llm_segments(blocks, title, design, model))
+        except RuntimeError as exc:
+            print(f"   {study_id}: {exc}; using rule-based sections")
+    return FullText(
+        study_id=study_id, pmcid="", source="pdf",
+        sections=sections_from_blocks(blocks, segments, not_headings),
+    )

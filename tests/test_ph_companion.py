@@ -1055,7 +1055,10 @@ class TestSentenceLinks:
                 continue
             fulltext = load_fulltext(record.study_id)
             document = document_text(record, fulltext)
+            from_pdf = fulltext is not None and fulltext.source == "pdf"
             for p in all_passages(record):
+                if from_pdf and p.source == "fulltext":
+                    continue  # body text taken from a PDF opens in the PDF viewer instead
                 total += 1
                 linked += make_anchors(p.text, document) is not None
         assert total > 800 and linked / total > 0.9

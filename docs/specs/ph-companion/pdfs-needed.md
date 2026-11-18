@@ -1,6 +1,6 @@
 # pH Companion — PDFs still needed
 
-**Status:** 2026-11-18
+**Status:** 2026-11-18 (33 PDFs stored; 30 still needed)
 
 Papers whose body text the library does not hold yet. With the PDF stored, a citation can open the
 original pages in the app's PDF viewer with the cited sentence highlighted.
@@ -9,21 +9,11 @@ Save each file under the name shown, into `data/corpus/pdf/`. That folder is kep
 
 These files have to be downloaded by hand: the sites do not allow automated downloads.
 
-## Free on PubMed Central (11)
+## Free on PubMed Central (1)
 
 | Save as | Paper | Journal | Where |
 |---|---|---|---|
-| `pmid-18503038.pdf` | Brotman et al. 2008 | Am J Epidemiol | Free on PubMed Central: https://pmc.ncbi.nlm.nih.gov/articles/PMC2574994/ (use the PDF link on that page) |
-| `pmid-18445948.pdf` | Madhivanan et al. 2008 | Indian J Med Microbiol | Free on PubMed Central: https://pmc.ncbi.nlm.nih.gov/articles/PMC3625939/ (use the PDF link on that page) |
-| `pmid-18803273.pdf` | Mania-Pramanik et al. 2008 | J Clin Lab Anal | Free on PubMed Central: https://pmc.ncbi.nlm.nih.gov/articles/PMC6649105/ (use the PDF link on that page) |
-| `pmid-21373274.pdf` | Bitzer et al. 2011 | Dtsch Arztebl Int | Free on PubMed Central: https://pmc.ncbi.nlm.nih.gov/articles/PMC3047717/ (use the PDF link on that page) |
-| `pmid-22553250.pdf` | Gajer et al. 2012 | Sci Transl Med | Free on PubMed Central: https://pmc.ncbi.nlm.nih.gov/articles/PMC3722878/ (use the PDF link on that page) |
-| `pmid-24080849.pdf` | Brotman et al. 2014 | Menopause | Free on PubMed Central: https://pmc.ncbi.nlm.nih.gov/articles/PMC3994184/ (use the PDF link on that page) |
-| `pmid-25073854.pdf` | Fettweis et al. 2014 | Microbiology (Reading) | Free on PubMed Central: https://pmc.ncbi.nlm.nih.gov/articles/PMC4178329/ (use the PDF link on that page) |
-| `pmid-25873579.pdf` | Madhivanan et al. 2015 | J Med Microbiol | Free on PubMed Central: https://pmc.ncbi.nlm.nih.gov/articles/PMC4835975/ (use the PDF link on that page) |
-| `pmid-25676470.pdf` | Mayer et al. 2015 | J Infect Dis | Free on PubMed Central: https://pmc.ncbi.nlm.nih.gov/articles/PMC4539900/ (use the PDF link on that page) |
 | `pmid-29554173.pdf` | Mitchell et al. 2018 | JAMA Intern Med | Free on PubMed Central: https://pmc.ncbi.nlm.nih.gov/articles/PMC5885275/ (use the PDF link on that page) |
-| `pmid-31142850.pdf` | Serrano et al. 2019 | Nat Med | Free on PubMed Central: https://pmc.ncbi.nlm.nih.gov/articles/PMC6746180/ (use the PDF link on that page) |
 
 ## Free PDF elsewhere (1)
 
