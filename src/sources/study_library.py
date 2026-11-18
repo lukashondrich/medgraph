@@ -37,6 +37,8 @@ SEARCH_DEPTH = 2000
 # Between studies that fit the question about equally well, one whose body
 # text is held (so a claim can be opened inside the paper) is preferred.
 BODY_BONUS = 1.15
+# Every query is padded to this many tokens (longer ones are cut).
+QUERY_TOKENS = 64
 # Qualifying score at which a match doubles a study's rank in the matched lane.
 MATCH_SCALE = 5.0
 # A study must be about the question to be used. Cosine similarity of its
@@ -229,24 +231,45 @@ class StudyLibrary:
             sid for sid in self.records if (FULLTEXT_DIR / f"{sid}.json").exists()
         )
         self.store_path = str(store_path or STUDY_STORE_PATH)
-        self._pipeline = None
+        self._retriever = None
+        self._model = None
         self._lock = threading.Lock()
 
     @property
     def available(self) -> bool:
         return self.store_path == ":memory:" or Path(self.store_path).exists()
 
-    def _get_pipeline(self, top_k: int):
-        if self._pipeline is None:
-            from src.knowledge_pipeline.corpus import STUDY_COLLECTION
-            from src.knowledge_pipeline.pipeline import (
-                build_retrieval_pipeline,
-                get_document_store,
-            )
+    def _load(self, top_k: int) -> None:
+        if self._retriever is not None:
+            return
+        from haystack_integrations.components.retrievers.qdrant import QdrantEmbeddingRetriever
+        from sentence_transformers import SentenceTransformer
 
-            store = get_document_store(location=self.store_path, collection_name=STUDY_COLLECTION)
-            self._pipeline = build_retrieval_pipeline(store, top_k=top_k)
-        return self._pipeline
+        from src.knowledge_pipeline.corpus import STUDY_COLLECTION
+        from src.knowledge_pipeline.pipeline import DEFAULT_EMBEDDING_MODEL, get_document_store
+
+        store = get_document_store(location=self.store_path, collection_name=STUDY_COLLECTION)
+        self._retriever = QdrantEmbeddingRetriever(document_store=store, top_k=top_k)
+        self._model = SentenceTransformer(DEFAULT_EMBEDDING_MODEL)
+
+    def _embed(self, text: str) -> list[float]:
+        """Embed one query, always padded to the same number of tokens.
+
+        On some servers the model is slow the first time it sees an input of
+        a new length (seconds per new length). With a fixed length that cost
+        is paid once, at warm-up, instead of on every new question. Padding
+        is masked out, so the embedding is the same as without it.
+        """
+        import torch
+
+        model = self._model
+        features = model.tokenizer(
+            [text], padding="max_length", max_length=QUERY_TOKENS, truncation=True, return_tensors="pt"
+        )
+        features = {name: tensor.to(model.device) for name, tensor in features.items()}
+        with torch.no_grad():
+            output = model(features)
+        return output["sentence_embedding"][0].tolist()
 
     def search(self, queries: list[str], top_k: int = SEARCH_DEPTH) -> list[ScoredPassage]:
         """Return passages for all queries, keeping each passage's best score.
@@ -260,10 +283,10 @@ class StudyLibrary:
             return []
         best: dict[str, ScoredPassage] = {}
         with self._lock:
-            pipeline = self._get_pipeline(top_k)
+            self._load(top_k)
             for query in queries:
-                result = pipeline.run({"embedder": {"text": query}})
-                for doc in result.get("retriever", {}).get("documents", []):
+                result = self._retriever.run(query_embedding=self._embed(query))
+                for doc in result.get("documents", []):
                     meta = doc.meta or {}
                     passage = ScoredPassage(
                         passage_id=meta.get("passage_id", doc.id),
