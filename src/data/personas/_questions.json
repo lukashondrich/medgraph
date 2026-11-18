@@ -1,0 +1,18 @@
+{
+  "priya": [
+    {"en": "Does my cycle affect vaginal pH?", "de": "Beeinflusst mein Zyklus den vaginalen pH-Wert?"},
+    {"en": "What is known about the vaginal bacteria of Indian women?", "de": "Was weiß man über die Vaginalflora indischer Frauen?"},
+    {"en": "Would hormonal contraception change my vaginal bacteria?", "de": "Würde hormonelle Verhütung meine Vaginalflora verändern?"},
+    {"en": "Can a home pH test detect an infection?", "de": "Kann ein pH-Selbsttest eine Infektion erkennen?"}
+  ],
+  "anna": [
+    {"en": "Is a higher pH normal after menopause?", "de": "Ist ein höherer pH-Wert nach der Menopause normal?"},
+    {"en": "How do vaginal bacteria change after menopause?", "de": "Wie verändert sich die Vaginalflora nach der Menopause?"},
+    {"en": "Can vaginal pH show that menopause has started?", "de": "Kann der vaginale pH-Wert den Beginn der Menopause anzeigen?"}
+  ],
+  "amara": [
+    {"en": "Does testing my pH at home help prevent preterm birth?", "de": "Hilft der pH-Selbsttest, eine Frühgeburt zu verhindern?"},
+    {"en": "Do vaginal bacteria differ between Black and white women in pregnancy?", "de": "Unterscheidet sich die Vaginalflora Schwarzer und weißer Frauen in der Schwangerschaft?"},
+    {"en": "What do vaginal bacteria have to do with preterm birth?", "de": "Was hat die Vaginalflora mit Frühgeburten zu tun?"}
+  ]
+}

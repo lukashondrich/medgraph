@@ -34,6 +34,9 @@ MAX_OVERALL = 4
 MAX_MATCHED = 3
 MAX_GUIDELINES = 2
 SEARCH_DEPTH = 2000
+# Between studies that fit the question about equally well, one whose body
+# text is held (so a claim can be opened inside the paper) is preferred.
+BODY_BONUS = 1.15
 # Qualifying score at which a match doubles a study's rank in the matched lane.
 MATCH_SCALE = 5.0
 # A study must be about the question to be used. Cosine similarity of its
@@ -127,8 +130,17 @@ def select_lanes(
     max_overall: int = MAX_OVERALL,
     max_matched: int = MAX_MATCHED,
     min_relevance: float = MIN_RELEVANCE,
+    body_ids: frozenset[str] | set[str] = frozenset(),
 ) -> LaneResult:
-    """Split scored passages into the matched and overall lanes."""
+    """Split scored passages into the matched and overall lanes.
+
+    ``body_ids`` names the studies whose body text is held; they get a small
+    ranking bonus in both lanes.
+    """
+
+    def bonus(study_id: str) -> float:
+        return BODY_BONUS if study_id in body_ids else 1.0
+
     by_study: dict[str, list[ScoredPassage]] = {}
     for passage in candidates:
         if passage.study_id in records:  # never cite a study without a checked record
@@ -150,7 +162,7 @@ def select_lanes(
     # question beats a closer match that is about something else.
     matched_ids.sort(
         key=lambda sid: (
-            by_study[sid][0].relevance * (1 + matches[sid].qualifying_score / MATCH_SCALE),
+            by_study[sid][0].relevance * (1 + matches[sid].qualifying_score / MATCH_SCALE) * bonus(sid),
             matches[sid].score,
         ),
         reverse=True,
@@ -160,7 +172,7 @@ def select_lanes(
     # A study is shown once: anything in the matched lane is left out of overall.
     overall_ids = [sid for sid in by_study if sid not in matched_ids]
     overall_ids.sort(
-        key=lambda sid: by_study[sid][0].relevance * evidence_weight(records[sid]),
+        key=lambda sid: by_study[sid][0].relevance * evidence_weight(records[sid]) * bonus(sid),
         reverse=True,
     )
     overall_ids = overall_ids[:max_overall]
@@ -210,7 +222,12 @@ class StudyLibrary:
     ) -> None:
         from src.knowledge_pipeline.corpus import STUDY_STORE_PATH
 
+        from src.knowledge_pipeline.fulltext import FULLTEXT_DIR
+
         self.records = records if records is not None else load_records(checked_only=True)
+        self.body_ids = frozenset(
+            sid for sid in self.records if (FULLTEXT_DIR / f"{sid}.json").exists()
+        )
         self.store_path = str(store_path or STUDY_STORE_PATH)
         self._pipeline = None
         self._lock = threading.Lock()
@@ -268,7 +285,9 @@ class StudyLibrary:
 
     def retrieve(self, queries: list[str], profile: UserProfile) -> LaneResult:
         """Two-lane retrieval over studies. Guidelines are a separate source."""
-        return select_lanes(self.search(queries), self._records_by_kind(False), profile)
+        return select_lanes(
+            self.search(queries), self._records_by_kind(False), profile, body_ids=self.body_ids
+        )
 
     def retrieve_guidelines(self, queries: list[str]) -> list[SourceItem]:
         """The most relevant guideline passages for the queries."""

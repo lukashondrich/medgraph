@@ -256,6 +256,20 @@ class TestLanes:
         lanes = select_lanes([passage("exact-weak", 0.4), passage("broader", 0.9)], records, make_profile())
         assert [i.study_id for i in lanes.matched] == ["broader", "exact-weak"]
 
+    def test_study_with_body_text_wins_a_near_tie(self):
+        records = self.records()
+        near_tie = [passage("mid-general", 0.80), passage("big-general", 0.78)]
+        # big-general has the stronger design, so it leads without a bonus ...
+        assert select_lanes(near_tie, records, make_profile()).overall[0].study_id == "big-general"
+        clear = [passage("mid-general", 0.60), passage("big-general", 0.80)]
+        # ... and a clearly more relevant study still wins against the bonus.
+        lanes = select_lanes(clear, records, make_profile(), body_ids={"mid-general"})
+        assert lanes.overall[0].study_id == "big-general"
+        # In a real near-tie on rank, the study whose body can be opened comes first.
+        tie = [passage("mid-general", 0.80), passage("big-general", 0.66)]
+        assert select_lanes(tie, records, make_profile()).overall[0].study_id == "big-general"
+        assert select_lanes(tie, records, make_profile(), body_ids={"mid-general"}).overall[0].study_id == "mid-general"
+
     def test_lane_sizes_are_capped(self):
         records = {f"m{i}": make_record(f"m{i}", cohort={"ancestry": ["indian"]}) for i in range(6)}
         records |= {f"g{i}": make_record(f"g{i}") for i in range(8)}
@@ -862,6 +876,7 @@ class TestApi:
     def test_persona_endpoints(self, client):
         gallery = client.get("/api/personas").json()
         assert [p["persona_id"] for p in gallery] == ["priya", "anna", "amara"]
+        assert all(len(p["questions"]) >= 3 and all(q["en"] and q["de"] for q in p["questions"]) for p in gallery)
         assert client.get("/api/personas/priya").json()["ancestry"] == "indian"
         assert client.get("/api/personas/nobody").status_code == 404
         assert len(client.get("/api/readings").json()) >= 2

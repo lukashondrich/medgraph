@@ -57,6 +57,7 @@
   var profileDetails = document.getElementById("profileDetails");
   var resultCard = document.getElementById("resultCard");
   var readingGallery = document.getElementById("readingGallery");
+  var suggestions = document.getElementById("suggestions");
   var phScale = document.getElementById("phScale");
   var phMarker = document.getElementById("phMarker");
   var phMeta = document.getElementById("phMeta");
@@ -174,6 +175,7 @@
     renderProfileCard();
     renderReadingGallery();
     renderScale();
+    renderSuggestions();
   }
 
   // ============================================================
@@ -308,6 +310,7 @@
 
     renderPersonaGallery();
     renderProfileCard();
+    renderSuggestions();
     profileCard.open = true; // show who was picked and what is known about her
     resultCard.hidden = false;
     setInputEnabled(true);
@@ -401,10 +404,31 @@
     });
   }
 
+  /** Shortcut questions for the selected persona, shown once a reading is chosen. */
+  function renderSuggestions() {
+    var questions = (selectedPersona && selectedReading && selectedPersona.questions) || [];
+    suggestions.innerHTML = "";
+    suggestions.hidden = !questions.length;
+    var lang = MedGraphI18n.getLang();
+    questions.forEach(function (q) {
+      var text = q[lang] || q.en;
+      var btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "suggestion-chip";
+      btn.textContent = text;
+      btn.disabled = isProcessing;
+      btn.addEventListener("click", function () {
+        runTurn("question", text);
+      });
+      suggestions.appendChild(btn);
+    });
+  }
+
   function selectReading(r) {
     if (isProcessing || !selectedPersona) return;
     selectedReading = r;
     renderReadingGallery();
+    renderSuggestions();
     renderScale();
     announce(t("readingSelected") + ": pH " + r.ph.toFixed(1));
 
@@ -1104,7 +1128,7 @@
     messageInput.disabled = !usable;
     sendBtn.disabled = !usable;
     micBtn.disabled = !usable || !recognition;
-    document.querySelectorAll(".patient-btn").forEach(function (btn) {
+    document.querySelectorAll(".patient-btn, .suggestion-chip").forEach(function (btn) {
       btn.disabled = !enabled;
     });
   }

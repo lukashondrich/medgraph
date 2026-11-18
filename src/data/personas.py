@@ -13,7 +13,15 @@ logger = logging.getLogger(__name__)
 
 _PERSONAS_DIR = Path(__file__).parent / "personas"
 _READINGS_PATH = _PERSONAS_DIR / "_readings.json"
+_QUESTIONS_PATH = _PERSONAS_DIR / "_questions.json"
 _ORDER = ["priya", "anna", "amara"]
+
+
+def suggested_questions(persona_id: str) -> list[dict]:
+    """Questions offered as shortcuts for a persona: [{"en": ..., "de": ...}]."""
+    if not _QUESTIONS_PATH.exists():
+        return []
+    return json.loads(_QUESTIONS_PATH.read_text()).get(persona_id, [])
 
 
 def load_persona(persona_id: str) -> Optional[UserProfile]:
@@ -43,6 +51,7 @@ def list_personas() -> list[dict]:
             "menopausal_status": profile.menopausal_status.value,
             "pregnancy": profile.pregnancy.value,
             "headline": profile.headline,
+            "questions": suggested_questions(profile.id),
         })
     return cards
 
