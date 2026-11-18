@@ -1,6 +1,6 @@
 # pH Companion — PDFs still needed
 
-**Status:** 2026-11-18 (33 PDFs stored; 30 still needed)
+**Status:** 2026-11-18 (34 PDFs stored; 29 still needed)
 
 Papers whose body text the library does not hold yet. With the PDF stored, a citation can open the
 original pages in the app's PDF viewer with the cited sentence highlighted.
@@ -15,11 +15,10 @@ These files have to be downloaded by hand: the sites do not allow automated down
 |---|---|---|---|
 | `pmid-29554173.pdf` | Mitchell et al. 2018 | JAMA Intern Med | Free on PubMed Central: https://pmc.ncbi.nlm.nih.gov/articles/PMC5885275/ (use the PDF link on that page) |
 
-## Free PDF elsewhere (1)
+## Free PDF elsewhere (0)
 
 | Save as | Paper | Journal | Where |
 |---|---|---|---|
-| `pmid-32027611.pdf` | Pramanick et al. 2018 | J Infect Dev Ctries | Free PDF: https://jidc.org/index.php/journal/article/download/32027611/1986 |
 
 ## Behind a paywall or unclear (28)
 

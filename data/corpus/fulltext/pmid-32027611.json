@@ -1,0 +1,96 @@
+{
+ "study_id": "pmid-32027611",
+ "pmcid": "",
+ "source": "pdf",
+ "sections": [
+  {
+   "title": "Introduction",
+   "kind": "introduction",
+   "paragraphs": [
+    "The microbial inhabitants of the vaginal tract play an important role in maintaining the vaginal health by protecting against a number of urogenital infections [1]. This protective microbiota mainly includes Lactobacillus that plays a crucial role in maintaining homeostasis of vaginal microbiota (VMB) through the production of metabolites such as lactic acid, hydrogen peroxide and bacteriocins secreted in the cervicovaginal fluid [2]. Dysbiosis in the VMB can lead to depletion in the lactobacilli population, resulting in bacterial vaginosis (BV) [3]. BV is associated with genital tract infections such as urinary tract infections, increased risk of acquisition of STIs including HIV and pelvic inflammatory disease [4,5]. Bacterial vaginosis can lead to adverse pregnancy outcomes such as intra-amniotic infection, preterm birth and infertility [6-8]. Considering antibiotic therapy to control these infections has associated antimicrobial resistance and recurrences, seeking natural methods for rehabilitation of vaginal microbiota may provide better substitute for treatments of vaginal infections [9]. Lactobacilli being one such alternative can attenuate the infection causing microbiota. These lactobacilli dominate the VMB during the reproductive phase as compared to prepubertal or menopausal phase where greater abundance of other taxa is reported [10,11].",
+    "Studies have presented the existence of different species and strains of Lactobacillus prevalent in vaginal isolates of women from different countries and ethnicities [12,13]. Previous reports show Ugandan women were mainly colonized by L. reuteri, L. crispatus, L. vaginalis and L. jensenii [14]. The prevalent vaginal lactobacilli studied in South African women were L. crispatus, L. iners, L. gasseri [15] whereas L. acidophilus, L. iners, L. gasseri were identified in Mexican women [16]. Reports on distribution of Lactobacillus in the healthy vaginas of Indian women are conflicting. A study from North India reported prevalence of different species of vaginal Lactobacillus in comparison to other countries [17], on the other hand, observed vaginal lactobacilli from women in South India were similar to that of other countries, but different from those in North India. It appears there is variation in vaginal Lactobacillus species among different population in India due to its diverse lifestyle and geographic segmentation [18]. Also, despite having similar Lactobacillus diversity, the metabolic properties of these Lactobacillus species may differ between countries [19]. Identifying and evaluating prevalent lactobacilli in the population could be useful for designing probiotics for vaginal health. The aim of the current study is to identify the diversity of vaginal Lactobacillus isolated from women visiting a tertiary care centre in Mumbai and assess these colonized Lactobacilli for their biochemical properties."
+   ]
+  },
+  {
+   "title": "Study Population",
+   "kind": "methods",
+   "paragraphs": [
+    "The use of human subjects in this study had prior approval of NIRRH Ethics Committee for Clinical Studies (Protocol Number 215/2012) and Institutional Ethics Committee of Seth G.S. Medical college and KEM hospital (Protocol No EC/GOV-5/ 2012) and was carried out in accordance with the guidelines of Good Clinical Practice and in compliance with the Helsinki Declaration. Women who satisfied the inclusion criteria and signed an informed consent were recruited from the Gynecology Outpatient Clinic of Seth G.S. Medical College and KEM Hospital, Mumbai from August 2013 to Jan 2015. About 424 women were evaluated for their eligibility to be included in the study. The recruited 203 women were healthy premenopausal between 18–45 years of age, not taking contraceptive steroids or antibiotics in the last six weeks and without complaints of urogenital infections."
+   ]
+  },
+  {
+   "title": "Sample collection",
+   "kind": "methods",
+   "paragraphs": [
+    "Two vaginal swabs were collected from each individual by rolling the swab across the upper lateral wall of the vagina. One swab was used for determination of vaginal pH using pH paper (HiMedia, Mumbai, India), Nugent scoring [20] and wet mount microscopy; the other was used for bacterial culture and molecular analysis. The presence of Trichomonas vaginalis and Candida albicans were assessed by wet mount and growth on HiChrome Candida Differential agar (HiMedia, Mumbai, India) respectively. Further study was carried out on women with normal microbiota."
+   ]
+  },
+  {
+   "title": "Culture conditions and isolation",
+   "kind": "methods",
+   "paragraphs": [
+    "The bacteria retrieved on swabs were suspended in 1 ml sterile PBS and inoculated on DeMan-Rogosa- Sharpe (MRS) agar and HiChrome Candida differential agar (HiMedia, Mumbai, India). As MRS is not supportive of L. iners, Brain Heart Infusion broth (HiMedia, Mumbai, India) was used to enrich its growth. After incubation in candle-jar at 37°C for 48 hours, each isolated colony was observed for Gram’s reaction and morphology. Gram-positive rods and catalase negative colonies were selected for further study."
+   ]
+  },
+  {
+   "title": "Identification of Lactobacillus",
+   "kind": "methods",
+   "paragraphs": [
+    "Lactobacillus species identification by Multiplex-PCR Bacterial genomic DNA was extracted using QIAamp Kit (Qiagen, Hilden, Germany , Cat. No. 69504) following manufacturer′s instructions and stored at -20o C. Gram-positive isolates from MRS agar medium were identified to the genus level by amplification with primers LbLMA-rev (5’ CTC AAA ACT AAA CAA AGT TTC 3’) and R16-1 (5’ CTT GTA CAC ACC GCC CGT TCA 3’) [21]. Taxonomic grouping was carried out by employing multiplex PCR- G using the protocol described previously [22] (Table 1). PCR programme included initial denaturation at 95°C for 1 minute followed by 35 cycles of denaturation at 95o C for 20 seconds, annealing and extension at 55°C for 2 minutes; and final extension at 74o C for 5 minutes. Lactobacillus species were identified by multiplex PCR for species as mentioned elsewhere [22-24] (Table 1). PCR programme and reaction mix was same as for PCR-G except annealing temperature which was 68o C for PCR II-1, 65o C for PCR II-2, 62o C for multiplex PCR III and 60o C for PCR IV. PCR generated products were analysed by electrophoresis in 2 per cent agarose gel containing ethidium bromide.",
+    "Lactobacillus strain differentiation Random amplified polymorphic DNA (RAPD) analysis was done to differentiate various isolates of the same species. The primer used was 5’ AGT CAG CCA C 3’ (Sigma, Banglore, India) as per Tynkkynen et al. [26]. The reaction mix contained 30 ng of template DNA in PCR buffer with 2 mM MgCl2, 0.2 mM of each nucleotide and 2.5U of Taq polymerase (Merck, Mumbai, India) in a total volume of 25 μL. PCR amplification was conducted in an Applied Biosystems Thermal Cycler with the following temperature profiles, initial denaturation at 94o C for 5 minutes, followed by 30 cycles at 94o C for 45 seconds, 32o C for 2 minutes, 72o C for 2 minutes, and final extension at 72o C for 5 minutes. PCR products were visualized on 1.5 per cent agarose gel."
+   ]
+  },
+  {
+   "title": "Biochemical Characterization",
+   "kind": "methods",
+   "paragraphs": [
+    "plate containing Bromo-cresol purple (HiMedia, Mumbai, India). The lactic acid producing bacteria were identified by the change in color of colony from purple to yellow on incubation at 37o C for 48 hours.",
+    "Acid production was further determined indirectly by measuring pH of cultured supernatant.",
+    "Screening of Hydrogen peroxide (H2O2) producers Hydrogen peroxide producing ability of the strains was determined using the method described by Parolin et al. [27] with slight modifications. Briefly Lactobacillus isolates were grown on MRS agar containing 3, 3’, 5, 5’-tetramethylbenzidine (TMB) (Sigma-Aldrich, St Louis, USA) horseradish peroxidase (HRP) (Sigma-Aldrich, St Louis, USA). After incubation plates were exposed to air for variable period of time before scoring them for blue coloration. On the basis of the time required for the blue coloration to appear, isolates were scored as weak (>60 minutes), intermediate (15–60 minutes) and strong producing strains (< 15 minutes). Isolates not producing blue coloration were scored as non-producers. Since it was difficult to culture L. iners on MRS agar medium, L. iners isolates were not included in the H2O2 production test."
+   ]
+  },
+  {
+   "title": "Statistical analysis",
+   "kind": "methods",
+   "paragraphs": [
+    "To achieve sample size of 100 asymptomatic women for the study, considering prevalence of reproductive tract infections of 52% among women, sample needed to screen the spectrum of vaginal lactobacilli in healthy Indian women was 403 (5% level of significance, 5% precision and 5% non-response rate). The proportion of women with a particular Lactobacillus was analysed using SPSS (version 16.0). Data of culture supernatants pH was summarized in the form of Mean and Standard deviation."
+   ]
+  },
+  {
+   "title": "Characterization of vaginal samples by Nugent scoring",
+   "kind": "results",
+   "paragraphs": [
+    "and culture based methods Of the 424 women screened, vaginal swabs were sampled from 203 asymptomatic healthy women who satisfied the inclusion criteria of the study.The mean age of the study population was 31.1 years and the mean vaginal pH was 4.1 ± 0.5. Nugent scoring of vaginal swabs obtained from these women was done to exclude 57 participants with altered vaginal flora (Nugent score > 4) (Figure 1a). Additional 37 women with Nugent score of 0-3 showing presence of trichomonas and yeast determined by wet mount and/or growth on Candida differential agar were excluded from the study. Vaginal specimens from the rest 107 women with Nugent score 0-3 were processed for Lactobacillus identification by culture on MRS and BHI medium (Figure 1b). Cultivable lactobacilli from vaginal specimens were recovered from 107/109 (98.2%) women. All 244 isolates from MRS agar plates were Gram-positive, non-spore forming, catalase-negative, rods with variable morphology characteristic of Lactobacillus. Cell morphology observed by Gram-staining varies widely from short, long, straight or slightly crescent shaped rods to coryneform coccobacilli; though colony characteristics were similar (Figure 1c and d)."
+   ]
+  },
+  {
+   "title": "Biochemical characterization",
+   "kind": "results",
+   "paragraphs": [
+    "All 244 isolates of Lactobacillus were acid producers as determined on BCP-MRS agar (Figure 4a). H2O2 producing Lactobacilli were present in 103(98.2%) women (Figure 4b). Hydrogen peroxide was produced by 94.2% of lactobacilli isolates. Detectable H2O2 was produced by 93% of L. crispatus, 96.7% of L. reuteri, 96.0% of L. jensenii and 94.6% of L. gasseri isolates. Of the total Lactobacillus studied more than half of each species were strong producers of H2O2 (Table 3).",
+    "MRS for 48 hours. The mean pH of the culture supernatants was 4.09 ± 0.6. L. crispatus and L. reuteri acidified the pH of the medium to 4.2 whereas L.",
+    "jensenii and L. gasseri reduced the pH to 4.0. Isolates of L. plantarum, L. delbreuckii, L. johnsonii and L. salivarius showed pH below 4.0 (Table 3)."
+   ]
+  },
+  {
+   "title": "Discussion",
+   "kind": "discussion",
+   "paragraphs": [
+    "populations [17]. However, findings from our study and that in South India depicts different scenario of VMB among women within India [18]. Likewise, three different studies reported contrasting observations of vaginal lactobacilli within South Africa [15,28,29]. This leads to the possibility of variations in vaginal lactobacilli among women from different parts of the country due to ethnic and geographic diversity [18].",
+    "Studies have significantly associated L. crispatus, L. reuteri, L. jensenii and L. gasseri with normal vaginal microbiota suggestively playing protective functions to the FRT by preventing it from urogenital infections [18,28]. Identifying the same species in our study of healthy women supports the importance of these species in maintaining homeostasis of vaginal niche.",
+    "Vaginal microbiota in a woman was considered to be dominated by a single Lactobacillus species [30]. Majority of our population on the contrary, was inhabited by two or more Lactobacillus species, advocating the importance of cumulative effects of Lactobacillus species in safeguarding the vaginal ecosystem.",
+    "indicated as a potential risk in preterm deliveries [31]. Various reports on L. iners indicated it to possess having the features of both probiotic and vaginal pathogens [32]. Due to its dual characteristic, the contribution of L. iners in vaginal health is ambiguous, necessitating further research.",
+    "imperative to characterise their biochemical properties. Lactic acid is one of the major metabolites of Lactobacillus that plays a crucial role in the vaginal immunity [35]. Considering all the isolated lactobacilli in our study produced acid substantiates the fact that it is one of the major elements, protecting the ecological niche of healthy vagina. The isolates were able to acidify the culture medium to pH 3-4.5, which is also the physiological pH of a healthy vagina. The low pH detected may be however attributed due to other organic acids besides lactic acid. It would be worthwhile to investigate the concentrations of lactic acid isomers in these samples.",
+    "Another metabolite of lactobacilli is H2O2 which is an essential component of vaginal defence system [36] Nearly all the lactobacilli isolates in our study produced H2O2 indicating its possible role in regulating the growth of pathogens. In vitro studies have shown antimicrobial and virucidal properties of hydrogen peroxide [33,37]. Still the antimicrobial effect of H2O2 in vivo has been questionable [38]. On the other hand, our findings show presence of H2O2 producers in nearly all women with a normal microbiota suggests its plausible role as a defence molecule. Besides, work by other researchers has also indicated sustained vaginal colonization of H2O2 producing lactobacilli over non- H2O2 producing isolates in women with normal microbiota [39]. Nonetheless quantifying the H2O2 producing ability of our isolates might be helpful in designing a microbicide.",
+    "Our study in identifying the vaginal lactobacilli is limited by the fact that only cultivable lactobacilli grown on MRS medium were studied. Studying the cultivable lactobacilli can be rationalized by our motives to evaluate their in vitro function that may help to identify potential candidates for microbicides or probiotics. The present investigation also had constraints of being a cross sectional study. Vaginal swabs collected at single time point may not reflect the dynamics of the Lactobacillus communities. Nonetheless the information generated from the present study can be authoritative from the reports of other studies that describe L. crispatus and L. gasseri dominated communities promotes stability over a period of time [40]. The isolated species could be further evaluated for their biotherapeutic properties such as colonization on vaginal epithelial surfaces and inhibitory effects on uropathogens."
+   ]
+  },
+  {
+   "title": "Conclusion",
+   "kind": "conclusion",
+   "paragraphs": [
+    "Our investigation identified L. iners L. crispatus, L. reuteri, L. jensenii and L. gasseri as the major indigenous members of normal VMB in women of reproductive age. The diversity in Lactobacillus species identified in different parts of the country could be attributed due to the ethnic and lifestyle changes that prevail. Presence of heterogeneous Lactobacillus population emphasises the importance of analysing composite strains as probiotics or microbicides. Regardless L. iners being the prevalent lactobacilli, its lack of existence as the lone Lactobacillus species in the normal vaginal microbiota was conflicting. This depicts the ambiguous role of L. iners in vaginal immunity, warranting further research. Almost all women in our study harboured lactic acid and H2O2 producing lactobacilli, emphasizing the importance of lactic acid and H2O2 in maintaining the healthy vaginal microenvironment. The foremost hydrogen peroxide and lactic acid strains could be evaluated for other functional properties to efficiently design better probiotics for maintenance of normal flora and prevention of bacterial vaginosis."
+   ]
+  }
+ ]
+}
