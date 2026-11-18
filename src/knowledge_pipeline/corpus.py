@@ -23,6 +23,7 @@ import logging
 import os
 import re
 import shutil
+from collections import Counter
 from datetime import date
 from pathlib import Path
 
@@ -408,6 +409,50 @@ def _cmd_enrich() -> None:
     print(f"{len(records)} records | {in_pmc} in PubMed Central | {stored} full texts stored ({fetched} new)")
 
 
+def _alnum(text: str) -> str:
+    import unicodedata
+
+    return "".join(c for c in unicodedata.normalize("NFKD", text).lower() if c.isalnum())
+
+
+def _cmd_pdftext(only: list[str], compare: bool) -> None:
+    """Extract body text from stored PDFs for papers without official full text."""
+    from src.sources.deeplinks import PDF_DIR
+
+    from .fulltext import load_fulltext, save_fulltext
+    from .pdftext import extract_fulltext
+    from .study_schemas import fulltext_passages
+
+    records = load_records(checked_only=True)
+    for pdf in sorted(PDF_DIR.glob("*.pdf")):
+        record = records.get(pdf.stem)
+        if record is None or (only and pdf.stem not in only):
+            continue
+        official = load_fulltext(record.study_id)
+        if official is not None and official.source != "pdf" and not compare:
+            continue  # official full text is better; keep it
+        extracted = extract_fulltext(record.study_id, pdf)
+        passages = fulltext_passages(record, extracted)
+        kinds = Counter(s.kind for s in extracted.sections for _ in s.paragraphs)
+        print(f"{record.study_id} {record.authors} {record.year}: {extracted.paragraph_count} paragraphs "
+              f"{dict(kinds)} -> {len(passages)} citable passages")
+        if official is not None and official.source != "pdf":
+            # Both exist: how much of the extracted text is really in the paper, and how much was found?
+            truth = _alnum(" ".join(p for s in official.sections for p in s.paragraphs))
+            truth_citable = fulltext_passages(record, official)
+            mine = _alnum(" ".join(p.text for p in passages))
+            real = sum(1 for p in passages if _alnum(p.text) in truth)
+            found = sum(1 for p in truth_citable if _alnum(p.text)[:80] in mine)
+            print(f"   compared with the official full text: {real}/{len(passages)} extracted passages are verbatim; "
+                  f"{found}/{len(truth_citable)} official citable passages were recovered")
+            for p in [p for p in passages if _alnum(p.text) not in truth][:4]:
+                print(f"   not verbatim [{p.section}]: {p.text[:140]}")
+            continue
+        save_fulltext(extracted)
+        for section in extracted.sections:
+            print(f"   {section.kind:12} {section.title[:50]:50} {len(section.paragraphs)} paragraphs")
+
+
 async def _cmd_draft(pmids: list[str], force: bool) -> None:
     for pmid in pmids:
         path = STUDIES_DIR / f"pmid-{pmid}.yaml"
@@ -448,10 +493,17 @@ def main() -> None:
     p_check.add_argument("--recheck", action="store_true", help="also re-run checked records")
     sub.add_parser("build", help="index checked records into the study store")
     sub.add_parser("enrich", help="look up PubMed Central ids and download open-access full texts")
+    p_pdf = sub.add_parser("pdftext", help="extract body text from stored PDFs (papers without official full text)")
+    p_pdf.add_argument("only", nargs="*", help="study ids (default: every stored PDF)")
+    p_pdf.add_argument("--compare", action="store_true",
+                       help="also extract papers that have official full text, and report how well the two agree")
     args = parser.parse_args()
 
     if args.command == "enrich":
         _cmd_enrich()
+        return
+    if args.command == "pdftext":
+        _cmd_pdftext(args.only, args.compare)
         return
 
     if args.command == "build":

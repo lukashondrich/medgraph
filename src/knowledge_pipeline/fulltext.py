@@ -50,7 +50,8 @@ class Section(BaseModel):
 
 class FullText(BaseModel):
     study_id: str
-    pmcid: str
+    pmcid: str = ""
+    source: str = Field(default="europepmc", description="'europepmc' (official full text) or 'pdf' (extracted)")
     sections: list[Section] = Field(default_factory=list)
 
     @property

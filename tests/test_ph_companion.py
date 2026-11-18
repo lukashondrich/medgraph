@@ -985,8 +985,9 @@ class TestFullText:
     def test_shipped_full_texts_belong_to_open_access_records(self):
         records = load_records()
         with_text = [r for r in records.values() if load_fulltext(r.study_id)]
-        assert len(with_text) >= 20
-        assert all(r.pmcid and r.open_access for r in with_text)
+        official = [r for r in with_text if load_fulltext(r.study_id).source == "europepmc"]
+        assert len(official) >= 20
+        assert all(r.pmcid and r.open_access for r in official)
         r = with_text[0]
         ids = [p.passage_id for p in all_passages(r)]
         assert len(ids) == len(set(ids)) and any("#f" in i for i in ids) and any("#p" in i for i in ids)
@@ -1163,3 +1164,73 @@ class TestAskableTopics:
     def test_topics_reach_the_writer_prompt(self):
         prompt = build_prompt({}, askable=askable_topics(load_persona("amara")))
         assert "You may ask about: sex in the last day or two" in prompt and "period" not in prompt.split("You may ask about")[1]
+
+
+# ── Text extracted from PDFs ──────────────────────────────────────────────
+
+from src.knowledge_pipeline.pdftext import build_sections, drop_page_furniture, looks_like_prose, to_lines  # noqa: E402
+
+
+def pdf_line(text, y, x=50, size=10.0, font="body", eol=True):
+    return {"s": text, "x": x, "y": y, "h": size, "w": len(text) * 5.0, "eol": eol, "f": "", "n": font}
+
+
+def pdf_page(*items):
+    return {"width": 600, "height": 800, "items": list(items)}
+
+
+class TestPdfText:
+    def body(self):
+        return [
+            pdf_line("Journal of Things 2016", 780, size=8.0),
+            pdf_line("Introduction", 700, size=12.0, font="bold"),
+            pdf_line("Earlier studies looked at vaginal pH in many different groups of", 680),
+            pdf_line("women and reported values that varied quite a lot between them.", 668),
+            pdf_line("Results", 620, size=12.0, font="bold"),
+            pdf_line("The mean vaginal pH was 4.2 in the first group and it was clearly", 600),
+            pdf_line("higher in the second group of women who took part in the study.", 588),
+            pdf_line("Figure 1. Distribution of pH values in both groups of women.", 540),
+            pdf_line("Open circles show the first group and squares the second one.", 528),
+            pdf_line("In the multi-", 480, x=60),
+            pdf_line("variable model the difference between the two groups remained.", 468),
+            pdf_line("References", 420, size=12.0, font="bold"),
+            pdf_line("1. Smith AB, Jones C. A paper about something else entirely. J Things 2001; 12(3):45-50.", 400),
+        ]
+
+    def sections(self):
+        pages = [pdf_page(*self.body()), pdf_page(pdf_line("Journal of Things 2016", 780, size=8.0)),
+                 pdf_page(pdf_line("Journal of Things 2016", 780, size=8.0))]
+        return build_sections(drop_page_furniture(to_lines(pages), pages))
+
+    def test_sections_headings_and_paragraphs(self):
+        sections = self.sections()
+        assert [(s.title, s.kind) for s in sections] == [("Introduction", "introduction"), ("Results", "results")]
+        assert sections[1].paragraphs[0].startswith("The mean vaginal pH was 4.2 in the first group")
+
+    def test_running_headers_captions_and_references_are_left_out(self):
+        text = " ".join(p for s in self.sections() for p in s.paragraphs)
+        assert "Journal of Things" not in text
+        assert "Figure 1" not in text and "Open circles" not in text
+        assert "Smith AB" not in text
+
+    def test_words_split_at_line_ends_are_rejoined(self):
+        assert "In the multivariable model the difference" in self.sections()[1].paragraphs[1]
+
+    def test_fragments_on_one_line_are_joined(self):
+        page = pdf_page(pdf_line("The mean ", 600, eol=False), pdf_line("pH was 4.2.", 600, x=95))
+        assert [l.text for l in to_lines([page])] == ["The mean pH was 4.2."]
+
+    def test_prose_filter(self):
+        assert looks_like_prose("The mean vaginal pH was clearly higher in the second group of women.")
+        assert not looks_like_prose("BV 12 (3.4) 45 (12.9) 0.01 TV 3 (0.9) 9 (2.6) 0.08 CT 4 (1.1) 7 (2.0)")
+        assert not looks_like_prose("Smith AB, Jones C, Brown DE, Miller FG, Davis HI, Wilson JK, Moore LM")
+        assert not looks_like_prose("Too short to count.")
+
+    def test_pdf_text_is_not_used_for_links_into_web_pages(self):
+        record = make_record("s", pmcid="PMC9")
+        ft = FullText(study_id="s", source="pdf", sections=[Section(title="Results", kind="results", paragraphs=[
+            "In our study the mean pH was clearly higher in the second group of women than in the first."])])
+        text = ft.sections[0].paragraphs[0]
+        assert pmc_url(record, text, ft) is None  # may differ from the page; the PDF viewer shows it instead
+        assert pmc_url(record, "First sentence about pH. Second sentence about bacteria.", ft) is not None
+        assert '<mark id="cited">' in render_paper(record, ft, text) and "extracted from the PDF" in render_paper(record, ft, text)

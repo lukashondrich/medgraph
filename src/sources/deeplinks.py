@@ -50,9 +50,13 @@ def normalize(text: str) -> str:
 
 
 def document_text(record: StudyRecord, fulltext: Optional[FullText]) -> str:
-    """All running text we hold for a paper, in page order."""
+    """The text we hold for a paper that is known to match its web page, in page order.
+
+    Text extracted from a PDF is left out: it is good enough to find a
+    passage in that PDF, but not to build a link into a web page.
+    """
     parts = [record.title, record.abstract]
-    if fulltext is not None:
+    if fulltext is not None and fulltext.source != "pdf":
         for section in fulltext.sections:
             parts.extend(section.paragraphs)
     return normalize(" \n ".join(parts))

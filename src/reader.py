@@ -65,7 +65,8 @@ def render_paper(record: StudyRecord, fulltext: Optional[FullText], highlight: s
     else:
         original, original_label = record.url, "Open the record on PubMed"
     holding = (
-        "the full text of this open-access paper" if fulltext is not None
+        "text extracted from the PDF of this paper" if fulltext is not None and fulltext.source == "pdf"
+        else "the full text of this open-access paper" if fulltext is not None
         else "the abstract of this paper; the full article is at the publisher"
     )
     notice = "" if found or not highlight else (

@@ -1,6 +1,6 @@
 # Claude Context: pH Companion
 
-**Last Updated:** 2026-11-13
+**Last Updated:** 2026-11-18
 
 ---
 
@@ -138,4 +138,13 @@ pytest tests/eval/ -v
 python -m src.knowledge_pipeline.corpus draft <pubmed ids>
 python -m src.knowledge_pipeline.corpus check
 python -m src.knowledge_pipeline.corpus build
+
+# Full text: official text for open-access papers, then text from stored PDFs for the rest
+python -m src.knowledge_pipeline.corpus enrich
+python -m src.knowledge_pipeline.corpus pdftext          # needs Google Chrome; --compare measures quality
+python -m src.knowledge_pipeline.corpus build
 ```
+
+PDF files live in `data/corpus/pdf/<study id>.pdf` and are kept out of git (`.git/info/exclude`). They are
+copied into the upload folder by hand before `railway up`. `docs/specs/ph-companion/pdfs-needed.md` lists
+the ones still to collect. Publisher sites and PubMed Central must not be fetched by automated tools.
