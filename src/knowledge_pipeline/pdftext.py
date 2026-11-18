@@ -191,7 +191,9 @@ def drop_page_furniture(lines: list[Line], pages: list[dict]) -> list[Line]:
     for line in lines:
         height = pages[line.page - 1]["height"]
         in_margin = line.y > height * 0.94 or line.y < height * 0.05
-        if key(line) in repeated or (in_margin and len(line.text) < 100) or re.fullmatch(r"[\d\s|/.-]+", line.text):
+        # A section heading can be the first line of a page; it is not a running header.
+        margin_note = in_margin and len(line.text) < 100 and not _HEADING_WORDS.match(line.text)
+        if key(line) in repeated or margin_note or re.fullmatch(r"[\d\s|/.-]+", line.text):
             continue
         kept.append(line)
     return kept
@@ -199,16 +201,18 @@ def drop_page_furniture(lines: list[Line], pages: list[dict]) -> list[Line]:
 
 def is_heading(line: Line, body_size: float, body_font: str) -> bool:
     words = line.text.split()
-    if not words or len(words) > 9 or line.text.endswith((".", ",", ";")):
+    numbered = bool(re.match(r"^\d+(?:\.\d+)*\.?\s+[A-Z]", line.text))  # "3.2. Recurrent vaginal infections and ..."
+    if not words or len(words) > (16 if numbered else 9) or line.text.endswith((".", ",", ";")):
         return False
     if _HEADING_WORDS.match(line.text):
         return True
     # A short line set larger or in another face than the body text, starting with a capital.
     stands_out = line.size > body_size * 1.08 or (line.font != body_font and line.size >= body_size * 0.98)
-    plain_words = not re.search(r"[\d,;=<>%@]", line.text)  # author lines and table cells have these
+    unnumbered = re.sub(r"^\d+(?:\.\d+)*\.?\s+", "", line.text)  # "2.1. Causes of vaginitis"
+    plain_words = not re.search(r"[\d,;=<>%@]", unnumbered)  # author lines and table cells have these
     return (
-        stands_out and plain_words and line.text[0].isupper() and len(line.text) > 3
-        and len(words) <= 7 and not _CAPTION.match(line.text)
+        stands_out and plain_words and (numbered or line.text[0].isupper()) and len(line.text) > 3
+        and (numbered or len(words) <= 7) and not _CAPTION.match(line.text)
     )
 
 
@@ -228,7 +232,11 @@ def build_sections(lines: list[Line]) -> list[Section]:
     body = [l for l in lines if len(l.text) > 25]
     if not body:
         return []
-    body_size = statistics.mode(l.size for l in body)
+    # Many journals set methods and references smaller than the main text, and
+    # those can outnumber it. The main text is the largest size that still
+    # makes up a real share of the lines.
+    shares = Counter(l.size for l in body)
+    body_size = max(size for size, count in shares.items() if count >= 0.10 * len(body))
     body_font = statistics.mode(l.font for l in body if l.size == body_size)
     typical_width = statistics.median(l.right - l.x for l in body if l.size == body_size)
 
@@ -251,7 +259,7 @@ def build_sections(lines: list[Line]) -> list[Section]:
 
     in_caption = False
     seen_findings = False
-    for line in lines:
+    for position, line in enumerate(lines):
         if reached_references:
             break
         gap = previous is None or line.page != previous.page or abs(previous.y - line.y) > body_size * 2.2
@@ -270,7 +278,7 @@ def build_sections(lines: list[Line]) -> list[Section]:
         if is_heading(line, body_size, body_font):
             flush()
             # "Reference" can also head a citation box on the first page.
-            if _STOP_HEADING.match(line.text) and seen_findings:
+            if _STOP_HEADING.match(line.text) and (seen_findings or position > 0.4 * len(lines)):
                 break
             title = re.sub(r"^\d+(?:\.\d+)*\.?\s+", "", line.text).rstrip(":")
             kind = classify_section(title)
